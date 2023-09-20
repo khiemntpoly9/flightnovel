@@ -30,6 +30,9 @@ export default function Header({ auth }) {
 		}
 	};
 
+	// Set user
+	const user = auth || null;
+
 	useEffect(() => {
 		const handleResize = () => {
 			const width = window.innerWidth;
@@ -240,10 +243,10 @@ export default function Header({ auth }) {
 							isUserOpen ? 'block' : 'hidden'
 						} w-full md:right-0 md:w-1/4 md:rounded-md lg:right-0 lg:w-1/4`}
 					>
-						{auth.user ? (
+						{user ? (
 							<ul className='menu z-[99] w-auto bg-base-100 p-2 shadow md:rounded-md'>
 								<li onClick={() => statusUser()}>
-									<Link href={route('dashboard')}>Trang cá nhân</Link>
+									<Link href={route('profile.edit')}>Trang cá nhân</Link>
 								</li>
 								<li onClick={() => statusUser()}>
 									<Link href='/profile'>Hệ thống</Link>
@@ -253,7 +256,7 @@ export default function Header({ auth }) {
 								</li>
 								<li
 									onClick={() => {
-										statusUser(), logoutS();
+										statusUser();
 									}}
 								>
 									<Link method='post' as='button' href={route('logout')}>
