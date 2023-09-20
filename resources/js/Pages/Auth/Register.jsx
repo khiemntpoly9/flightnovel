@@ -1,117 +1,171 @@
 import { useEffect } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
+import { FaFacebook, FaGoogle } from 'react-icons/fa';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import DefaultLayout from '@/Layouts/DefaultLayout';
 
 export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-    });
+	const { data, setData, post, processing, errors, reset } = useForm({
+		name: '',
+		email: '',
+		password: '',
+		password_confirmation: '',
+	});
 
-    useEffect(() => {
-        return () => {
-            reset('password', 'password_confirmation');
-        };
-    }, []);
+	useEffect(() => {
+		return () => {
+			reset('password', 'password_confirmation');
+		};
+	}, []);
 
-    const submit = (e) => {
-        e.preventDefault();
+	const submit = (e) => {
+		e.preventDefault();
+		post(route('register'));
+	};
 
-        post(route('register'));
-    };
+	return (
+		<DefaultLayout>
+			<Head title='Đăng ký' />
+			<div className='container mx-auto w-10/12 bg-white'>
+				<div className='flex min-h-full flex-1 flex-col justify-center lg:px-8'>
+					<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+						<h2 className='text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>Đăng ký</h2>
+					</div>
+					<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+						<form onSubmit={submit}>
+							{/* Full name */}
+							<div className='mb-2'>
+								<label
+									htmlFor='fullname-lable'
+									className='mb-2 block text-sm font-medium leading-6 text-gray-900'
+								>
+									Họ và tên
+								</label>
+								<div>
+									<input
+										id='name'
+										name='name'
+										value={data.name}
+										autoComplete='name'
+										isFocused={true}
+										onChange={(e) => setData('name', e.target.value)}
+										className={`${
+											errors && errors.name ? 'mb-2 border-rose-600' : ''
+										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										required
+									/>
+									<InputError message={errors.name} className='mt-2' />
+									{/* {errors && <p className='text-sm italic text-red-500'>{errors.erFullname}</p>} */}
+								</div>
+							</div>
+							{/* Email */}
+							<div className='mb-2'>
+								<label htmlFor='email' className='mb-2 block text-sm font-medium leading-6 text-gray-900'>
+									Tài khoản Email
+								</label>
+								<div>
+									<input
+										id='email'
+										name='email'
+										type='email'
+										value={data.email}
+										autoComplete='username'
+										className={`${
+											errors && errors.erEmail ? 'mb-2 border-rose-600' : ''
+										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										onChange={(e) => setData('email', e.target.value)}
+										required
+									/>
+									<InputError message={errors.email} className='mt-2' />
+									{/* {errors && <p className='text-sm italic text-red-500'>{errors.erEmail}</p>} */}
+								</div>
+							</div>
+							{/* Password */}
+							<div className='mb-2'>
+								<div className='flex items-center justify-between'>
+									<label
+										htmlFor='password'
+										className='mb-2 block text-sm font-medium leading-6 text-gray-900'
+									>
+										Mật khẩu
+									</label>
+								</div>
+								<div>
+									<input
+										id='password'
+										type='password'
+										name='password'
+										value={data.password}
+										autoComplete='new-password'
+										className={`${
+											errors && errors.erPassword ? 'mb-2 border-rose-600' : ''
+										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										onChange={(e) => setData('password', e.target.value)}
+										required
+									/>
+									<InputError message={errors.password} className='mt-2' />
+									{/* {errors && <p className='text-sm italic text-red-500'>{errors.erPassword}</p>} */}
+								</div>
+							</div>
+							{/* Repeact Password */}
+							<div className='mb-2'>
+								<div className='flex items-center justify-between'>
+									<label htmlFor='password' className='block text-sm font-medium leading-6 text-gray-900'>
+										Xác nhận mật khẩu
+									</label>
+								</div>
+								<div>
+									<input
+										id='password_confirmation'
+										type='password'
+										name='password_confirmation'
+										value={data.password_confirmation}
+										autoComplete='new-password'
+										className={`${
+											errors && errors.erRepeactPass ? 'mb-2 border-rose-600' : ''
+										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										onChange={(e) => setData('password_confirmation', e.target.value)}
+									/>
+									<InputError message={errors.password_confirmation} className='mt-2' />
+									{/* {errors && <p className='text-sm italic text-red-500'>{errors.erRepeactPass}</p>} */}
+								</div>
+							</div>
+							<div className='mt-4'>
+								<button
+									type='submit'
+									className='flex w-full justify-center rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600'
+								>
+									Đăng ký
+								</button>
+							</div>
+						</form>
+						<p className='mt-10 text-center text-sm text-gray-500'>
+							Bạn đã có tài khoản?{' '}
+							<Link
+								href={route('login')}
+								className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'
+							>
+								Đăng nhập ngay
+							</Link>
+						</p>
+						<hr />
+						<p className='mt-3 text-center text-sm text-gray-500'>Hoặc đăng ký bằng</p>
+						<div className='flex '>
+							{/* Nút đăng nhập bằng Facebook */}
+							<button className='mx-2 mt-4 flex w-1/2 items-center justify-center rounded-md bg-blue-500 px-1 py-2 text-white shadow-md hover:bg-blue-600'>
+								<FaFacebook className='mr-2' />
+								Facebook
+							</button>
 
-    return (
-        <GuestLayout>
-            <Head title="Register" />
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ml-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
-    );
+							{/* Nút đăng nhập bằng Google */}
+							<button className='mx-2 mt-4 flex w-1/2 items-center justify-center rounded-md bg-red-500 px-1 py-2 text-white shadow-md hover:bg-red-600'>
+								<FaGoogle className='mr-2' />
+								Google
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</DefaultLayout>
+	);
 }

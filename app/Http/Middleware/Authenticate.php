@@ -14,4 +14,7 @@ class Authenticate extends Middleware
     {
         return $request->expectsJson() ? null : route('login');
     }
+
+    // Giải thích đoạn code trên:
+    // Nếu request là một request trả về JSON thì không cần redirect
 }

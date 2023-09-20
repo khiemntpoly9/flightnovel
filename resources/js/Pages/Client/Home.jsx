@@ -1,5 +1,3 @@
-import Header from '@/Pages/Client/Components/Header';
-import Footer from '@/Pages/Client/Components/Footer';
 import SlideNoiBat from '@/Pages/Client/Components/SlideNoiBat';
 import TruyenMoi from '@/Pages/Client/Components/TruyenMoi';
 import LichSuDoc from '@/Pages/Client/Components/LichSuDoc';
@@ -7,7 +5,7 @@ import ChuongMoi from '@/Pages/Client/Components/ChuongMoi';
 import TheoDoiNhieu from '@/Pages/Client/Components/TheoDoiNhieu';
 import TruyenDaHoanThanh from '@/Pages/Client/Components/TruyenDaHoanThanh';
 import TruyenVuaDang from '@/Pages/Client/Components/TruyenVuaDang';
-import { Link, Head } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 export default function Home({ auth }) {
 	return (

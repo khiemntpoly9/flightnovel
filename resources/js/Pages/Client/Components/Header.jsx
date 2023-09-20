@@ -245,6 +245,13 @@ export default function Header({ auth }) {
 					>
 						{user ? (
 							<ul className='menu z-[99] w-auto bg-base-100 p-2 shadow md:rounded-md'>
+								{user.role.short_role === 'admin' ? (
+									<li onClick={() => statusUser()}>
+										<Link href={route('admin.home')}>Trang Quản Trị</Link>
+									</li>
+								) : (
+									<></>
+								)}
 								<li onClick={() => statusUser()}>
 									<Link href={route('profile.edit')}>Trang cá nhân</Link>
 								</li>
