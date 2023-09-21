@@ -1,4 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import moment from 'moment/moment';
 import { Link, Head } from '@inertiajs/react';
 // import DeleteUserForm from './Partials/DeleteUserForm';
 // import UpdatePasswordForm from './Partials/UpdatePasswordForm';
@@ -96,7 +97,9 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
 						<div className='mb-5 mt-5 '>
 							<div className='py-1 text-sm  md:text-base'>Tên tài khoản: {auth.user.name}</div>
 							<div className='py-1 text-sm md:text-base'>Email: {auth.user.email}</div>
-							<div className='py-1  text-sm md:text-base'>Tham gia: {auth.user.created_at}</div>
+							<div className='py-1  text-sm md:text-base'>
+								Tham gia: {moment(auth.user.created_at).format('DD/MM/YYYY | HH:mm:ss')}
+							</div>
 						</div>
 					</div>
 				</div>
