@@ -14,7 +14,7 @@ return new class extends Migration {
 			$table->bigIncrements('id_team');
 			$table->bigInteger('id_user')->unsigned();
 			$table->string('team_name');
-			$table->string('team_detail');
+			$table->string('team_detail')->nullable();
 			$table->timestamps();
 			// Foreign Keys
 			$table->foreign('id_user')->references('id')->on('users');

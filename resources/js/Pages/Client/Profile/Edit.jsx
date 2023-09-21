@@ -98,7 +98,7 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
 							<div className='py-1 text-sm  md:text-base'>Tên tài khoản: {auth.user.name}</div>
 							<div className='py-1 text-sm md:text-base'>Email: {auth.user.email}</div>
 							<div className='py-1  text-sm md:text-base'>
-								Tham gia: {moment(auth.user.created_at).format('DD/MM/YYYY | HH:mm:ss')}
+								Tham gia: {moment(auth.user.created_at).format('DD/MM/YYYY - HH:mm:ss')}
 							</div>
 						</div>
 					</div>
