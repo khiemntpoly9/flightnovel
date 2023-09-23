@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import InputError from '@/Components/InputError';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FaFacebook, FaGoogle } from 'react-icons/fa';
@@ -22,7 +21,6 @@ export default function Login({ auth, status, canResetPassword }) {
 		e.preventDefault();
 		post(route('login'));
 	};
-
 	return (
 		<DefaultLayout>
 			<Head title='Đăng nhập' />
@@ -58,8 +56,7 @@ export default function Login({ auth, status, canResetPassword }) {
 										isFocused={true}
 										onChange={(e) => setData('email', e.target.value)}
 									/>
-									<InputError message={errors.email} className='mt-2' />
-									{/* {errors && <p className='text-sm italic text-red-500'>{errors.eremail}</p>} */}
+									{errors && errors.email && <p className='text-sm italic text-red-500'>{errors.email}</p>}
 								</div>
 							</div>
 							<div className='mb-2'>
@@ -88,8 +85,9 @@ export default function Login({ auth, status, canResetPassword }) {
 										autoComplete='current-password'
 										onChange={(e) => setData('password', e.target.value)}
 									/>
-									<InputError message={errors.password} className='mt-2' />
-									{/* {errors && <p className='text-sm italic text-red-500'>{errors.erpassword}</p>} */}
+									{errors && errors.password && (
+										<p className='text-sm italic text-red-500'>{errors.password}</p>
+									)}
 								</div>
 								<div className='mt-2'>
 									<label className='flex items-center'>

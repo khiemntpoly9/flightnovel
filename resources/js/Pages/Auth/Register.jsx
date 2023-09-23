@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { FaFacebook, FaGoogle } from 'react-icons/fa';
-import InputError from '@/Components/InputError';
 import { Head, Link, useForm } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 
@@ -35,10 +34,7 @@ export default function Register() {
 						<form onSubmit={submit}>
 							{/* Full name */}
 							<div className='mb-2'>
-								<label
-									htmlFor='fullname-lable'
-									className='mb-2 block text-sm font-medium leading-6 text-gray-900'
-								>
+								<label htmlFor='name' className='mb-2 block text-sm font-medium leading-6 text-gray-900'>
 									Họ và tên
 								</label>
 								<div>
@@ -47,15 +43,13 @@ export default function Register() {
 										name='name'
 										value={data.name}
 										autoComplete='name'
-										isFocused={true}
 										onChange={(e) => setData('name', e.target.value)}
 										className={`${
 											errors && errors.name ? 'mb-2 border-rose-600' : ''
 										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 										required
 									/>
-									<InputError message={errors.name} className='mt-2' />
-									{/* {errors && <p className='text-sm italic text-red-500'>{errors.erFullname}</p>} */}
+									{errors && errors.name && <p className='text-sm italic text-red-500'>{errors.name}</p>}
 								</div>
 							</div>
 							{/* Email */}
@@ -71,13 +65,12 @@ export default function Register() {
 										value={data.email}
 										autoComplete='username'
 										className={`${
-											errors && errors.erEmail ? 'mb-2 border-rose-600' : ''
+											errors && errors.email ? 'mb-2 border-rose-600' : ''
 										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 										onChange={(e) => setData('email', e.target.value)}
 										required
 									/>
-									<InputError message={errors.email} className='mt-2' />
-									{/* {errors && <p className='text-sm italic text-red-500'>{errors.erEmail}</p>} */}
+									{errors && errors.email && <p className='text-sm italic text-red-500'>{errors.email}</p>}
 								</div>
 							</div>
 							{/* Password */}
@@ -98,13 +91,14 @@ export default function Register() {
 										value={data.password}
 										autoComplete='new-password'
 										className={`${
-											errors && errors.erPassword ? 'mb-2 border-rose-600' : ''
+											errors && errors.password ? 'mb-2 border-rose-600' : ''
 										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 										onChange={(e) => setData('password', e.target.value)}
 										required
 									/>
-									<InputError message={errors.password} className='mt-2' />
-									{/* {errors && <p className='text-sm italic text-red-500'>{errors.erPassword}</p>} */}
+									{errors && errors.password && (
+										<p className='text-sm italic text-red-500'>{errors.password}</p>
+									)}
 								</div>
 							</div>
 							{/* Repeact Password */}
@@ -122,12 +116,13 @@ export default function Register() {
 										value={data.password_confirmation}
 										autoComplete='new-password'
 										className={`${
-											errors && errors.erRepeactPass ? 'mb-2 border-rose-600' : ''
+											errors && errors.password ? 'mb-2 border-rose-600' : ''
 										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 										onChange={(e) => setData('password_confirmation', e.target.value)}
 									/>
-									<InputError message={errors.password_confirmation} className='mt-2' />
-									{/* {errors && <p className='text-sm italic text-red-500'>{errors.erRepeactPass}</p>} */}
+									{/* {errors && errors.password && (
+										<p className='text-sm italic text-red-500'>{errors.password}</p>
+									)} */}
 								</div>
 							</div>
 							<div className='mt-4'>
