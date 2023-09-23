@@ -1,4 +1,5 @@
 import 'animate.css';
+import { Link } from '@inertiajs/react';
 import { useState } from 'react';
 export default function SideBar() {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -37,7 +38,7 @@ export default function SideBar() {
 					<div className='relative h-64 w-full  md:hidden '>
 						{/* Menu Items */}
 						<div className='absolute left-0 z-50 w-full'>
-							<ul className=' menu w-full  rounded-md  bg-base-100 shadow '>
+							<ul className='menu w-full rounded-md bg-base-100 shadow'>
 								<li>
 									<details open>
 										<summary>Thống kê</summary>
@@ -71,7 +72,7 @@ export default function SideBar() {
 
 			{/* sidebar */}
 			<div
-				className={`trasition absolute inset-y-0 left-0  -translate-x-full transform space-y-6 bg-blue-800 px-2 py-7 text-blue-100 duration-200 md:relative md:translate-x-0 ${
+				className={`trasition absolute inset-y-0 left-0 -translate-x-full transform space-y-6 bg-blue-800 px-2 py-7 text-blue-100 duration-200 md:relative md:translate-x-0 ${
 					open ? 'w-64' : 'w-16'
 				}`}
 			>
@@ -102,7 +103,7 @@ export default function SideBar() {
 						viewBox='0 0 24 24'
 						strokeWidth={1.5}
 						stroke='currentColor'
-						className={`absolute top-9 h-6 w-6 cursor-pointer rounded-full  border border-blue-800 bg-white text-blue-800 md:-right-3 ${
+						className={`absolute top-9 h-6 w-6 cursor-pointer rounded-full border border-blue-800 bg-white text-blue-800 md:-right-3 ${
 							!open && 'rotate-180'
 						}`}
 						onClick={() => setOpen(!open)}
@@ -119,7 +120,7 @@ export default function SideBar() {
 								className={`collapse collapse-arrow mb-1 rounded-md bg-blue-800 text-white hover:bg-blue-700`}
 							>
 								<input type='checkbox' className={`${!open && 'hidden'}`} />
-								<div className='collapse-title flex items-center  gap-4'>
+								<div className='collapse-title flex items-center gap-4'>
 									<svg
 										xmlns='http://www.w3.org/2000/svg'
 										fill='none'
@@ -135,7 +136,7 @@ export default function SideBar() {
 										/>
 									</svg>
 									<a
-										className={`block rounded  transition duration-200   group-hover:text-white ${
+										className={`block rounded transition duration-200 group-hover:text-white ${
 											!open && 'hidden'
 										}`}
 										href='#'
@@ -179,6 +180,28 @@ export default function SideBar() {
 							>
 								Tài khoản
 							</a>
+						</li>
+						<li className='group flex items-center gap-4 rounded px-3 py-4 hover:bg-blue-700'>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								fill='none'
+								viewBox='0 0 24 24'
+								strokeWidth={1.5}
+								stroke='currentColor'
+								className='h-6 w-6'
+							>
+								<path
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									d='M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25'
+								/>
+							</svg>
+							<Link
+								className={`block transition duration-200 group-hover:text-white ${!open && 'hidden'}`}
+								href={route('admin.categories')}
+							>
+								Thể loại
+							</Link>
 						</li>
 						<li className='group flex items-center gap-4 rounded px-3 py-4 hover:bg-blue-700 '>
 							<svg

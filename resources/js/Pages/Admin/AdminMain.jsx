@@ -20,172 +20,20 @@ export default function AdminMain() {
 					</div>
 				</div>
 				{/* end dashboard */}
-
-				{/* Table */}
-				<div className='overflow-x-auto '>
-					<table className='table table-fixed '>
-						{/* head */}
-						<thead>
-							<tr>
-								<th>
-									<label>
-										<input type='checkbox' className='checkbox' />
-									</label>
-								</th>
-								<th>Tên</th>
-								<th>Quyền hạn</th>
-								<th>Report</th>
-								<th>Phản hồi</th>
-							</tr>
-						</thead>
-						<tbody>
-							{/* row 1 */}
-							<tr>
-								<th>
-									<label>
-										<input type='checkbox' className='checkbox' />
-									</label>
-								</th>
-								<td>
-									<div className='flex items-center space-x-3'>
-										<div className='avatar'>
-											<div className='mask mask-squircle h-12 w-12'>
-												<img
-													src='/tailwind-css-component-profile-2@56w.png'
-													alt='Avatar Tailwind CSS Component'
-												/>
-											</div>
-										</div>
-										<div>
-											<div className='font-bold'>Hart Hagerty</div>
-											<div className='text-sm opacity-50'>United States</div>
-										</div>
-									</div>
-								</td>
-								<td>
-									Zemlak, Daniel and Leannon
-									<br />
-									<span className='badge badge-ghost badge-sm'>Desktop Support Technician</span>
-								</td>
-								<td>Purple</td>
-								<th>
-									<button className='btn btn-ghost btn-xs'>Xử lý</button>
-								</th>
-							</tr>
-							{/* row 2 */}
-							<tr>
-								<th>
-									<label>
-										<input type='checkbox' className='checkbox' />
-									</label>
-								</th>
-								<td>
-									<div className='flex items-center space-x-3'>
-										<div className='avatar'>
-											<div className='mask mask-squircle h-12 w-12'>
-												<img
-													src='/tailwind-css-component-profile-3@56w.png'
-													alt='Avatar Tailwind CSS Component'
-												/>
-											</div>
-										</div>
-										<div>
-											<div className='font-bold'>Brice Swyre</div>
-											<div className='text-sm opacity-50'>China</div>
-										</div>
-									</div>
-								</td>
-								<td>
-									Carroll Group
-									<br />
-									<span className='badge badge-ghost badge-sm'>Tax Accountant</span>
-								</td>
-								<td>Red</td>
-								<th>
-									<button className='btn btn-ghost btn-xs'>Xử lý</button>
-								</th>
-							</tr>
-							{/* row 3 */}
-							<tr>
-								<th>
-									<label>
-										<input type='checkbox' className='checkbox' />
-									</label>
-								</th>
-								<td>
-									<div className='flex items-center space-x-3'>
-										<div className='avatar'>
-											<div className='mask mask-squircle h-12 w-12'>
-												<img
-													src='/tailwind-css-component-profile-4@56w.png'
-													alt='Avatar Tailwind CSS Component'
-												/>
-											</div>
-										</div>
-										<div>
-											<div className='font-bold'>Marjy Ferencz</div>
-											<div className='text-sm opacity-50'>Russia</div>
-										</div>
-									</div>
-								</td>
-								<td>
-									Rowe-Schoen
-									<br />
-									<span className='badge badge-ghost badge-sm'>Office Assistant I</span>
-								</td>
-								<td>Crimson</td>
-								<th>
-									<button className='btn btn-ghost btn-xs'>Xử lý</button>
-								</th>
-							</tr>
-							{/* row 4 */}
-							<tr>
-								<th>
-									<label>
-										<input type='checkbox' className='checkbox' />
-									</label>
-								</th>
-								<td>
-									<div className='flex items-center space-x-3'>
-										<div className='avatar'>
-											<div className='mask mask-squircle h-12 w-12'>
-												<img
-													src='/tailwind-css-component-profile-5@56w.png'
-													alt='Avatar Tailwind CSS Component'
-												/>
-											</div>
-										</div>
-										<div>
-											<div className='font-bold'>Yancy Tear</div>
-											<div className='text-sm opacity-50'>Brazil</div>
-										</div>
-									</div>
-								</td>
-								<td>
-									Wyman-Ledner
-									<br />
-									<span className='badge badge-ghost badge-sm'>Community Outreach Specialist</span>
-								</td>
-								<td>Indigo</td>
-								<th>
-									<button className='btn btn-ghost btn-xs'>Xử lý</button>
-								</th>
-							</tr>
-						</tbody>
-						{/* foot */}
-						<tfoot>
-							<tr>
-								<th></th>
-								<th>Tên</th>
-								<th>Quyền hạn</th>
-								<th>Report</th>
-								<th>Phản hồi</th>
-							</tr>
-						</tfoot>
-					</table>
-				</div>
-				{/* end Table */}
 			</div>
+			<button className='btn' onClick={() => document.getElementById('my_modal_3').showModal()}>
+				open modal
+			</button>
+			<dialog id='my_modal_3' className='modal'>
+				<div className='modal-box'>
+					<form method='dialog'>
+						{/* if there is a button in form, it will close the modal */}
+						<button className='btn btn-circle btn-ghost btn-sm absolute right-2 top-2'>✕</button>
+					</form>
+					<h3 className='text-lg font-bold'>Hello!</h3>
+					<p className='py-4'>Press ESC key or click on ✕ button to close</p>
+				</div>
+			</dialog>
 		</AdminLayout>
 	);
 }

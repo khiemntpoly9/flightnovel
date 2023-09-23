@@ -13,4 +13,6 @@ class Categories extends Model
         'id_categories',
         'name',
     ];
+    protected $primaryKey = 'id_categories';
+    public $timestamps = false;
 }

@@ -1,6 +1,3 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
-
 /** @type {import('tailwindcss').Config} */
 export default {
 	content: [
@@ -15,13 +12,9 @@ export default {
 				'header-a': '#FFA95A',
 				'li-a': 'A9A9A9',
 			},
-			// fontFamily: {
-			// 	sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-			// },
 		},
 	},
-
-	plugins: [forms, require('daisyui')],
+	plugins: [require('daisyui')],
 	daisyui: {
 		themes: false, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
 		darkTheme: 'dark', // name of one of the included themes for dark mode
