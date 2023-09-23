@@ -85,7 +85,7 @@ class CateController extends Controller
 		$category->delete();
 		// Lấy lại dữ liệu từ bảng categories
 		$categories = Categories::all();
-		// Trả về dữ liệu dạng json
+
 		return Inertia::render('Admin/Categories/Categories', [
 			'categories' => $categories,
 			'successMessage' => 'Xóa thể loại thành công',

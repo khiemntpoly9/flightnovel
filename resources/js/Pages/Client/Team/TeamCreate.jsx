@@ -2,6 +2,8 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { useState } from 'react';
 import { router, usePage } from '@inertiajs/react';
 import { toast } from 'react-toastify';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export default function TeamCreate({ auth }) {
 	const { errors } = usePage().props;
 	// Show success message
@@ -26,12 +28,14 @@ export default function TeamCreate({ auth }) {
 	});
 	// handle change input
 	const handleChange = (e) => {
-		const key = e.target.id;
-		const value = e.target.value;
-		setValues((values) => ({
-			...values,
-			[key]: value,
-		}));
+		if (e && e.target && e.target.id) {
+			const key = e.target.id;
+			const value = e.target.value;
+			setValues((values) => ({
+				...values,
+				[key]: value,
+			}));
+		}
 	};
 	// handle submit form
 	const handleSubmit = (e) => {
@@ -61,13 +65,28 @@ export default function TeamCreate({ auth }) {
 						</div>
 						<div className='mb-4 flex flex-col'>
 							<label className='mb-2'>Mô tả nhóm</label>
-							<input
-								className='appearance-none rounded border p-2 shadow focus:outline-none'
-								type='text'
-								value={values.team_detail}
-								id='team_detail'
-								onChange={handleChange}
-							/>
+							{/* CKEditor 5 */}
+							<div>
+								<CKEditor
+									id='team_detail'
+									editor={ClassicEditor}
+									data={values.team_detail}
+									onReady={(editor) => {
+										// You can store the "editor" and use when it is needed.
+										// console.log('Editor is ready to use!', editor);
+									}}
+									onChange={(event, editor) => {
+										const data = editor.getData();
+										handleChange({ target: { id: 'team_detail', value: data } });
+									}}
+									onBlur={(event, editor) => {
+										// console.log('Blur.', editor);
+									}}
+									onFocus={(event, editor) => {
+										// console.log('Focus.', editor);
+									}}
+								/>
+							</div>
 						</div>
 						<div>
 							<button
