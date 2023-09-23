@@ -32,13 +32,8 @@ class CateController extends Controller
 			'name' => $request->name,
 		]);
 
-		$categories = Categories::all();
-
-		// Chuyển hướng về trang categories
-		return Inertia::render('Admin/Categories/Categories', [
-			'successMessage' => 'Tạo thể loại thành công',
-			'categories' => $categories,
-		]);
+		$request->session()->flash('success', 'Tạo thể loại thành công');
+		return redirect()->route('admin.categories');
 	}
 
 	public function CateDetail(Request $request, $id)
@@ -68,13 +63,8 @@ class CateController extends Controller
 			'name' => $request->name,
 		]);
 
-		$categories = Categories::all();
-
-		// Chuyển hướng về trang categories
-		return Inertia::render('Admin/Categories/Categories', [
-			'successMessage' => 'Cập nhật thể loại thành công',
-			'categories' => $categories,
-		]);
+		$request->session()->flash('success', 'Cập nhật thể loại thành công');
+		return redirect()->route('admin.categories');
 	}
 
 	public function CateDelete(Request $request, $id)
@@ -83,12 +73,7 @@ class CateController extends Controller
 		$category = Categories::find($id);
 		// Xóa dữ liệu
 		$category->delete();
-		// Lấy lại dữ liệu từ bảng categories
-		$categories = Categories::all();
-
-		return Inertia::render('Admin/Categories/Categories', [
-			'categories' => $categories,
-			'successMessage' => 'Xóa thể loại thành công',
-		]);
+		$request->session()->flash('success', 'Xóa thể loại thành công');
+		return redirect()->route('admin.categories');
 	}
 }

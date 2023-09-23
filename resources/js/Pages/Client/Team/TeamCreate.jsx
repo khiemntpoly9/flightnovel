@@ -5,9 +5,7 @@ import { toast } from 'react-toastify';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export default function TeamCreate({ auth }) {
-	const { errors } = usePage().props;
-	// Show success message
-	const { successMessage } = usePage().props;
+	const { errors, successMessage } = usePage().props;
 	if (successMessage) {
 		toast.success(successMessage, {
 			position: 'top-right',

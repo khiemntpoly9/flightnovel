@@ -3,7 +3,7 @@ import { router, usePage, Link } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 export default function Categories({ categories }) {
-	const { errors, successMessage } = usePage().props;
+	const { errors, flash } = usePage().props;
 	const [values, setValues] = useState({
 		name: '',
 	});
@@ -23,8 +23,8 @@ export default function Categories({ categories }) {
 	};
 	// Toast
 	useEffect(() => {
-		if (successMessage) {
-			toast.success(successMessage, {
+		if (flash.success) {
+			toast.success(flash.success, {
 				position: 'top-right',
 				autoClose: 1500,
 				hideProgressBar: false,
@@ -34,7 +34,7 @@ export default function Categories({ categories }) {
 				progress: undefined,
 			});
 		}
-	}, [successMessage]);
+	}, [flash.success]);
 	return (
 		<AdminLayout>
 			<div>
