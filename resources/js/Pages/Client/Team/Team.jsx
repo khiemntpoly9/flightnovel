@@ -5,7 +5,8 @@ export default function Team({ auth }) {
 		<DefaultLayout auth={auth}>
 			<div className='container mx-auto w-10/12'>
 				<div>
-					<Link className='btn' href='/team/create'>
+					{/* <Link className='btn' href='/team/create'> */}
+					<Link className='btn' href={route('team.create')}>
 						Tạo nhóm
 					</Link>
 				</div>

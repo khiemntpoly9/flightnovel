@@ -48,7 +48,7 @@ class CateController extends Controller
 
 	public function CateUpdate(Request $request)
 	{
-
+		// Để show dữ liệu từ form
 		// dd($request->all());
 		// Kiểm tra dữ liệu đầu vào
 		$request->validate([

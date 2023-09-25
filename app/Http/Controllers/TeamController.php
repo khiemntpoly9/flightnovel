@@ -21,6 +21,8 @@ class TeamController extends Controller
 
 	public function TeamStore(Request $request)
 	{
+		// Để show dữ liệu từ form
+		// dd($request->all());
 		$request->validate([
 			'team_name' => ['required', 'string', 'max:255', 'min:5'],
 		], [
