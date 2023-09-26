@@ -18,7 +18,6 @@ return new class extends Migration {
       $table->string('illustrator');
       $table->bigInteger('views');
       $table->integer('status');
-      $table->integer('id_categories')->unsigned();
       $table->integer('id_vol')->unsigned();
       $table->bigInteger('id_rate')->unsigned();
       $table->bigInteger('id_user')->unsigned();
@@ -26,7 +25,6 @@ return new class extends Migration {
       $table->bigInteger('id_detail')->unsigned();
       $table->timestamps();
       // Foreign Keys
-      $table->foreign('id_categories')->references('id_categories')->on('categories');
       $table->foreign('id_vol')->references('id_vol')->on('vol');
       $table->foreign('id_rate')->references('id_rate')->on('rate');
       $table->foreign('id_user')->references('id')->on('users');

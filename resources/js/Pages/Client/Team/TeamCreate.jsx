@@ -1,25 +1,10 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { useState } from 'react';
 import { router, usePage } from '@inertiajs/react';
-import { toast } from 'react-toastify';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export default function TeamCreate({ auth }) {
-	const { errors, successMessage } = usePage().props;
-	if (successMessage) {
-		toast.success(successMessage, {
-			position: 'top-right',
-			autoClose: 1500,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-		});
-		setTimeout(() => {
-			router.get('/');
-		}, 1500);
-	}
+	const { errors } = usePage().props;
 	const [values, setValues] = useState({
 		team_name: '',
 		team_detail: '',

@@ -11,7 +11,10 @@ class TeamController extends Controller
 	//
 	public function TeamIndex()
 	{
-		return Inertia::render('Client/Team/Team');
+		$team = Team::where('id_user', auth()->user()->id)->first();
+		return Inertia::render('Client/Team/Team', [
+			'team' => $team,
+		]);
 	}
 
 	public function TeamCreate()
@@ -37,8 +40,6 @@ class TeamController extends Controller
 			'team_name' => $request->team_name,
 			'team_detail' => $request->team_detail,
 		]);
-		return Inertia::render('Client/Team/TeamCreate', [
-			'successMessage' => 'Tạo nhóm thành công',
-		]);
+		return redirect()->route('team.index');
 	}
 }
