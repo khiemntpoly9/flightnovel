@@ -1,9 +1,9 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Novel() {
+export default function Novel({ auth }) {
 	return (
-		<DefaultLayout>
+		<DefaultLayout auth={auth}>
 			<Head title='Novel' />
 			<div>Thêm truyện</div>
 		</DefaultLayout>
