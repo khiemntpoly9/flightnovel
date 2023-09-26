@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CateController;
+use App\Http\Controllers\NovelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Foundation\Application;
@@ -39,6 +40,11 @@ Route::middleware('auth')->prefix('team')->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');
 		Route::post('/create', [TeamController::class, 'TeamStore'])->name('team.store');
 	});
+});
+
+// Truyện
+Route::middleware('auth')->prefix('novel')->group(function () {
+	Route::get('/', [NovelController::class, 'NovelIndex'])->name('novel.index');
 });
 
 // Admin

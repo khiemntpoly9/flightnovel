@@ -24,7 +24,7 @@ export default function Team({ auth, team }) {
 					Tên nhóm: <span>{team.team_name}</span> <br />
 					<div dangerouslySetInnerHTML={{ __html: `${team.team_detail}` }}></div>
 				</div>
-				<Link className='btn' href={route('team.create')}>
+				<Link className='btn' href={route('novel.index')}>
 					Thêm truyện
 				</Link>
 			</div>
