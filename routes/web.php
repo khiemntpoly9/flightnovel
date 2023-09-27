@@ -59,4 +59,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 	Route::get('/categories/detail/{id}', [CateController::class, 'CateDetail'])->name('admin.categories.detail');
 });
 
+// Test
+Route::get('/test', function () {
+	return Inertia::render('Test');
+});
+
 require __DIR__ . '/auth.php';
