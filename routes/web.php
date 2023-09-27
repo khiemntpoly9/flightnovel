@@ -64,4 +64,10 @@ Route::get('/test', function () {
 	return Inertia::render('Test');
 });
 
+// Test 2
+Route::get('/test', function () {
+	return Inertia::render('Test');
+});
+
+
 require __DIR__ . '/auth.php';
