@@ -58,13 +58,17 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
 				</div>
 				{/* End Breadcrumbs */}
 				<div className='mt-2'>
-					{/* avata*/}
+					{/* avatar */}
 					<div className='mb-5 flex items-center justify-center'>
-						<img
-							src='https://png.pngtree.com/png-vector/20190704/ourlarge/pngtree-businessman-user-avatar-free-vector-png-image_1538405.jpg'
-							alt=''
-							className='h-28 w-28 rounded-full md:h-44 md:w-44'
-						/>
+						{auth.user.avatar ? (
+							<img src={auth.user.avatar} alt='' className='h-28 w-28 rounded-full md:h-44 md:w-44' />
+						) : (
+							<img
+								src='https://png.pngtree.com/png-vector/20190704/ourlarge/pngtree-businessman-user-avatar-free-vector-png-image_1538405.jpg'
+								alt=''
+								className='h-28 w-28 rounded-full md:h-44 md:w-44'
+							/>
+						)}
 					</div>
 					{/* end avatar */}
 					<div className=' md:m-auto md:w-96 lg:m-auto'>
