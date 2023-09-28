@@ -20,14 +20,12 @@ return new class extends Migration {
       $table->integer('status');
       $table->integer('id_vol')->unsigned();
       $table->bigInteger('id_rate')->unsigned();
-      $table->bigInteger('id_user')->unsigned();
       $table->bigInteger('id_team')->unsigned();
       $table->bigInteger('id_detail')->unsigned();
       $table->timestamps();
       // Foreign Keys
       $table->foreign('id_vol')->references('id_vol')->on('vol');
       $table->foreign('id_rate')->references('id_rate')->on('rate');
-      $table->foreign('id_user')->references('id')->on('users');
       $table->foreign('id_team')->references('id_team')->on('team');
       $table->foreign('id_detail')->references('id_detail')->on('detail');
     });
