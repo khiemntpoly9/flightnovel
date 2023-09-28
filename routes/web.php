@@ -3,6 +3,7 @@
 use App\Http\Controllers\CateController;
 use App\Http\Controllers\NovelController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -58,5 +59,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 	Route::delete('/categories/{id}', [CateController::class, 'CateDelete'])->name('admin.categories.delete');
 	Route::get('/categories/detail/{id}', [CateController::class, 'CateDetail'])->name('admin.categories.detail');
 });
+
+// Login Provider
+Route::get('/auth/{provider}', [ProviderController::class, 'redirect'])->name('redirect');
+Route::get('/auth/{provider}/callback', [ProviderController::class, 'callback'])->name('callback');
 
 require __DIR__ . '/auth.php';

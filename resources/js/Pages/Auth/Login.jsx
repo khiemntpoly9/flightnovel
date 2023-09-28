@@ -125,16 +125,22 @@ export default function Login({ auth, status, canResetPassword }) {
 						<p className='mt-3 text-center text-sm text-gray-500'>Hoặc đăng nhập bằng</p>
 						<div className='flex '>
 							{/* Nút đăng nhập bằng Facebook */}
-							<button className='mx-2 mt-4 flex w-1/2 items-center justify-center rounded-md bg-blue-500 px-1 py-2 text-white shadow-md hover:bg-blue-600'>
+							<Link
+								href='auth/facebook'
+								className='mx-2 mt-4 flex w-1/2 items-center justify-center rounded-md bg-blue-500 px-1 py-2 text-white shadow-md hover:bg-blue-600'
+							>
 								<FaFacebook className='mr-2' />
 								Facebook
-							</button>
+							</Link>
 
 							{/* Nút đăng nhập bằng Google */}
-							<button className='mx-2 mt-4 flex w-1/2 items-center justify-center rounded-md bg-red-500 px-1 py-2 text-white shadow-md hover:bg-red-600'>
+							<Link
+								href='auth/google'
+								className='mx-2 mt-4 flex w-1/2 items-center justify-center rounded-md bg-red-500 px-1 py-2 text-white shadow-md hover:bg-red-600'
+							>
 								<FaGoogle className='mr-2' />
 								Google
-							</button>
+							</Link>
 						</div>
 					</div>
 				</div>
