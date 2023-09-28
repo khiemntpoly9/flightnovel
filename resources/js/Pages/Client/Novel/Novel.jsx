@@ -5,11 +5,6 @@ import { router, usePage } from '@inertiajs/react';
 
 export default function Novel({ auth }) {
 	const { errors } = usePage().props;
-	const [values, setValues] = useState({
-		email: '',
-		password: '',
-	});
-
 	return (
 		<DefaultLayout auth={auth}>
 			<Head title='Novel' />
@@ -32,11 +27,8 @@ export default function Novel({ auth }) {
 										id='name'
 										name='name'
 										type='text'
-										className={`${
-											errors && errors.email ? 'mb-2 border-rose-600' : ''
-										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										className={` w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 									/>
-									{errors && <p className='text-sm italic text-red-500'>{errors.email}</p>}
 								</div>
 							</div>
 							{/* Tên khác */}
@@ -51,11 +43,8 @@ export default function Novel({ auth }) {
 										id='aname'
 										name='aname'
 										type='text'
-										className={`${
-											errors && errors.password ? 'mb-2 border-rose-600' : ''
-										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 									/>
-									{errors && <p className='text-sm italic text-red-500'>{errors.password}</p>}
 								</div>
 
 								{/* Tác giả */}
@@ -69,11 +58,8 @@ export default function Novel({ auth }) {
 										id='author'
 										name='author'
 										type='text'
-										className={`${
-											errors && errors.password ? 'mb-2 border-rose-600' : ''
-										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 									/>
-									{errors && <p className='text-sm italic text-red-500'>{errors.password}</p>}
 								</div>
 
 								{/* Họa sĩ */}
@@ -87,11 +73,8 @@ export default function Novel({ auth }) {
 										id='illustrator'
 										name='illustrator'
 										type='text'
-										className={`${
-											errors && errors.password ? 'mb-2 border-rose-600' : ''
-										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 									/>
-									{errors && <p className='text-sm italic text-red-500'>{errors.password}</p>}
 								</div>
 
 								{/* Nhóm dịch */}
@@ -104,13 +87,10 @@ export default function Novel({ auth }) {
 									<select
 										name='team'
 										id='team'
-										className={`${
-											errors && errors.password ? 'mb-2 border-rose-600' : ''
-										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 									>
 										alo
 									</select>
-									{errors && <p className='text-sm italic text-red-500'>{errors.password}</p>}
 								</div>
 							</div>
 
@@ -172,11 +152,8 @@ export default function Novel({ auth }) {
 									id='detail'
 									name='detail'
 									type='textarea'
-									className={`${
-										errors && errors.password ? 'mb-2 border-rose-600' : ''
-									} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+									className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 								/>
-								{errors && <p className='text-sm italic text-red-500'>{errors.password}</p>}
 							</div>
 
 							{/* Chú thích */}
@@ -190,11 +167,8 @@ export default function Novel({ auth }) {
 									id='note'
 									name='note'
 									type='textarea'
-									className={`${
-										errors && errors.password ? 'mb-2 border-rose-600' : ''
-									} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+									className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 								/>
-								{errors && <p className='text-sm italic text-red-500'>{errors.password}</p>}
 							</div>
 							<div className='mt-4'>
 								<button
