@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,21 +24,39 @@ class ProfileController extends Controller
 			'status' => session('status'),
 		]);
 	}
-
+	public function updateAccount()
+	{
+		return Inertia::render('Client/Profile/Partials/UpdateProfileInformationForm');
+	}
 	/**
 	 * Update the user's profile information.
 	 */
-	public function update(ProfileUpdateRequest $request): RedirectResponse
-	{
-		$request->user()->fill($request->validated());
+	// public function update(ProfileUpdateRequest $request): RedirectResponse
+	// {
+	// 	$request->user()->fill($request->validated());
 
-		if ($request->user()->isDirty('email')) {
-			$request->user()->email_verified_at = null;
-		}
+	// 	if ($request->user()->isDirty('email')) {
+	// 		$request->user()->email_verified_at = null;
+	// 	}
 
-		$request->user()->save();
+	// 	$request->user()->save();
 
-		return Redirect::route('profile.edit');
+	// 	return Redirect::route('profile.edit');
+	// }
+	public function update(Request $request){
+		$request->validate([
+			'name' => ['required', 'string', 'max:255', 'min:5'],
+		], [
+			'name.required' => 'Tên tài khoản không được để trống',
+			'name.max' => 'Tên tài khoản không được quá 255 ký tự',
+			'name.min' => 'Tên tài khoản không được dưới 5 ký tự',
+		]);
+		$user = User::where('id', auth()->user()->id)->first()->update([
+			'name' => $request->name,
+		]);
+		$request->session()->flash('success', 'Cập nhật tài khoản thành công');
+		return redirect()->route('profile.edit');
+
 	}
 
 	/**
