@@ -17,6 +17,14 @@ class TeamController extends Controller
 		]);
 	}
 
+	public function TeamAdmin()
+	{
+		$team = Team::all();
+		return Inertia::render('Admin/Team/Team', [
+			'team' => $team,
+		]);
+	}
+
 	public function TeamCreate()
 	{
 		return Inertia::render('Client/Team/TeamCreate');
