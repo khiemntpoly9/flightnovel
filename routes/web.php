@@ -54,6 +54,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 		return Inertia::render('Admin/AdminMain');
 	})->name('admin.home');
 	Route::get('/categories', [CateController::class, 'CateIndex'])->name('admin.categories');
+	Route::get('/team', [TeamController::class, 'TeamAdmin'])->name('admin.team');
 	Route::post('/categories', [CateController::class, 'CateStore'])->name('admin.categories.store');
 	Route::patch('/categories', [CateController::class, 'CateUpdate'])->name('admin.categories.update');
 	Route::delete('/categories/{id}', [CateController::class, 'CateDelete'])->name('admin.categories.delete');
