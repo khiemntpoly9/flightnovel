@@ -37,6 +37,7 @@ Route::middleware('auth')->prefix('profile')->group(function () {
 	Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
 	Route::get('/update', [ProfileController::class, 'updateAccount'])->name('profile.create');
 	Route::patch('/update', [ProfileController::class, 'update'])->name('profile.update');
+	Route::post('/update/avatar', [ProfileController::class, 'avatarupdate'])->name('profile.avatar');
 	// Route::middleware('profile')->group(function () {
 	// 	Route::get('/update', [ProfileController::class, 'updateAccount'])->name('profile.update');
 	// });

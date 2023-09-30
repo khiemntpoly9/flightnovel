@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FileUploadRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -28,6 +29,8 @@ class ProfileController extends Controller
 	{
 		return Inertia::render('Client/Profile/Partials/UpdateProfileInformationForm');
 	}
+
+
 	/**
 	 * Update the user's profile information.
 	 */
@@ -43,7 +46,17 @@ class ProfileController extends Controller
 
 	// 	return Redirect::route('profile.edit');
 	// }
-	public function update(Request $request){
+	public function avatarupdate(Request $request){
+		// Lấy tệp đã xác minh
+		// $file = $request->hasFile('avatar');
+		
+		dd($request->all());
+		// Lưu tệp vào thư mục hoặc thực hiện xử lý khác
+		// $path = $file->store('uploads');
+	}
+
+	public function update(Request $request)
+	{
 		$request->validate([
 			'name' => ['required', 'string', 'max:255', 'min:5'],
 		], [
@@ -56,7 +69,6 @@ class ProfileController extends Controller
 		]);
 		$request->session()->flash('success', 'Cập nhật tài khoản thành công');
 		return redirect()->route('profile.edit');
-
 	}
 
 	/**
