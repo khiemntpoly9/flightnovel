@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -46,13 +47,27 @@ class ProfileController extends Controller
 
 	// 	return Redirect::route('profile.edit');
 	// }
-	public function avatarupdate(Request $request){
+	public function avatarupdate(Request $request)
+	{
 		// Lấy tệp đã xác minh
 		// $file = $request->hasFile('avatar');
-		
-		dd($request->all());
+
+		// Storage::disk('digitalocean')->delete("avatar/baymax.jpg");
 		// Lưu tệp vào thư mục hoặc thực hiện xử lý khác
 		// $path = $file->store('uploads');
+		// try {
+		// 	Storage::disk('digitalocean')->delete("avatar/tesrtgg.jpg");
+		// 	return "Đã xóa tệp tin thành công!";
+		// } catch (\Exception $e) {
+		// 	return "Lỗi khi xóa tệp tin: " . $e->getMessage();
+		// }
+		$filePath = "avatar/baymax.jpg";
+		if (Storage::disk('digitalocean')->exists($filePath)) {
+			Storage::disk('digitalocean')->delete($filePath);
+			return "Đã xóa tệp tin thành công!";
+		} else {
+			return "Tệp tin không tồn tại.";
+		}
 	}
 
 	public function update(Request $request)

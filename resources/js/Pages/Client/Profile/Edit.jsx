@@ -110,6 +110,7 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
 									</svg>
 								</button>
 							</div>
+							{/* Modal change Avatar */}
 							<dialog id='my_modal_4' className='modal'>
 								<div className='modal-box w-4/12 max-w-5xl '>
 									<form method='dialog'>
@@ -125,7 +126,8 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
 											className='file-input file-input-bordered mt-3 w-full max-w-xs'
 											onChange={(e) => setSelectedFile('file', e.target.files[0])}
 										/>
-										<button className='btn btn-success m-2'>Success</button>
+										<button className='btn btn-success m-2'>Lưu</button>
+										<Link href={route('test.delete')}>Test</Link>
 									</form>
 								</div>
 							</dialog>
