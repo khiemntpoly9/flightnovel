@@ -1,21 +1,32 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import moment from 'moment/moment';
-import { Link, Head, router } from '@inertiajs/react';
-import { useState } from 'react';
-// import DeleteUserForm from './Partials/DeleteUserForm';
-// import UpdatePasswordForm from './Partials/UpdatePasswordForm';
-// import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
+import { Link, Head, router, usePage } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
-export default function Edit({ auth, mustVerifyEmail, status }) {
-	const [selectedFile, setSelectedFile] = useState({
-		file: null,
-	});
-
+export default function Edit({ auth }) {
+	const [selectedFile, setSelectedFile] = useState(null);
+	const { errors, flash } = usePage().props;
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		router.post(route('profile.avatar'), selectedFile, { forceFormData: true });
-		// console.log(selectedFile);
+		const formData = new FormData();
+		formData.append('avatar', selectedFile);
+		router.post(route('profile.avatar'), formData);
 	};
+	// Toast
+	useEffect(() => {
+		if (flash.success) {
+			toast.success(flash.success, {
+				position: 'top-right',
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	}, [flash.success]);
 	return (
 		<AuthenticatedLayout
 			user={auth.user}
@@ -120,14 +131,12 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
 									<h3 className='text-lg font-bold'>Thay đổi Avatar</h3>
 									<form onSubmit={handleSubmit} className=' text-center' encType='multipart/form-data'>
 										<input
-											id='file'
-											name='file'
 											type='file'
 											className='file-input file-input-bordered mt-3 w-full max-w-xs'
-											onChange={(e) => setSelectedFile('file', e.target.files[0])}
+											onChange={(e) => setSelectedFile(e.target.files[0])}
 										/>
+										{errors.avatar && <p className='mt-2 text-sm italic text-red-500'>{errors.avatar}</p>}
 										<button className='btn btn-success m-2'>Lưu</button>
-										<Link href={route('test.delete')}>Test</Link>
 									</form>
 								</div>
 							</dialog>

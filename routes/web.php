@@ -28,20 +28,11 @@ Route::get('/', function () {
 });
 
 // Profile
-// Route::middleware('auth')->group(function () {
-// 	Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-// 	Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-// 	Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
 Route::middleware('auth')->prefix('profile')->group(function () {
 	Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
 	Route::get('/update', [ProfileController::class, 'updateAccount'])->name('profile.create');
 	Route::patch('/update', [ProfileController::class, 'update'])->name('profile.update');
-	// Route::post('/update/avatar', [ProfileController::class, 'avatarupdate'])->name('profile.avatar');
-	Route::get('/testavatar', [ProfileController::class, 'avatarupdate'])->name('test.delete');
-	// Route::middleware('profile')->group(function () {
-	// 	Route::get('/update', [ProfileController::class, 'updateAccount'])->name('profile.update');
-	// });
+	Route::post('/update/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
 });
 
 // Team
@@ -74,25 +65,5 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 // Login Provider
 Route::get('/auth/{provider}', [ProviderController::class, 'redirect'])->name('redirect');
 Route::get('/auth/{provider}/callback', [ProviderController::class, 'callback'])->name('callback');
-
-// Test
-Route::get('/test-connection', function () {
-	try {
-		$client = new Aws\S3\S3Client([
-			'version' => 'latest',
-			'region' => env('DO_DEFAULT_REGION'),
-			'credentials' => [
-				'key' => env('DO_ACCESS_KEY_ID'),
-				'secret' => env('DO_SECRET_ACCESS_KEY'),
-			],
-			'endpoint' => env('DO_ENDPOINT'),
-		]);
-
-		$client->listBuckets(); // Thực hiện một hoạt động bất kỳ
-		return "Kết nối thành công đến DigitalOcean Spaces!";
-	} catch (Exception $e) {
-		return "Lỗi khi kết nối đến DigitalOcean Spaces: " . $e->getMessage();
-	}
-});
 
 require __DIR__ . '/auth.php';
