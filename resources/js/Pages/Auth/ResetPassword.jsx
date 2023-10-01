@@ -22,69 +22,80 @@ export default function ResetPassword({ token, email }) {
 
 	const submit = (e) => {
 		e.preventDefault();
-
 		post(route('password.store'));
 	};
 
 	return (
 		<DefaultLayout>
-			<Head title='Reset Password' />
+			<Head title='Khôi phục mật khẩu' />
 
-			<form onSubmit={submit}>
-				<div>
-					<InputLabel htmlFor='email' value='Email' />
+			<div className='container'>
+				<div className='m-auto w-1/2'>
+					<form onSubmit={submit}>
+						<div>
+							<label className='mb-2' htmlFor='email'>
+								Email
+							</label>
+							<input
+								id='email'
+								type='email'
+								name='email'
+								value={data.email}
+								className={`${
+									errors && errors.email ? 'mb-2 border-rose-600' : ''
+								} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+								autoComplete='username'
+								onChange={(e) => setData('email', e.target.value)}
+								disabled
+							/>
+							{errors && errors.email && <p className='text-sm italic text-red-500'>{errors.email}</p>}
+						</div>
 
-					<TextInput
-						id='email'
-						type='email'
-						name='email'
-						value={data.email}
-						className='mt-1 block w-full'
-						autoComplete='username'
-						onChange={(e) => setData('email', e.target.value)}
-					/>
+						<div className='mt-4'>
+							<label className='mb-2' htmlFor='email'>
+								Mật khẩu mới
+							</label>
+							<input
+								id='password'
+								type='password'
+								name='password'
+								value={data.password}
+								className={`${
+									errors && errors.password ? 'mb-2 border-rose-600' : ''
+								} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+								autoComplete='new-password'
+								onChange={(e) => setData('password', e.target.value)}
+							/>
+							{errors && errors.password && <p className='text-sm italic text-red-500'>{errors.password}</p>}
+						</div>
 
-					<InputError message={errors.email} className='mt-2' />
+						<div className='mt-4'>
+							<label className='mb-2' htmlFor='email'>
+								Xác nhận mật khẩu mới
+							</label>
+							<TextInput
+								type='password'
+								name='password_confirmation'
+								value={data.password_confirmation}
+								className={`${
+									errors && errors.password_confirmation ? 'mb-2 border-rose-600' : ''
+								} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+								autoComplete='new-password'
+								onChange={(e) => setData('password_confirmation', e.target.value)}
+							/>
+							{errors && errors.password_confirmation && (
+								<p className='text-sm italic text-red-500'>{errors.password_confirmation}</p>
+							)}
+						</div>
+
+						<div className='mt-4 flex items-center justify-end'>
+							<PrimaryButton className='ml-4' disabled={processing}>
+								Xác nhận
+							</PrimaryButton>
+						</div>
+					</form>
 				</div>
-
-				<div className='mt-4'>
-					<InputLabel htmlFor='password' value='Password' />
-
-					<TextInput
-						id='password'
-						type='password'
-						name='password'
-						value={data.password}
-						className='mt-1 block w-full'
-						autoComplete='new-password'
-						isFocused={true}
-						onChange={(e) => setData('password', e.target.value)}
-					/>
-
-					<InputError message={errors.password} className='mt-2' />
-				</div>
-
-				<div className='mt-4'>
-					<InputLabel htmlFor='password_confirmation' value='Confirm Password' />
-
-					<TextInput
-						type='password'
-						name='password_confirmation'
-						value={data.password_confirmation}
-						className='mt-1 block w-full'
-						autoComplete='new-password'
-						onChange={(e) => setData('password_confirmation', e.target.value)}
-					/>
-
-					<InputError message={errors.password_confirmation} className='mt-2' />
-				</div>
-
-				<div className='mt-4 flex items-center justify-end'>
-					<PrimaryButton className='ml-4' disabled={processing}>
-						Reset Password
-					</PrimaryButton>
-				</div>
-			</form>
+			</div>
 		</DefaultLayout>
 	);
 }
