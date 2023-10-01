@@ -16,4 +16,6 @@ class Detail extends Model
 		'another_name',
 		'adult'
 	];
+
+	public $timestamps = false;
 }

@@ -47,6 +47,7 @@ Route::middleware('auth')->prefix('team')->group(function () {
 // Truyện
 Route::middleware('auth')->prefix('novel')->group(function () {
 	Route::get('/', [NovelController::class, 'NovelIndex'])->name('novel.index');
+	Route::post('/', [NovelController::class, 'NovelCreate'])->name('novel.create');
 });
 
 // Admin
