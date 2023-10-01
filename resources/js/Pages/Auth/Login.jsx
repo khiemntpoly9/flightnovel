@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { FaFacebook, FaGoogle } from 'react-icons/fa';
+import { FaGoogle } from 'react-icons/fa';
 
 export default function Login({ error }) {
 	const { data, setData, post, processing, errors, reset } = useForm({
@@ -123,16 +123,7 @@ export default function Login({ error }) {
 						</p>
 						<hr />
 						<p className='mt-3 text-center text-sm text-gray-500'>Hoặc đăng nhập bằng</p>
-						<div className='flex '>
-							{/* Nút đăng nhập bằng Facebook */}
-							<a
-								href='auth/facebook'
-								className='mx-2 mt-4 flex w-1/2 items-center justify-center rounded-md bg-blue-500 px-1 py-2 text-white shadow-md hover:bg-blue-600'
-							>
-								<FaFacebook className='mr-2' />
-								Facebook
-							</a>
-
+						<div className='flex justify-center'>
 							{/* Nút đăng nhập bằng Google */}
 							<a
 								href='auth/google'

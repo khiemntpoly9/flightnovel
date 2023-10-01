@@ -49,9 +49,18 @@ class ProfileController extends Controller
 	// }
 	public function updateAvatar(FileUploadRequest $request)
 	{
-		$path = Storage::disk('digitalocean')->put('avatar', $request->file('avatar'), 'public');
 		// Lấy user id
 		$id = auth()->user()->id;
+		$path_old = User::where('id', $id)->first()->avatar;
+		// Xóa ảnh cũ (Áp dụng link DigitalOcean, vì có trường hợp link avatar của Google)
+		if ($path_old) {
+			$pos = strpos($path_old, 'avatar');
+			$path_old_cut = substr($path_old, $pos);
+			// Tiến hành xóa
+			Storage::disk('digitalocean')->delete($path_old_cut);
+		}
+		// Lưu ảnh mới
+		$path = Storage::disk('digitalocean')->put('avatar', $request->file('avatar'), 'public');
 		// Cập nhật user
 		$user = User::where('id', $id)->first()->update([
 			'avatar' => 'https://flightnovel.sgp1.digitaloceanspaces.com/' . $path,
