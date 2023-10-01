@@ -6,27 +6,13 @@ import { toast } from 'react-toastify';
 
 export default function Edit({ auth }) {
 	const [selectedFile, setSelectedFile] = useState(null);
-	const { errors, flash } = usePage().props;
+	const { errors } = usePage().props;
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const formData = new FormData();
 		formData.append('avatar', selectedFile);
 		router.post(route('profile.avatar'), formData);
 	};
-	// Toast
-	useEffect(() => {
-		if (flash.success) {
-			toast.success(flash.success, {
-				position: 'top-right',
-				autoClose: 1500,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-			});
-		}
-	}, [flash.success]);
 	return (
 		<AuthenticatedLayout
 			user={auth.user}

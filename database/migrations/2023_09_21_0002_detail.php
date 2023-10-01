@@ -14,8 +14,8 @@ return new class extends Migration {
 			$table->bigIncrements('id_detail');
 			$table->text('summary');
 			$table->text('note');
-			$table->string('another_name');
-			$table->integer('adult');
+			$table->string('another_name')->nullable();
+			$table->integer('adult')->nullable();
 		});
 	}
 

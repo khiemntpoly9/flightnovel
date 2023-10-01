@@ -16,10 +16,10 @@ return new class extends Migration {
       $table->string('thumbnail');
       $table->string('author');
       $table->string('illustrator');
-      $table->bigInteger('views');
-      $table->integer('status');
-      $table->integer('id_vol')->unsigned();
-      $table->bigInteger('id_rate')->unsigned();
+      $table->bigInteger('views')->default(0);
+      $table->integer('status')->nullable();
+      $table->integer('id_vol')->unsigned()->nullable();
+      $table->bigInteger('id_rate')->unsigned()->nullable();
       $table->bigInteger('id_team')->unsigned();
       $table->bigInteger('id_detail')->unsigned();
       $table->timestamps();

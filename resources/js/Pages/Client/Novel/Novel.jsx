@@ -8,13 +8,13 @@ export default function Novel({ auth, categories }) {
 	const [values, setValues] = useState({
 		name_novel: '',
 		another_name: '',
-		thumbnail: '',
 		author: '',
 		illustrator: '',
 		categories: [],
 		summary: '',
 		note: '',
 	});
+	const [selectedFile, setSelectedFile] = useState(null);
 	// Handle change input
 	const handleChange = (e) => {
 		const key = e.target.id;
@@ -26,14 +26,17 @@ export default function Novel({ auth, categories }) {
 	};
 	// Handle change checkbox
 	const handleCheckbox = (e) => {
-		const cateId = e.target.id_categories;
+		const cateId = e.target.id;
 		const isChecked = e.target.checked;
 
+		// Lấy mảng categories hiện tại
 		const updateCategories = [...values.categories];
 
 		if (isChecked) {
+			// Nếu được check thì thêm id đó vào mảng
 			updateCategories.push(cateId);
 		} else {
+			// Nếu không được check thì xóa id đó trong mảng
 			const index = updateCategories.indexOf(cateId);
 			if (index !== -1) {
 				updateCategories.splice(index, 1);
@@ -47,8 +50,16 @@ export default function Novel({ auth, categories }) {
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(values);
-		// router.post('/novel', values);
+		const formData = new FormData();
+		formData.append('name_novel', values.name_novel);
+		formData.append('another_name', values.another_name);
+		formData.append('author', values.author);
+		formData.append('illustrator', values.illustrator);
+		formData.append('categories', values.categories);
+		formData.append('summary', values.summary);
+		formData.append('note', values.note);
+		formData.append('thumbnail', selectedFile);
+		router.post('/novel', formData);
 	};
 	return (
 		<DefaultLayout auth={auth}>
@@ -61,7 +72,7 @@ export default function Novel({ auth, categories }) {
 						</h2>
 					</div>
 					<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-md'>
-						<form onSubmit={handleSubmit}>
+						<form onSubmit={handleSubmit} encType='multipart/form-data'>
 							{/* Tên truyện */}
 							<div className='mb-2'>
 								<label
@@ -139,9 +150,8 @@ export default function Novel({ auth, categories }) {
 										<input
 											className='mr-1'
 											type='checkbox'
-											name={category.name}
+											name='categories'
 											id={category.id_categories}
-											checked={values.categories.includes(category.id_categories)}
 											onChange={handleCheckbox}
 										/>
 										<label
@@ -168,7 +178,19 @@ export default function Novel({ auth, categories }) {
 									className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 								/>
 							</div>
-
+							{/* Thumbnail */}
+							<div className='mb-2 flex items-center justify-between'>
+								<label htmlFor='summary' className='block text-sm font-medium leading-6 text-gray-900'>
+									Thumbnail
+								</label>
+							</div>
+							<div className='mb-2'>
+								<input
+									type='file'
+									className='file-input file-input-bordered mt-3 w-full max-w-xs'
+									onChange={(e) => setSelectedFile(e.target.files[0])}
+								/>
+							</div>
 							{/* Chú thích */}
 							<div className='mb-2 flex items-center justify-between'>
 								<label htmlFor='note' className='block text-sm font-medium leading-6 text-gray-900'>

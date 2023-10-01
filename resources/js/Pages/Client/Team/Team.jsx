@@ -1,7 +1,23 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Link } from '@inertiajs/react';
-export default function Team({ auth, team }) {
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
+export default function Team({ auth, team, success }) {
 	// Nếu chưa có team
+	// Toast
+	useEffect(() => {
+		if (success) {
+			toast.success(success, {
+				position: 'top-right',
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	}, [success]);
 	if (!team) {
 		return (
 			<DefaultLayout auth={auth}>
