@@ -32,7 +32,7 @@ class LoginRequest extends FormRequest
 		];
 	}
 
-	public function messages()
+	public function messages(): array
 	{
 		return [
 			'email.required' => 'Email không được bỏ trống',
@@ -42,11 +42,6 @@ class LoginRequest extends FormRequest
 		];
 	}
 
-	/**
-	 * Attempt to authenticate the request's credentials.
-	 *
-	 * @throws \Illuminate\Validation\ValidationException
-	 */
 	public function authenticate(): void
 	{
 		$this->ensureIsNotRateLimited();
