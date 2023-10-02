@@ -58,8 +58,6 @@ class NovelController extends Controller
 			]);
 		}
 
-		return Inertia::render('Client/Team/Team', [
-			'success' => 'Thêm truyện thành công',
-		]);
+		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
 	}
 }

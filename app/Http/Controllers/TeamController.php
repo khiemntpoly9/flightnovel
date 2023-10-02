@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Novel;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,10 +12,24 @@ class TeamController extends Controller
 	//
 	public function TeamIndex()
 	{
+		// Lấy dữ liệu từ session
+		$success = session('success');
+		// Lấy dữ liệu từ bảng team
 		$team = Team::where('id_user', auth()->user()->id)->first();
-		return Inertia::render('Client/Team/Team', [
-			'team' => $team,
-		]);
+		if (!$team) {
+			return Inertia::render('Client/Team/Team', [
+				'team' => $team,
+				'success' => $success,
+			]);
+		} else {
+			// Lấy novel có id_team = id của team
+			$novel = Novel::where('id_team', $team->id_team)->get();
+			return Inertia::render('Client/Team/Team', [
+				'team' => $team,
+				'novel' => $novel,
+				'success' => $success,
+			]);
+		}
 	}
 
 	public function TeamAdmin()

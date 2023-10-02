@@ -187,7 +187,7 @@ export default function Novel({ auth, categories }) {
 							<div className='mb-2'>
 								<input
 									type='file'
-									className='file-input file-input-bordered mt-3 w-full max-w-xs'
+									className='file-input file-input-bordered mt-1 w-full max-w-xs'
 									onChange={(e) => setSelectedFile(e.target.files[0])}
 								/>
 							</div>
