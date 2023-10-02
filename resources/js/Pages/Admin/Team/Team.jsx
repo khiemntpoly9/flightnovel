@@ -3,12 +3,11 @@ import { router, usePage, Link } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 export default function Team({ team }) {
-	
 	return (
 		<AdminLayout>
 			<div>
 				<div className='p-2'>
-					<h2 className='text-center text-xl md:text-5xl m-10'>Quản lý nhóm</h2>
+					<h2 className='m-10 text-center text-xl md:text-5xl'>Quản lý nhóm</h2>
 				</div>
 				{/* Table */}
 				<div className='overflow-x-auto '>
@@ -42,18 +41,18 @@ export default function Team({ team }) {
 											</div>
 										</div>
 									</td>
-                                    <td>
+									<td>
 										<div className='flex items-center space-x-3'>
 											<div>
-												<div className='font-md'>{item.team_detail}</div>
+												<div
+													className='font-md'
+													dangerouslySetInnerHTML={{ __html: `${item.team_detail}` }}
+												></div>
 											</div>
 										</div>
 									</td>
 									<td>
-										<Link
-											href={`/admin/team/detail/${item.id_team}`}
-											className='btn bg-lime-400 md:btn-xs'
-										>
+										<Link href={`/admin/team/detail/${item.id_team}`} className='btn bg-lime-400 md:btn-xs'>
 											Sửa
 										</Link>
 									</td>
