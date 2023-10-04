@@ -11,10 +11,12 @@ return new class extends Migration {
 	public function up(): void
 	{
 		Schema::create('vol', function (Blueprint $table) {
-			$table->increments('id_vol');
-			$table->string('id_chap');
+			$table->bigIncrements('id_vol');
+			$table->bigInteger('id_novel')->unsigned();
 			$table->string('title');
 			$table->timestamps();
+			// Foreign Keys
+			$table->foreign('id_novel')->references('id_novel')->on('novel');
 		});
 	}
 

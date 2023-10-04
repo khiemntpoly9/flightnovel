@@ -10,11 +10,14 @@ return new class extends Migration {
 	 */
 	public function up(): void
 	{
-		Schema::create('team', function (Blueprint $table) {
-			$table->bigIncrements('id_team');
-			$table->string('team_name');
-			$table->string('team_detail')->nullable();
+		Schema::create('chap', function (Blueprint $table) {
+			$table->bigIncrements('id_chap');
+			$table->bigInteger('id_vol')->unsigned();
+			$table->string('title')->nullable();
+			$table->text('content')->nullable();
 			$table->timestamps();
+			// Foreign Keys
+			$table->foreign('id_vol')->references('id_vol')->on('vol');
 		});
 	}
 
@@ -23,6 +26,6 @@ return new class extends Migration {
 	 */
 	public function down(): void
 	{
-		Schema::dropIfExists('team');
+		Schema::dropIfExists('chap');
 	}
 };

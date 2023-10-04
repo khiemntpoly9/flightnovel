@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-				<link rel="icon" type="image/png" href="https://flightnovel.sgp1.digitaloceanspaces.com/FUnVluXXEAAxnnq-removebg-preview.png">
+				<link rel="icon" type="image/png" href="https://flightnovel.sgp1.digitaloceanspaces.com/s6wmfigndn891.png">
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->

@@ -2,7 +2,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Link } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
-export default function Team({ auth, team, novel, success }) {
+export default function Team({ auth, team_user, team, novel, success }) {
 	// Toast
 	useEffect(() => {
 		if (success) {
@@ -18,7 +18,7 @@ export default function Team({ auth, team, novel, success }) {
 		}
 	}, [success]);
 	// Nếu chưa có team
-	if (!team) {
+	if (!team_user) {
 		return (
 			<DefaultLayout auth={auth}>
 				<div className='container mx-auto w-10/12'>
@@ -36,8 +36,8 @@ export default function Team({ auth, team, novel, success }) {
 			<DefaultLayout auth={auth}>
 				<div className='container mx-auto w-10/12'>
 					<div>
-						Tên nhóm: <span>{team.team_name}</span> <br />
-						<div dangerouslySetInnerHTML={{ __html: `${team.team_detail}` }}></div>
+						Tên nhóm: <span>{team.team.team_name}</span> <br />
+						<div dangerouslySetInnerHTML={{ __html: `${team.team.team_detail}` }}></div>
 					</div>
 					<Link className='btn' href={route('novel.index')}>
 						Thêm truyện
