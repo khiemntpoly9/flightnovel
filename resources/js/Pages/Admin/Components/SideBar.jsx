@@ -64,6 +64,9 @@ export default function SideBar() {
 								<li>
 									<a href='#'>Thiết lập</a>
 								</li>
+								<li>
+									<Link href='/'>Trang chủ</Link>
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -117,7 +120,7 @@ export default function SideBar() {
 					<ul className='space-y-2'>
 						<li>
 							<div
-								className={`collapse collapse-arrow mb-1 rounded-md bg-blue-800 text-white hover:bg-blue-700`}
+								className={`collapse-arrow collapse mb-1 rounded-md bg-blue-800 text-white hover:bg-blue-700`}
 							>
 								<input type='checkbox' className={`${!open && 'hidden'}`} />
 								<div className='collapse-title flex items-center gap-4'>
@@ -223,7 +226,7 @@ export default function SideBar() {
 								href={route('admin.team')}
 							>
 								Nhóm dịch
-							</Link>						
+							</Link>
 						</li>
 						<li className='group flex items-center gap-4 rounded px-3 py-4 hover:bg-blue-700 '>
 							<svg
@@ -249,7 +252,7 @@ export default function SideBar() {
 							</a>
 						</li>
 
-						<li className='group flex items-center gap-4 rounded px-3 py-4 hover:bg-blue-700 '>
+						<li className='group flex items-center gap-4 rounded px-3 py-4 hover:bg-blue-700'>
 							<svg
 								xmlns='http://www.w3.org/2000/svg'
 								fill='none'
@@ -272,6 +275,28 @@ export default function SideBar() {
 							>
 								Thiết lập
 							</a>
+						</li>
+						<li className='group flex items-center gap-4 rounded px-3 py-4 hover:bg-blue-700'>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								fill='none'
+								viewBox='0 0 24 24'
+								strokeWidth={1.5}
+								stroke='currentColor'
+								className='h-6 w-6'
+							>
+								<path
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									d='M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25'
+								/>
+							</svg>
+							<Link
+								href='/'
+								className={`block transition duration-200 group-hover:text-white ${!open && 'hidden'}`}
+							>
+								Trang chủ
+							</Link>
 						</li>
 					</ul>
 				</nav>

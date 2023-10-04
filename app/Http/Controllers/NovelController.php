@@ -7,6 +7,7 @@ use App\Models\Detail;
 use App\Models\Novel;
 use App\Models\NovelCate;
 use App\Models\Team;
+use App\Models\TeamUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -31,7 +32,8 @@ class NovelController extends Controller
 			'thumbnail' => ['image', 'mimes:png,jpg', 'max:3000'],
 		]);
 		// ID team
-		$id_team = Team::where('id_user', auth()->user()->id)->first()->id_team;
+		// $id_team = Team::where('id_user', auth()->user()->id)->first()->id_team;
+		$id_team = TeamUser::where('id_user', auth()->user()->id)->first()->id_team;
 		// Thêm dữ liệu bảng detail
 		$detail = Detail::create([
 			'summary' => $request->summary,
@@ -47,6 +49,7 @@ class NovelController extends Controller
 			'illustrator' => $request->illustrator,
 			'id_team' => $id_team,
 			'id_detail' => $detail->id,
+			'id_user' => auth()->user()->id,
 		]);
 
 		// Thêm truyện vào bảng novel_cate
@@ -58,8 +61,6 @@ class NovelController extends Controller
 			]);
 		}
 
-		return Inertia::render('Client/Team/Team', [
-			'success' => 'Thêm truyện thành công',
-		]);
+		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
 	}
 }

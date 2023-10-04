@@ -2,6 +2,8 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import { router, usePage } from '@inertiajs/react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default function Novel({ auth, categories }) {
 	const { errors } = usePage().props;
@@ -165,46 +167,82 @@ export default function Novel({ auth, categories }) {
 							</div>
 							{/* Tóm tắt */}
 							<div className='mb-2 flex items-center justify-between'>
-								<label htmlFor='summary' className='block text-sm font-medium leading-6 text-gray-900'>
-									Tóm tắt
-								</label>
+								<label className='block text-sm font-medium leading-6 text-gray-900'>Tóm tắt</label>
 							</div>
 							<div className='mb-2'>
-								<input
+								{/* <input
 									id='summary'
 									type='textarea'
 									value={values.summary}
 									onChange={handleChange}
 									className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
-								/>
+								/> */}
+								<div>
+									<CKEditor
+										id='summary'
+										editor={ClassicEditor}
+										data={values.summary}
+										onReady={(editor) => {
+											// You can store the "editor" and use when it is needed.
+											// console.log('Editor is ready to use!', editor);
+										}}
+										onChange={(event, editor) => {
+											const data = editor.getData();
+											handleChange({ target: { id: 'summary', value: data } });
+										}}
+										onBlur={(event, editor) => {
+											// console.log('Blur.', editor);
+										}}
+										onFocus={(event, editor) => {
+											// console.log('Focus.', editor);
+										}}
+									/>
+								</div>
 							</div>
 							{/* Thumbnail */}
 							<div className='mb-2 flex items-center justify-between'>
-								<label htmlFor='summary' className='block text-sm font-medium leading-6 text-gray-900'>
-									Thumbnail
-								</label>
+								<label className='block text-sm font-medium leading-6 text-gray-900'>Thumbnail</label>
 							</div>
 							<div className='mb-2'>
 								<input
 									type='file'
-									className='file-input file-input-bordered mt-3 w-full max-w-xs'
+									className='file-input file-input-bordered mt-1 w-full max-w-xs'
 									onChange={(e) => setSelectedFile(e.target.files[0])}
 								/>
 							</div>
 							{/* Chú thích */}
 							<div className='mb-2 flex items-center justify-between'>
-								<label htmlFor='note' className='block text-sm font-medium leading-6 text-gray-900'>
-									Chú thích
-								</label>
+								<label className='block text-sm font-medium leading-6 text-gray-900'>Chú thích</label>
 							</div>
 							<div className='mb-2'>
-								<input
+								{/* <input
 									id='note'
 									type='textarea'
 									value={values.note}
 									onChange={handleChange}
 									className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
-								/>
+								/> */}
+								<div>
+									<CKEditor
+										id='note'
+										editor={ClassicEditor}
+										data={values.note}
+										onReady={(editor) => {
+											// You can store the "editor" and use when it is needed.
+											// console.log('Editor is ready to use!', editor);
+										}}
+										onChange={(event, editor) => {
+											const data = editor.getData();
+											handleChange({ target: { id: 'note', value: data } });
+										}}
+										onBlur={(event, editor) => {
+											// console.log('Blur.', editor);
+										}}
+										onFocus={(event, editor) => {
+											// console.log('Focus.', editor);
+										}}
+									/>
+								</div>
 							</div>
 							<div className='mt-4'>
 								<button

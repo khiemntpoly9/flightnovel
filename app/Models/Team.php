@@ -14,15 +14,9 @@ class Team extends Model
 
 	protected $fillable = [
 		'id_team',
-		'id_user',
 		'team_name',
 		'team_detail',
 		'created_at',
 		'updated_at',
 	];
-
-	public function user(): BelongsTo
-	{
-		return $this->belongsTo(User::class, 'id_user', 'id');
-	}
 }
