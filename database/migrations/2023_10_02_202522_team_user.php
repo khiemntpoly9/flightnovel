@@ -12,7 +12,7 @@ return new class extends Migration {
 	{
 		Schema::create('team_user', function (Blueprint $table) {
 			$table->bigIncrements('id');
-			$table->bigInteger('id_user')->unsigned();
+			$table->bigInteger('id_user')->unsigned()->unique();
 			$table->bigInteger('id_team')->unsigned();
 			$table->integer('team_role')->unsigned();
 			$table->timestamps();
