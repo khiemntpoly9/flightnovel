@@ -10,7 +10,7 @@ class Novel extends Model
 	use HasFactory;
 	protected $table = 'novel';
 	protected $fillable = [
-		'id_novel',
+		'id',
 		'name_novel',
 		'thumbnail',
 		'author',
@@ -26,4 +26,6 @@ class Novel extends Model
 		'created_at',
 		'updated_at',
 	];
+
+	protected $primaryKey = 'id';
 }

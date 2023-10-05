@@ -91,7 +91,7 @@ export default function Categories({ categories }) {
 						</thead>
 						<tbody>
 							{categories.map((item) => (
-								<tr key={item.id_categories}>
+								<tr key={item.id}>
 									<th>
 										<label>
 											<input type='checkbox' className='checkbox' />
@@ -105,23 +105,18 @@ export default function Categories({ categories }) {
 										</div>
 									</td>
 									<td>
-										<Link
-											href={`/admin/categories/detail/${item.id_categories}`}
-											className='btn bg-lime-400 md:btn-xs'
-										>
+										<Link href={`/admin/categories/detail/${item.id}`} className='btn bg-lime-400 md:btn-xs'>
 											Sửa
 										</Link>
 									</td>
 									<th>
 										<button
 											className='btn bg-red-400 md:btn-xs'
-											onClick={() =>
-												document.getElementById(`modal_delete_${item.id_categories}`).showModal()
-											}
+											onClick={() => document.getElementById(`modal_delete_${item.id}`).showModal()}
 										>
 											Xóa
 										</button>
-										<dialog id={`modal_delete_${item.id_categories}`} className='modal'>
+										<dialog id={`modal_delete_${item.id}`} className='modal'>
 											<div className='modal-box'>
 												<form method='dialog'>
 													<button className='btn btn-circle btn-ghost btn-sm absolute right-2 top-2'>
@@ -136,7 +131,7 @@ export default function Categories({ categories }) {
 													<form method='dialog'>
 														<button
 															onClick={() => {
-																router.delete(`/admin/categories/${item.id_categories}`);
+																router.delete(`/admin/categories/${item.id}`);
 															}}
 															className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
 														>

@@ -10,7 +10,7 @@ class Vol extends Model
     use HasFactory;
     protected $table = 'vol';
     protected $fillable = [
-        'id_vol',
+        'id',
         'id_chap',
         'title',
         'created_at',

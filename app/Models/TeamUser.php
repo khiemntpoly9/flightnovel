@@ -28,6 +28,6 @@ class TeamUser extends Model
 
 	public function team(): BelongsTo
 	{
-		return $this->belongsTo(Team::class, 'id_team', 'id_team');
+		return $this->belongsTo(Team::class, 'id_team', 'id');
 	}
 }

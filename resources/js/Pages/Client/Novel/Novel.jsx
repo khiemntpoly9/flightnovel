@@ -148,16 +148,16 @@ export default function Novel({ auth, categories }) {
 							</div>
 							<div className='mb-2 flex flex-wrap items-center'>
 								{categories.map((category) => (
-									<div key={category.id_categories} className='mb-2 w-1/2 md:mb-0 md:flex md:w-1/3'>
+									<div key={category.id} className='mb-2 w-1/2 md:mb-0 md:flex md:w-1/3'>
 										<input
 											className='mr-1'
 											type='checkbox'
 											name='categories'
-											id={category.id_categories}
+											id={category.id}
 											onChange={handleCheckbox}
 										/>
 										<label
-											htmlFor={category.id_categories}
+											htmlFor={category.id}
 											className='block text-sm font-medium leading-6 text-gray-900'
 										>
 											{category.name}

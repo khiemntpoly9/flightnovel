@@ -59,7 +59,7 @@ class CateController extends Controller
 		]);
 
 		// Lưu dữ liệu vào bảng categories
-		Categories::where('id_categories', $request->id_categories)->update([
+		Categories::where('id', $request->id)->update([
 			'name' => $request->name,
 		]);
 

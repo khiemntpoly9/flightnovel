@@ -10,12 +10,14 @@ class Detail extends Model
 	use HasFactory;
 	protected $table = 'detail';
 	protected $fillable = [
-		'id_detail',
+		'id',
 		'summary',
 		'note',
 		'another_name',
 		'adult'
 	];
+
+	protected $primaryKey = 'id';
 
 	public $timestamps = false;
 }

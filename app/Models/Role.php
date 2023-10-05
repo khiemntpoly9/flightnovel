@@ -15,7 +15,7 @@ class Role extends Model
 
     // Khai báo các cột trong database
     protected $fillable = [
-        'id_role',
+        'id',
         'name_role',
         'short_role'
     ];
@@ -26,6 +26,6 @@ class Role extends Model
     // Khai báo mối quan hệ với bảng user
     public function user(): HasMany
     {
-        return $this->hasMany(User::class, 'id_role');
+        return $this->hasMany(User::class, 'id_role', 'id');
     }
 }

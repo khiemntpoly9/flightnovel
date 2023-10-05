@@ -33,7 +33,7 @@ class NovelController extends Controller
 		]);
 		// ID team
 		// $id_team = Team::where('id_user', auth()->user()->id)->first()->id_team;
-		$id_team = TeamUser::where('id_user', auth()->user()->id)->first()->id_team;
+		$id_team = TeamUser::where('id_user', auth()->user()->id)->first()->id;
 		// Thêm dữ liệu bảng detail
 		$detail = Detail::create([
 			'summary' => $request->summary,

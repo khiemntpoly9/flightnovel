@@ -41,6 +41,6 @@ class User extends Authenticatable
 	// Khai báo mối quan hệ với bảng role
 	public function role(): BelongsTo
 	{
-		return $this->belongsTo(Role::class, 'id_role', 'id_role');
+		return $this->belongsTo(Role::class, 'id_role', 'id');
 	}
 }

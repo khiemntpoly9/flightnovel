@@ -13,10 +13,12 @@ class Team extends Model
 	protected $table = 'team';
 
 	protected $fillable = [
-		'id_team',
+		'id',
 		'team_name',
 		'team_detail',
 		'created_at',
 		'updated_at',
 	];
+
+	protected $primaryKey = 'id';
 }

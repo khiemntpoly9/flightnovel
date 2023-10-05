@@ -20,11 +20,11 @@ class NovelCate extends Model
 
 	public function novel()
 	{
-		return $this->belongsTo(Novel::class, 'id_novel', 'id_novel');
+		return $this->belongsTo(Novel::class, 'id_novel', 'id');
 	}
 
 	public function categories()
 	{
-		return $this->belongsTo(Categories::class, 'id_categories', 'id_categories');
+		return $this->belongsTo(Categories::class, 'id_categories', 'id');
 	}
 }

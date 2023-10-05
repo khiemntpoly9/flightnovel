@@ -4,7 +4,7 @@ import { useState } from 'react';
 export default function CategoriesEdit({ category }) {
 	const { errors } = usePage().props;
 	const [values, setValues] = useState({
-		id_categories: category.id_categories,
+		id: category.id,
 		name: category.name,
 	});
 	// handle change input

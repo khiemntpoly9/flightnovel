@@ -25,7 +25,7 @@ class TeamController extends Controller
 		} else {
 			// Lấy novel có id_team = id của team
 			$team = TeamUser::with('team')->where('id_user', auth()->user()->id)->first();
-			$novel = Novel::where('id_team', $team->id_team)->get();
+			$novel = Novel::where('id_team', $team->id)->get();
 			return Inertia::render('Client/Team/Team', [
 				'team_user' => $team_user,
 				'team' => $team,
