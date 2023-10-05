@@ -11,7 +11,7 @@ return new class extends Migration {
   public function up(): void
   {
     Schema::create('novel', function (Blueprint $table) {
-      $table->bigIncrements('id_novel');
+      $table->bigIncrements('id');
       $table->string('name_novel');
       $table->string('thumbnail');
       $table->string('author');
@@ -25,9 +25,9 @@ return new class extends Migration {
       $table->integer('hidden')->unsigned()->default(0);
       $table->timestamps();
       // Foreign Keys
-      $table->foreign('id_rate')->references('id_rate')->on('rate');
-      $table->foreign('id_team')->references('id_team')->on('team');
-      $table->foreign('id_detail')->references('id_detail')->on('detail');
+      $table->foreign('id_rate')->references('id')->on('rate');
+      $table->foreign('id_team')->references('id')->on('team');
+      $table->foreign('id_detail')->references('id')->on('detail');
       $table->foreign('id_user')->references('id')->on('users');
     });
   }

@@ -18,7 +18,7 @@ return new class extends Migration {
 			$table->timestamps();
 			// Foreign Keys
 			$table->foreign('id_user')->references('id')->on('users');
-			$table->foreign('id_team')->references('id_team')->on('team');
+			$table->foreign('id_team')->references('id')->on('team');
 		});
 	}
 

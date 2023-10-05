@@ -11,7 +11,7 @@ return new class extends Migration {
 	public function up(): void
 	{
 		Schema::create('detail', function (Blueprint $table) {
-			$table->bigIncrements('id_detail');
+			$table->bigIncrements('id');
 			$table->text('summary');
 			$table->text('note');
 			$table->string('another_name')->nullable();

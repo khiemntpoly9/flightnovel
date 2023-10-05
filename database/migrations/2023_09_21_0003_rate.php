@@ -11,7 +11,7 @@ return new class extends Migration {
 	public function up(): void
 	{
 		Schema::create('rate', function (Blueprint $table) {
-			$table->bigIncrements('id_rate');
+			$table->bigIncrements('id');
 			$table->bigInteger('id_user')->unsigned();
 			$table->string('comment');
 			$table->integer('point');

@@ -11,13 +11,13 @@ return new class extends Migration {
 	public function up(): void
 	{
 		Schema::create('follow', function (Blueprint $table) {
-			$table->bigIncrements('id_follow');
+			$table->bigIncrements('id');
 			$table->bigInteger('id_user')->unsigned();
 			$table->bigInteger('id_novel')->unsigned();
 			$table->timestamps();
 			// Foreign Keys
 			$table->foreign('id_user')->references('id')->on('users');
-			$table->foreign('id_novel')->references('id_novel')->on('novel');
+			$table->foreign('id_novel')->references('id')->on('novel');
 		});
 	}
 

@@ -11,13 +11,13 @@ return new class extends Migration {
 	public function up(): void
 	{
 		Schema::create('chap', function (Blueprint $table) {
-			$table->bigIncrements('id_chap');
+			$table->bigIncrements('id');
 			$table->bigInteger('id_vol')->unsigned();
 			$table->string('title')->nullable();
 			$table->text('content')->nullable();
 			$table->timestamps();
 			// Foreign Keys
-			$table->foreign('id_vol')->references('id_vol')->on('vol');
+			$table->foreign('id_vol')->references('id')->on('vol');
 		});
 	}
 

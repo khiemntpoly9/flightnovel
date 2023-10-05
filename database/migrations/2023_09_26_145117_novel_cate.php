@@ -15,8 +15,8 @@ return new class extends Migration {
 			$table->bigInteger('id_novel')->unsigned();
 			$table->integer('id_categories')->unsigned();
 			// Foreign Keys
-			$table->foreign('id_novel')->references('id_novel')->on('novel');
-			$table->foreign('id_categories')->references('id_categories')->on('categories');
+			$table->foreign('id_novel')->references('id')->on('novel');
+			$table->foreign('id_categories')->references('id')->on('categories');
 		});
 	}
 
