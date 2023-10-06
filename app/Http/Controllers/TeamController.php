@@ -34,6 +34,10 @@ class TeamController extends Controller
 			]);
 		}
 	}
+	public function TeamNovel()
+	{
+		return Inertia::render('Client/Team/TeamNovel');
+	}
 
 	public function TeamAdmin()
 	{
