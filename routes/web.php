@@ -5,6 +5,7 @@ use App\Http\Controllers\NovelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\VolController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,9 +43,12 @@ Route::middleware('auth')->prefix('team')->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');
 		Route::post('/create', [TeamController::class, 'TeamStore'])->name('team.store');
 	});
+	// Vol
+	Route::get('/novel/{id}/vol', [VolController::class, 'VolIndex'])->name('vol.index');
+	Route::post('/novel/{id}/vol', [VolController::class, 'VolStore'])->name('vol.create');
 });
 
-// Truyện
+// Novel
 Route::middleware('auth')->prefix('novel')->group(function () {
 	Route::get('/', [NovelController::class, 'NovelIndex'])->name('novel.index');
 	Route::post('/', [NovelController::class, 'NovelCreate'])->name('novel.create');

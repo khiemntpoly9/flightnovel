@@ -14,13 +14,13 @@ class TeamController extends Controller
 	public function TeamIndex()
 	{
 		// Lấy dữ liệu từ session
-		$success = session('success');
+		$status = ['success' => session('success'), 'error' => session('error')];
 		// Lấy dữ liệu từ bảng team_user
 		$team_user = TeamUser::where('id_user', auth()->user()->id)->first();
 		if (!$team_user) {
 			return Inertia::render('Client/Team/Team', [
 				'team_user' => $team_user,
-				'success' => $success,
+				'status' => $status,
 			]);
 		} else {
 			// Lấy novel có id_team = id của team
@@ -30,7 +30,7 @@ class TeamController extends Controller
 				'team_user' => $team_user,
 				'team' => $team,
 				'novel' => $novel,
-				'success' => $success,
+				'status' => $status,
 			]);
 		}
 	}

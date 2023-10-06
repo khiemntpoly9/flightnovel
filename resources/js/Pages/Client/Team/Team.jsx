@@ -2,11 +2,12 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Link } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
-export default function Team({ auth, team_user, team, novel, success }) {
+export default function Team({ auth, team_user, team, novel, status }) {
 	// Toast
 	useEffect(() => {
-		if (success) {
-			toast.success(success, {
+		// Success
+		if (status.success) {
+			toast.success(status.success, {
 				position: 'top-right',
 				autoClose: 1500,
 				hideProgressBar: false,
@@ -16,7 +17,19 @@ export default function Team({ auth, team_user, team, novel, success }) {
 				progress: undefined,
 			});
 		}
-	}, [success]);
+		// Error
+		if (status.error) {
+			toast.error(status.error, {
+				position: 'top-right',
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	}, [status]);
 	// Nếu chưa có team
 	if (!team_user) {
 		return (
@@ -46,7 +59,7 @@ export default function Team({ auth, team_user, team, novel, success }) {
 					<div className='mt-2'>
 						<span>Danh sách truyện</span>
 						{novel.map((novel) => (
-							<div key={novel.id_novel}>
+							<div key={novel.id}>
 								<img src={novel.thumbnail} alt='thumbnail' />
 								<p>{novel.name_novel}</p>
 							</div>
