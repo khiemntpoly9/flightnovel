@@ -63,4 +63,9 @@ class NovelController extends Controller
 
 		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
 	}
+	
+	// admin novel
+	public function NovelAdmin(){
+		return Inertia::render('Admin/Novel/Novel');
+	}
 }

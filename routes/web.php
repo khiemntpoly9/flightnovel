@@ -61,6 +61,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 	})->name('admin.home');
 	Route::get('/categories', [CateController::class, 'CateIndex'])->name('admin.categories');
 	Route::get('/team', [TeamController::class, 'TeamAdmin'])->name('admin.team');
+	Route::get('/novel',[NovelController::class,'NovelAdmin'])->name('admin.novel');
 	Route::post('/categories', [CateController::class, 'CateStore'])->name('admin.categories.store');
 	Route::patch('/categories', [CateController::class, 'CateUpdate'])->name('admin.categories.update');
 	Route::delete('/categories/{id}', [CateController::class, 'CateDelete'])->name('admin.categories.delete');
