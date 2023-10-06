@@ -56,10 +56,10 @@ export default function SideBar() {
 									<a href='#'>Tài khoản</a>
 								</li>
 								<li>
-									<a href='#'>Nhóm dịch</a>
+									<Link href={route('admin.team')}>Nhóm dịch</Link>
 								</li>
 								<li>
-									<a href='#'>Truyện</a>
+									<Link href={route('admin.novel')}>Truyện</Link>
 								</li>
 								<li>
 									<a href='#'>Thiết lập</a>
@@ -244,12 +244,12 @@ export default function SideBar() {
 								/>
 							</svg>
 
-							<a
-								href='#'
+							<Link
 								className={`block  transition duration-200  group-hover:text-white ${!open && 'hidden'}`}
+								href={route('admin.novel')}
 							>
 								Truyện
-							</a>
+							</Link>
 						</li>
 
 						<li className='group flex items-center gap-4 rounded px-3 py-4 hover:bg-blue-700'>
