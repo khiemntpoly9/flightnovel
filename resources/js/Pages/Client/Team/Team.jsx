@@ -54,78 +54,26 @@ export default function Team({ auth, team_user, team, novel, status }) {
 						<strong>Chi tiết: </strong>{' '}
 						<span dangerouslySetInnerHTML={{ __html: `${team.team.team_detail}` }}></span>
 					</div>
-
 					{/* Show truyện */}
 					<div className='mt-2'>
 						<span className='text-xl font-bold'>Danh sách truyện</span>
 						<div className='bottom relative mb-4 grid grid-cols-3 gap-2 py-2 sm:grid-cols-4 lg:grid-cols-6'>
 							{novel.map((novel) => (
-								<>
-									<div className='card'>
-										<img src={novel.thumbnail} alt='' className='' />
-										<div className='name'>
-											<h2 className='mt-2 text-center text-xl font-semibold'>{novel.name_novel}</h2>
-											<p className='mt-0 font-semibold'> Tác giả: {novel.author}</p>
-											<p className='mt-0 font-semibold'> Họa sĩ: {novel.illustrator}</p>
-										</div>
+								<div key={novel.id} className='card'>
+									<img src={novel.thumbnail} alt='' className='' />
+									<div className='name'>
+										<Link href={`/team/novel/${novel.id}`} className='mt-2 text-lg font-semibold'>
+											{novel.name_novel}
+										</Link>
+										<p className='mt-0 font-semibold'> Tác giả: {novel.author}</p>
 									</div>
-									<div className='card'>
-										<img src={novel.thumbnail} alt='' className='' />
-										<div className='name'>
-											<h2 className='mt-2 text-center text-xl font-semibold'>{novel.name_novel}</h2>
-											<p className='mt-0 font-semibold'> Tác giả: {novel.author}</p>
-											<p className='mt-0 font-semibold'> Họa sĩ: {novel.illustrator}</p>
-										</div>
-									</div>
-									<div className='card'>
-										<img src={novel.thumbnail} alt='' className='' />
-										<div className='name'>
-											<h2 className='mt-2 text-center text-xl font-semibold'>{novel.name_novel}</h2>
-											<p className='mt-0 font-semibold'> Tác giả: {novel.author}</p>
-											<p className='mt-0 font-semibold'> Họa sĩ: {novel.illustrator}</p>
-										</div>
-									</div>
-									<div className='card'>
-										<img src={novel.thumbnail} alt='' className='' />
-										<div className='name'>
-											<h2 className='mt-2 text-center text-xl font-semibold'>{novel.name_novel}</h2>
-											<p className='mt-0 font-semibold'> Tác giả: {novel.author}</p>
-											<p className='mt-0 font-semibold'> Họa sĩ: {novel.illustrator}</p>
-										</div>
-									</div>
-									<div className='card'>
-										<img src={novel.thumbnail} alt='' className='' />
-										<div className='name'>
-											<h2 className='mt-2 text-center text-xl font-semibold'>{novel.name_novel}</h2>
-											<p className='mt-0 font-semibold'> Tác giả: {novel.author}</p>
-											<p className='mt-0 font-semibold'> Họa sĩ: {novel.illustrator}</p>
-										</div>
-									</div>
-									<div className='card'>
-										<img src={novel.thumbnail} alt='' className='' />
-										<div className='name'>
-											<h2 className='mt-2 text-center text-xl font-semibold'>{novel.name_novel}</h2>
-											<p className='mt-0 font-semibold'> Tác giả: {novel.author}</p>
-											<p className='mt-0 font-semibold'> Họa sĩ: {novel.illustrator}</p>
-										</div>
-									</div>
-								</>
+								</div>
 							))}
 						</div>
 					</div>
 					<Link className='btn' href={route('novel.index')}>
 						Thêm truyện
 					</Link>
-					{/* Show truyện */}
-					<div className='mt-2'>
-						<span>Danh sách truyện</span>
-						{novel.map((novel) => (
-							<div key={novel.id}>
-								<img src={novel.thumbnail} alt='thumbnail' />
-								<p>{novel.name_novel}</p>
-							</div>
-						))}
-					</div>
 				</div>
 			</DefaultLayout>
 		);

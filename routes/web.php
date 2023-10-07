@@ -39,15 +39,17 @@ Route::middleware('auth')->prefix('profile')->group(function () {
 // Team
 Route::middleware('auth')->prefix('team')->group(function () {
 	Route::get('/', [TeamController::class, 'TeamIndex'])->name('team.index');
-	Route::get('/team-novel', [TeamController::class, 'TeamNovel'])->name('team.novel');
+	Route::get('/novel/{id}', [TeamController::class, 'TeamNovel'])->middleware('team.user')->name('team.novel');
 	Route::middleware('team')->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');
 		Route::post('/create', [TeamController::class, 'TeamStore'])->name('team.store');
-		
+
 	});
 	// Vol
-	Route::get('/novel/{id}/vol', [VolController::class, 'VolIndex'])->name('vol.index');
-	Route::post('/novel/{id}/vol', [VolController::class, 'VolStore'])->name('vol.create');
+	Route::middleware('team.user')->group(function () {
+		Route::get('/novel/{id}/vol', [VolController::class, 'VolIndex'])->name('vol.index');
+		Route::post('/novel/{id}/vol', [VolController::class, 'VolStore'])->name('vol.create');
+	});
 });
 
 // Novel
@@ -63,7 +65,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 	})->name('admin.home');
 	Route::get('/categories', [CateController::class, 'CateIndex'])->name('admin.categories');
 	Route::get('/team', [TeamController::class, 'TeamAdmin'])->name('admin.team');
-	Route::get('/novel',[NovelController::class,'NovelAdmin'])->name('admin.novel');
+	Route::get('/novel', [NovelController::class, 'NovelAdmin'])->name('admin.novel');
 	Route::post('/categories', [CateController::class, 'CateStore'])->name('admin.categories.store');
 	Route::patch('/categories', [CateController::class, 'CateUpdate'])->name('admin.categories.update');
 	Route::delete('/categories/{id}', [CateController::class, 'CateDelete'])->name('admin.categories.delete');

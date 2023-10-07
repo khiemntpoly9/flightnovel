@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Novel;
 use App\Models\Team;
 use App\Models\TeamUser;
+use App\Models\Vol;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -34,9 +35,16 @@ class TeamController extends Controller
 			]);
 		}
 	}
-	public function TeamNovel()
+	public function TeamNovel(Request $request, $id)
 	{
-		return Inertia::render('Client/Team/TeamNovel');
+		$novel = Novel::where('id', $id)->first();
+		$vol = Vol::where('id_novel', $id)->get();
+		$status = ['success' => session('success'), 'error' => session('error')];
+		return Inertia::render('Client/Team/TeamNovel', [
+			'novel' => $novel,
+			'vol' => $vol,
+			'status' => $status,
+		]);
 	}
 
 	public function TeamAdmin()
