@@ -20,12 +20,12 @@ class TeamController extends Controller
 		if (!$team_user) {
 			return Inertia::render('Client/Team/Team', [
 				'team_user' => $team_user,
-				'status' => $status,
+				'status' => $status
 			]);
 		} else {
 			// Lấy novel có id_team = id của team
 			$team = TeamUser::with('team')->where('id_user', auth()->user()->id)->first();
-			$novel = Novel::where('id_team', $team->id)->get();
+			$novel = Novel::where('id_team', $team->id_team)->get();
 			return Inertia::render('Client/Team/Team', [
 				'team_user' => $team_user,
 				'team' => $team,
@@ -33,6 +33,10 @@ class TeamController extends Controller
 				'status' => $status,
 			]);
 		}
+	}
+	public function TeamNovel()
+	{
+		return Inertia::render('Client/Team/TeamNovel');
 	}
 
 	public function TeamAdmin()
