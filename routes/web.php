@@ -38,9 +38,11 @@ Route::middleware('auth')->prefix('profile')->group(function () {
 // Team
 Route::middleware('auth')->prefix('team')->group(function () {
 	Route::get('/', [TeamController::class, 'TeamIndex'])->name('team.index');
+	Route::get('/team-novel', [TeamController::class, 'TeamNovel'])->name('team.novel');
 	Route::middleware('team')->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');
 		Route::post('/create', [TeamController::class, 'TeamStore'])->name('team.store');
+		
 	});
 });
 
