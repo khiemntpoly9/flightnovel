@@ -28,7 +28,8 @@ class ProviderController extends Controller
 			// Tìm tài khoản trong CSDL
 			$user = User::where([
 				'provider' => $provider,
-				'provider_id' => $SociaUser->id
+				'provider_id' => $SociaUser->id,
+				'email' => $SociaUser->getEmail()
 			])->first();
 			// Nếu tài khoản chưa tồn tại thì tạo mới
 			if (!$user) {
