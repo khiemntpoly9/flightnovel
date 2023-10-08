@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Novel;
 use App\Models\Team;
 use App\Models\TeamUser;
+use App\Models\Vol;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,13 +16,13 @@ class TeamController extends Controller
 	public function TeamIndex()
 	{
 		// Lấy dữ liệu từ session
-		$success = session('success');
+		$status = ['success' => session('success'), 'error' => session('error')];
 		// Lấy dữ liệu từ bảng team_user
 		$team_user = TeamUser::where('id_user', auth()->user()->id)->first();
 		if (!$team_user) {
 			return Inertia::render('Client/Team/Team', [
 				'team_user' => $team_user,
-				'success' => $success
+				'status' => $status
 			]);
 		} else {
 			// Lấy novel có id_team = id của team
@@ -30,13 +32,21 @@ class TeamController extends Controller
 				'team_user' => $team_user,
 				'team' => $team,
 				'novel' => $novel,
-				'success' => $success,
+				'status' => $status,
 			]);
 		}
 	}
-	public function TeamNovel()
+	// Hiện Novel chi tiết trong team
+	public function TeamNovel(Request $request, $id)
 	{
-		return Inertia::render('Client/Team/TeamNovel');
+		$novel = Novel::where('id', $id)->first();
+		$vol = Vol::where('id_novel', $id)->with('chap:id,id_vol,title,created_at')->get();
+		$status = ['success' => session('success'), 'error' => session('error')];
+		return Inertia::render('Client/Team/TeamNovel', [
+			'novel' => $novel,
+			'vol' => $vol,
+			'status' => $status,
+		]);
 	}
 
 	public function TeamAdmin()

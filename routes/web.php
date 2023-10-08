@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\CateController;
+use App\Http\Controllers\ChapController;
 use App\Http\Controllers\NovelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\VolController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,15 +40,23 @@ Route::middleware('auth')->prefix('profile')->group(function () {
 // Team
 Route::middleware('auth')->prefix('team')->group(function () {
 	Route::get('/', [TeamController::class, 'TeamIndex'])->name('team.index');
-	Route::get('/team-novel', [TeamController::class, 'TeamNovel'])->name('team.novel');
+	Route::get('/novel/{id}', [TeamController::class, 'TeamNovel'])->middleware('team.user')->name('team.novel');
 	Route::middleware('team')->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');
 		Route::post('/create', [TeamController::class, 'TeamStore'])->name('team.store');
-		
+
 	});
+	// Vol
+	Route::middleware('team.user')->group(function () {
+		Route::get('/novel/{id}/vol', [VolController::class, 'VolIndex'])->name('vol.index');
+		Route::post('/novel/{id}/vol', [VolController::class, 'VolStore'])->name('vol.create');
+	});
+	// Chap
+	Route::get('/novel/{id}/vol/{id_vol}/create-chap', [ChapController::class, 'ChapCreate'])->name('chap.create');
+	Route::post('/novel/{id}/vol/{id_vol}/create-chap', [ChapController::class, 'ChapStore'])->name('chap.store');
 });
 
-// Truyện
+// Novel
 Route::middleware('auth')->prefix('novel')->group(function () {
 	Route::get('/', [NovelController::class, 'NovelIndex'])->name('novel.index');
 	Route::post('/', [NovelController::class, 'NovelCreate'])->name('novel.create');
@@ -59,7 +69,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 	})->name('admin.home');
 	Route::get('/categories', [CateController::class, 'CateIndex'])->name('admin.categories');
 	Route::get('/team', [TeamController::class, 'TeamAdmin'])->name('admin.team');
-	Route::get('/novel',[NovelController::class,'NovelAdmin'])->name('admin.novel');
+	Route::get('/novel', [NovelController::class, 'NovelAdmin'])->name('admin.novel');
 	Route::post('/categories', [CateController::class, 'CateStore'])->name('admin.categories.store');
 	Route::patch('/categories', [CateController::class, 'CateUpdate'])->name('admin.categories.update');
 	Route::delete('/categories/{id}', [CateController::class, 'CateDelete'])->name('admin.categories.delete');
