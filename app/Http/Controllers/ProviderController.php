@@ -20,11 +20,14 @@ class ProviderController extends Controller
 			// Lấy thông tin người dùng từ provider
 			$SociaUser = Socialite::driver($provider)->user();
 			// Kiểm tra email đã tồn tại trong CSDL chưa
-			// if (User::where('email', $SociaUser->getEmail())->exists()) {
-			// 	return Inertia::render('Auth/Login', [
-			// 		'error' => 'Tài khoản Email đã tồn tại!'
-			// 	]);
-			// }
+			if (User::where('email', $SociaUser->getEmail())->exists()) {
+				// Nếu tồn tại thì cập nhật lại thông tin
+				User::where('email', $SociaUser->getEmail())->update([
+					'provider' => $provider,
+					'provider_id' => $SociaUser->getId(),
+					'provider_token' => $SociaUser->token,
+				]);
+			}
 			// Tìm tài khoản trong CSDL
 			$user = User::where([
 				'provider' => $provider,
