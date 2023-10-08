@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CateController;
+use App\Http\Controllers\ChapController;
 use App\Http\Controllers\NovelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProviderController;
@@ -50,6 +51,9 @@ Route::middleware('auth')->prefix('team')->group(function () {
 		Route::get('/novel/{id}/vol', [VolController::class, 'VolIndex'])->name('vol.index');
 		Route::post('/novel/{id}/vol', [VolController::class, 'VolStore'])->name('vol.create');
 	});
+	// Chap
+	Route::get('/novel/{id}/vol/{id_vol}/create-chap', [ChapController::class, 'ChapCreate'])->name('chap.create');
+	Route::post('/novel/{id}/vol/{id_vol}/create-chap', [ChapController::class, 'ChapStore'])->name('chap.store');
 });
 
 // Novel

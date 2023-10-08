@@ -2,6 +2,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Link } from '@inertiajs/react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import moment from 'moment/moment';
 
 const TeamNovel = ({ auth, novel, vol, status }) => {
 	// Toast
@@ -120,41 +121,48 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 				{vol.map((vol) => (
 					<div key={vol.id} className='mb-3 w-full rounded border-2'>
 						<div className='bg-header-a p-2'>
-							<span className='rounded text-white'>{vol.title}</span>
-							<button className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'>
-								Thêm chap
-							</button>
-							<button className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'>Sửa chap</button>
+							<div className='flex flex-row justify-between'>
+								<div className='flex items-center'>
+									<p className='rounded text-white'>{vol.title}</p>
+								</div>
+								<div>
+									<Link
+										href={`/team/novel/${novel.id}/vol/${vol.id}/create-chap`}
+										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+									>
+										Thêm chap
+									</Link>
+									<button className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'>
+										Chỉnh sửa
+									</button>
+									<button className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'>
+										Xoá Chương
+									</button>
+								</div>
+							</div>
 						</div>
 						<div className='flex gap-2 p-2'>
 							<div className='flex w-full flex-col '>
-								<div className='flex justify-between p-2 hover:bg-slate-300'>
-									<div>Chương 1: ...........</div>
-									<div>28/7/2023</div>
+								{vol.chap && vol.chap.length > 0 ? (
+									vol.chap.map((chap) => (
+										<div key={chap.id} className='flex justify-between p-2 hover:bg-slate-300'>
+											<div>{chap.title}</div>
+											<div>{moment(chap.created_at).format('DD/MM/YYYY')}</div>
+											<div>
+												<button>Chỉnh sửa</button>
+											</div>
+										</div>
+									))
+								) : (
 									<div>
-										<button>chỉnh sửa</button>
+										<span>Chưa có chap</span>
 									</div>
-								</div>
-								<div className='flex justify-between p-2 hover:bg-slate-300'>
-									<div>Chương 2: ...........</div>
-									<div>28/7/2023</div>
-									<div>
-										<button>chỉnh sửa</button>
-									</div>
-								</div>
-								<div className='flex justify-between p-2 hover:bg-slate-300'>
-									<div>Chương 3: ...........</div>
-									<div>28/7/2023</div>
-									<div>
-										<button>chỉnh sửa</button>
-									</div>
-								</div>
+								)}
 							</div>
 						</div>
 					</div>
 				))}
 			</div>
-			;
 		</DefaultLayout>
 	);
 };

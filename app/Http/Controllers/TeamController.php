@@ -6,6 +6,7 @@ use App\Models\Novel;
 use App\Models\Team;
 use App\Models\TeamUser;
 use App\Models\Vol;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -35,10 +36,11 @@ class TeamController extends Controller
 			]);
 		}
 	}
+	// Hiện Novel chi tiết trong team
 	public function TeamNovel(Request $request, $id)
 	{
 		$novel = Novel::where('id', $id)->first();
-		$vol = Vol::where('id_novel', $id)->get();
+		$vol = Vol::where('id_novel', $id)->with('chap:id,id_vol,title,created_at')->get();
 		$status = ['success' => session('success'), 'error' => session('error')];
 		return Inertia::render('Client/Team/TeamNovel', [
 			'novel' => $novel,

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Novel;
-use App\Models\TeamUser;
 use App\Models\Vol;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
