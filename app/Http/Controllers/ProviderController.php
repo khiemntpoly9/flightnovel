@@ -29,7 +29,6 @@ class ProviderController extends Controller
 			$user = User::where([
 				'provider' => $provider,
 				'provider_id' => $SociaUser->id,
-				'email' => $SociaUser->getEmail()
 			])->first();
 			// Nếu tài khoản chưa tồn tại thì tạo mới
 			if (!$user) {
