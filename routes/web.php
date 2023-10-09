@@ -66,6 +66,8 @@ Route::middleware('auth')->prefix('team')->group(function () {
 Route::middleware('auth')->prefix('novel')->group(function () {
 	Route::get('/', [NovelController::class, 'NovelIndex'])->name('novel.index');
 	Route::post('/', [NovelController::class, 'NovelCreate'])->name('novel.create');
+	Route::get('/novel/{id}/update', [NovelController::class, 'NovelUp'])->name('novel.up');
+	
 });
 
 // Admin
