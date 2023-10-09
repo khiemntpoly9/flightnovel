@@ -44,22 +44,23 @@ Route::middleware('auth')->prefix('team')->group(function () {
 	Route::middleware('team')->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');
 		Route::post('/create', [TeamController::class, 'TeamStore'])->name('team.store');
-
 	});
-	// Vol
+	// Team User
 	Route::middleware('team.user')->group(function () {
+		// Vol
 		Route::get('/novel/{id}/vol', [VolController::class, 'VolIndex'])->name('vol.index');
 		Route::get('/novel/{id}/vol/{id_vol}', [VolController::class, 'VolUpdatePage'])->name('vol.update.page');
 		Route::patch('/novel/{id}/vol/{id_vol}', [VolController::class, 'VolUpdate'])->name('vol.update');
 		Route::post('/novel/{id}/vol', [VolController::class, 'VolStore'])->name('vol.create');
 		Route::delete('/novel/{id}/vol/{id_vol}', [VolController::class, 'VolDelete'])->name('vol.delete');
+		// Chap
+		Route::get('/novel/{id}/vol/{id_vol}/create-chap', [ChapController::class, 'ChapCreate'])->name('chap.create');
+		Route::get('/novel/{id}/vol/{id_vol}/update-chap/{id_chap}', [ChapController::class, 'ChapUpdate'])->name('chap.update');
+		Route::patch('/novel/{id}/vol/{id_vol}/update-chap/{id_chap}', [ChapController::class, 'ChapUpdatePatch'])->name('chap.update.patch');
+		Route::post('/novel/{id}/vol/{id_vol}/create-chap', [ChapController::class, 'ChapStore'])->name('chap.store');
+		Route::delete('/novel/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapDelete'])->name('chap.delete');
 	});
-	// Chap
-	Route::get('/novel/{id}/vol/{id_vol}/create-chap', [ChapController::class, 'ChapCreate'])->name('chap.create');
-	Route::get('/novel/{id}/vol/{id_vol}/update-chap/{id_chap}', [ChapController::class, 'ChapUpdate'])->name('chap.update');
-	Route::patch('/novel/{id}/vol/{id_vol}/update-chap/{id_chap}', [ChapController::class, 'ChapUpdatePatch'])->name('chap.update.patch');
-	Route::post('/novel/{id}/vol/{id_vol}/create-chap', [ChapController::class, 'ChapStore'])->name('chap.store');
-	Route::delete('/novel/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapDelete'])->name('chap.delete');
+
 });
 
 // Novel
