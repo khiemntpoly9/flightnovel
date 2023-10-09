@@ -127,7 +127,7 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 								</div>
 								<div>
 									<Link
-										href={`/team/novel/${novel.id}/vol/${vol.id}/create-chap`}
+										href={`/team/novel/${novel.id}/vol/${vol.id}/chap/create-chap`}
 										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
 									>
 										Thêm chap
@@ -182,7 +182,7 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 											<div className='flex gap-3'>
 												<Link
 													className='text-orange-300 hover:text-orange-500'
-													href={`/team/novel/${novel.id}/vol/${vol.id}/update-chap/${chap.id}`}
+													href={`/team/novel/${novel.id}/vol/${vol.id}/chap/update-chap/${chap.id}`}
 												>
 													Chỉnh sửa
 												</Link>
@@ -207,7 +207,9 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 															<form method='dialog'>
 																<button
 																	onClick={() => {
-																		router.delete(`/team/novel/${novel.id}/vol/${vol.id}/chap/${chap.id}`);
+																		router.delete(
+																			`/team/novel/${novel.id}/vol/${vol.id}/chap/delete/${chap.id}`
+																		);
 																	}}
 																	className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
 																>

@@ -7,7 +7,7 @@ import TruyenDaHoanThanh from '@/Pages/Client/Components/TruyenDaHoanThanh';
 import TruyenVuaDang from '@/Pages/Client/Components/TruyenVuaDang';
 import { Head } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
-export default function Home({ auth }) {
+export default function Home({ auth, novels }) {
 	return (
 		<>
 			<DefaultLayout auth={auth}>
@@ -19,7 +19,7 @@ export default function Home({ auth }) {
 					<div className='mt-2 w-full'>
 						<div className='flex flex-col justify-center gap-2 lg:flex-row'>
 							<div className='order-2 mx-auto w-10/12 lg:order-1 lg:m-0 lg:w-6/12'>
-								<TruyenMoi />
+								<TruyenMoi novels={novels} />
 							</div>
 							<div className='order-1 mx-auto w-10/12	lg:order-2 lg:m-0 lg:w-4/12'>
 								<LichSuDoc />
