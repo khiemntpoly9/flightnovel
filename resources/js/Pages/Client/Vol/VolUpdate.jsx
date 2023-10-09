@@ -1,8 +1,9 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import { Head, router } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function VolUpdate({ auth, novel, vol }) {
+	const { errors } = usePage().props;
 	const [values, setValues] = useState({
 		title: vol.title,
 	});
@@ -36,8 +37,11 @@ export default function VolUpdate({ auth, novel, vol }) {
 								type='text'
 								value={values.title}
 								onChange={handleChange}
-								className={` w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+								className={`${
+									errors && errors.title ? 'mb-2 border-rose-600' : ''
+								} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 							/>
+							{errors && errors.title && <p className='text-sm italic text-red-500'>{errors.title}</p>}
 						</div>
 					</div>
 					<div className='mt-4'>

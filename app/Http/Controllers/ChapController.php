@@ -20,11 +20,13 @@ class ChapController extends Controller
 	public function ChapStore(Request $request, $id, $id_vol)
 	{
 		$request->validate([
-			'title' => ['required', 'string', 'max:255'],
+			'title' => ['required', 'string', 'min:5', 'max:255'],
 			'content' => ['required'],
 		], [
 			'title.required' => 'Vui lòng nhập tên chương',
+			'title.min' => 'Tên chương phải có ít nhất 5 ký tự',
 			'title.max' => 'Tên chương không được quá 255 ký tự',
+			'content.required' => 'Vui lòng nhập nội dung chương',
 		]);
 
 		$chap = new Chap();
@@ -51,11 +53,13 @@ class ChapController extends Controller
 	public function ChapUpdatePatch(Request $request, $id, $id_vol, $id_chap)
 	{
 		$request->validate([
-			'title' => ['required', 'string', 'max:255'],
+			'title' => ['required', 'string', 'min:5', 'max:255'],
 			'content' => ['required'],
 		], [
 			'title.required' => 'Vui lòng nhập tên chương',
+			'title.min' => 'Tên chương phải có ít nhất 5 ký tự',
 			'title.max' => 'Tên chương không được quá 255 ký tự',
+			'content.required' => 'Vui lòng nhập nội dung chương',
 		]);
 
 		$chap = Chap::find($id_chap);
