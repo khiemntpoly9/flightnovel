@@ -145,11 +145,16 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 							<div className='flex w-full flex-col '>
 								{vol.chap && vol.chap.length > 0 ? (
 									vol.chap.map((chap) => (
-										<div key={chap.id} className='flex justify-between p-2 hover:bg-slate-300'>
+										<div key={chap.id} className='flex justify-between p-2 hover:bg-slate-200'>
 											<div>{chap.title}</div>
 											<div>{moment(chap.created_at).format('DD/MM/YYYY')}</div>
-											<div>
-												<button>Chỉnh sửa</button>
+											<div className='flex gap-3'>
+												<Link className='text-orange-300 hover:text-orange-500' href='#'>
+													Chỉnh sửa
+												</Link>
+												<Link className='text-red-300 hover:text-red-500' href='#'>
+													Xoá
+												</Link>
 											</div>
 										</div>
 									))
