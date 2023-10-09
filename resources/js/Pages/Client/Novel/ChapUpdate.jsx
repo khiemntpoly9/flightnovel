@@ -1,10 +1,13 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { useState } from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Head, router } from '@inertiajs/react';
 
-export default function Vol({ auth, id_novel }) {
+export default function ChapUpdate({ auth, chap, list }) {
 	const [values, setValues] = useState({
-		title: '',
+		title: chap.title,
+		content: chap.content,
 	});
 	// Handle change input
 	const handleChange = (e) => {
@@ -18,17 +21,17 @@ export default function Vol({ auth, id_novel }) {
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		router.post(`/team/novel/${id_novel}/vol`, values);
+		router.patch(`/team/novel/${list.id}/vol/${list.id_vol}/update-chap/${chap.id}`, values);
 	};
 	return (
 		<DefaultLayout auth={auth}>
-			<Head title='Vol' />
+			<Head title='Cập nhật chap' />
 			<div className='container mx-auto w-10/12'>
 				<form onSubmit={handleSubmit}>
 					{/* Tên Vol */}
 					<div className='mb-2'>
 						<label htmlFor='title' className='mb-2 block text-sm font-medium leading-6 text-gray-900'>
-							Tên Vol
+							Tên Chap
 						</label>
 						<div>
 							<input
@@ -40,12 +43,37 @@ export default function Vol({ auth, id_novel }) {
 							/>
 						</div>
 					</div>
+					<div className='mb-4 flex flex-col'>
+						<label className='mb-2'>Nội dung</label>
+						{/* CKEditor 5 */}
+						<div>
+							<CKEditor
+								id='content'
+								editor={ClassicEditor}
+								data={values.content}
+								onReady={(editor) => {
+									// You can store the "editor" and use when it is needed.
+									// console.log('Editor is ready to use!', editor);
+								}}
+								onChange={(event, editor) => {
+									const data = editor.getData();
+									handleChange({ target: { id: 'content', value: data } });
+								}}
+								onBlur={(event, editor) => {
+									// console.log('Blur.', editor);
+								}}
+								onFocus={(event, editor) => {
+									// console.log('Focus.', editor);
+								}}
+							/>
+						</div>
+					</div>
 					<div className='mt-4'>
 						<button
 							type='submit'
 							className='flex w-full justify-center rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600'
 						>
-							Thêm
+							Cập nhật
 						</button>
 					</div>
 				</form>
