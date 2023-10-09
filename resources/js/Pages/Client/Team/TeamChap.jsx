@@ -1,10 +1,11 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import { Head, router } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default function TeamChap({ auth, id_novel, id_vol }) {
+	const { errors } = usePage().props;
 	const [values, setValues] = useState({
 		title: '',
 		content: '',
@@ -39,8 +40,11 @@ export default function TeamChap({ auth, id_novel, id_vol }) {
 								type='text'
 								value={values.title}
 								onChange={handleChange}
-								className={` w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+								className={`${
+									errors && errors.title ? 'mb-2 border-rose-600' : ''
+								} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 							/>
+							{errors && errors.title && <p className='text-sm italic text-red-500'>{errors.title}</p>}
 						</div>
 					</div>
 					<div className='mb-4 flex flex-col'>
@@ -67,6 +71,7 @@ export default function TeamChap({ auth, id_novel, id_vol }) {
 								}}
 							/>
 						</div>
+						{errors && errors.content && <p className='text-sm italic text-red-500'>{errors.content}</p>}
 					</div>
 					<div className='mt-4'>
 						<button

@@ -89,8 +89,13 @@ export default function Novel({ auth, categories }) {
 										type='text'
 										value={values.name_novel}
 										onChange={handleChange}
-										className={` w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										className={`${
+											errors && errors.name_novel ? 'mb-2 border-rose-600' : ''
+										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 									/>
+									{errors && errors.name_novel && (
+										<p className='text-sm italic text-red-500'>{errors.name_novel}</p>
+									)}
 								</div>
 							</div>
 							{/* Tên khác */}
@@ -122,8 +127,11 @@ export default function Novel({ auth, categories }) {
 										type='text'
 										value={values.author}
 										onChange={handleChange}
-										className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										className={`${
+											errors && errors.author ? 'mb-2 border-rose-600' : ''
+										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 									/>
+									{errors && errors.author && <p className='text-sm italic text-red-500'>{errors.author}</p>}
 								</div>
 
 								{/* Họa sĩ */}
@@ -138,8 +146,13 @@ export default function Novel({ auth, categories }) {
 										type='text'
 										value={values.illustrator}
 										onChange={handleChange}
-										className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
+										className={`${
+											errors && errors.illustrator ? 'mb-2 border-rose-600' : ''
+										} w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 									/>
+									{errors && errors.illustrator && (
+										<p className='text-sm italic text-red-500'>{errors.illustrator}</p>
+									)}
 								</div>
 							</div>
 							{/* Thể loại */}
@@ -165,18 +178,14 @@ export default function Novel({ auth, categories }) {
 									</div>
 								))}
 							</div>
+							{errors && errors.categories && (
+								<p className='text-sm italic text-red-500'>{errors.categories}</p>
+							)}
 							{/* Tóm tắt */}
 							<div className='mb-2 flex items-center justify-between'>
 								<label className='block text-sm font-medium leading-6 text-gray-900'>Tóm tắt</label>
 							</div>
 							<div className='mb-2'>
-								{/* <input
-									id='summary'
-									type='textarea'
-									value={values.summary}
-									onChange={handleChange}
-									className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
-								/> */}
 								<div>
 									<CKEditor
 										id='summary'
@@ -198,6 +207,7 @@ export default function Novel({ auth, categories }) {
 										}}
 									/>
 								</div>
+								{errors && errors.summary && <p className='text-sm italic text-red-500'>{errors.summary}</p>}
 							</div>
 							{/* Thumbnail */}
 							<div className='mb-2 flex items-center justify-between'>
@@ -209,6 +219,9 @@ export default function Novel({ auth, categories }) {
 									className='file-input file-input-bordered mt-1 w-full max-w-xs'
 									onChange={(e) => setSelectedFile(e.target.files[0])}
 								/>
+								{errors && errors.thumbnail && (
+									<p className='text-sm italic text-red-500'>{errors.thumbnail}</p>
+								)}
 							</div>
 							{/* Chú thích */}
 							<div className='mb-2 flex items-center justify-between'>
