@@ -51,7 +51,7 @@ class NovelController extends Controller
 			'summary.required' => 'Tóm tắt không được để trống',
 		]);
 		// ID team
-		$id_team = TeamUser::where('id_user', auth()->user()->id)->first()->id;
+		$id_team = TeamUser::where('id_user', auth()->user()->id)->first()->id_team;
 		// Thêm dữ liệu bảng detail
 		$detail = Detail::create([
 			'summary' => $request->summary,
