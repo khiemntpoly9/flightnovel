@@ -8,6 +8,7 @@ use App\Models\Novel;
 use App\Models\NovelCate;
 use App\Models\Team;
 use App\Models\TeamUser;
+use App\Models\Vol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -82,9 +83,20 @@ class NovelController extends Controller
 		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
 	}
 
-	// admin novel
+	// Admin Novel
 	public function NovelAdmin()
 	{
 		return Inertia::render('Admin/Novel/Novel');
+	}
+
+	// Novel User Read
+	public function NovelRead($id)
+	{
+		$novel = Novel::where('id', $id)->first();
+		$vol = Vol::where('id_novel', $id)->with('chap:id,id_vol,title,created_at')->get();
+		return Inertia::render('Client/Novel/NovelRead', [
+			'novel' => $novel,
+			'vol' => $vol,
+		]);
 	}
 }

@@ -22,7 +22,7 @@ export default function TeamChap({ auth, id_novel, id_vol }) {
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		router.post(`/team/novel/${id_novel}/vol/${id_vol}/create-chap`, values);
+		router.post(`/team/novel/${id_novel}/vol/${id_vol}/chap/create-chap`, values);
 	};
 	return (
 		<DefaultLayout auth={auth}>
