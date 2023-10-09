@@ -21,9 +21,10 @@ class VolController extends Controller
 	{
 		// Validate
 		$request->validate([
-			'title' => ['required', 'string', 'max:255'],
+			'title' => ['required', 'string', 'min:5', 'max:255'],
 		], [
-			'title.required' => 'Vui lòng nhập tên vol',
+			'title.required' => 'Vui lòng nhập tên chương',
+			'title.min' => 'Tên vol phải có ít nhất 5 ký tự',
 			'title.max' => 'Tên vol không được quá 255 ký tự',
 		]);
 
@@ -50,9 +51,10 @@ class VolController extends Controller
 	{
 		// Validate
 		$request->validate([
-			'title' => ['required', 'string', 'max:255'],
+			'title' => ['required', 'string', 'min:5', 'max:255'],
 		], [
 			'title.required' => 'Vui lòng nhập tên chương',
+			'title.min' => 'Tên chương phải có ít nhất 5 ký tự',
 			'title.max' => 'Tên chương không được quá 255 ký tự',
 		]);
 
