@@ -57,6 +57,14 @@ class TeamController extends Controller
 		]);
 	}
 
+	public function TeamDetailAdmin($id)
+	{
+		$team = Team::where('id', $id)->first();
+		return Inertia::render('Admin/Team/TeamDetail',[
+			'team' => $team,
+		]);
+	}
+
 	public function TeamCreate()
 	{
 		return Inertia::render('Client/Team/TeamCreate');

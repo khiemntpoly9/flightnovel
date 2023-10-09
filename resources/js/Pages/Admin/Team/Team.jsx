@@ -27,7 +27,7 @@ export default function Team({ team }) {
 						</thead>
 						<tbody>
 							{team.map((item) => (
-								<tr key={item.id_team}>
+								<tr key={item.id}>
 									<th>
 										<label>
 											<input type='checkbox' className='checkbox' />
@@ -35,9 +35,9 @@ export default function Team({ team }) {
 									</th>
 									<td>
 										<div className='flex items-center space-x-3'>
-											<div>
-												<div className='font-md'>{item.team_name}</div>
-											</div>
+											<Link className='font-md' href={`/admin/team/detail/${item.id}`}>
+												{item.team_name}
+											</Link>
 										</div>
 									</td>
 									<td>
