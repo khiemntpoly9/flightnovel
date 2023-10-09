@@ -1,5 +1,5 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import moment from 'moment/moment';
@@ -132,12 +132,43 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 									>
 										Thêm chap
 									</Link>
-									<button className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'>
+									<Link
+										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+										href={`/team/novel/${novel.id}/vol/${vol.id}`}
+									>
 										Chỉnh sửa
+									</Link>
+									<button
+										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+										onClick={() => document.getElementById(`modal_delete_vol_${vol.id}`).showModal()}
+									>
+										Xoá chương
 									</button>
-									<button className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'>
-										Xoá Chương
-									</button>
+									<dialog id={`modal_delete_vol_${vol.id}`} className='modal'>
+										<div className='modal-box'>
+											<form method='dialog'>
+												<button className='btn btn-circle btn-ghost btn-sm absolute right-2 top-2'>✕</button>
+											</form>
+											<h3 className='text-lg font-bold'>Xoá chương!</h3>
+											<p className='py-4 text-base font-normal'>Bạn có chắc muốn xoá chương {vol.title}?</p>
+											<p className='py-4 text-base font-normal'>
+												Đồng nghĩa với việc bạn sẽ xoá tất cả các chap trong chương này!
+											</p>
+											<div className='modal-action'>
+												<form method='dialog'>
+													<button
+														onClick={() => {
+															router.delete(`/team/novel/${novel.id}/vol/${vol.id}`);
+														}}
+														className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
+													>
+														Xoá
+													</button>
+													<button className='btn'>Đóng</button>
+												</form>
+											</div>
+										</div>
+									</dialog>
 								</div>
 							</div>
 						</div>
@@ -149,11 +180,46 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 											<div>{chap.title}</div>
 											<div>{moment(chap.created_at).format('DD/MM/YYYY')}</div>
 											<div className='flex gap-3'>
-												<Link className='text-orange-300 hover:text-orange-500' href='#'>
+												<Link
+													className='text-orange-300 hover:text-orange-500'
+													href={`/team/novel/${novel.id}/vol/${vol.id}/update-chap/${chap.id}`}
+												>
 													Chỉnh sửa
 												</Link>
-												<Link className='text-red-300 hover:text-red-500' href='#'>
+												<button
+													className='text-red-300 hover:text-red-500'
+													onClick={() => document.getElementById(`modal_delete_${chap.id}`).showModal()}
+												>
 													Xoá
+												</button>
+												<dialog id={`modal_delete_${chap.id}`} className='modal'>
+													<div className='modal-box'>
+														<form method='dialog'>
+															<button className='btn btn-circle btn-ghost btn-sm absolute right-2 top-2'>
+																✕
+															</button>
+														</form>
+														<h3 className='text-lg font-bold'>Xoá chap!</h3>
+														<p className='py-4 text-base font-normal'>
+															Bạn có chắc muốn xoá chap {chap.title}?
+														</p>
+														<div className='modal-action'>
+															<form method='dialog'>
+																<button
+																	onClick={() => {
+																		router.delete(`/team/novel/${novel.id}/vol/${vol.id}/chap/${chap.id}`);
+																	}}
+																	className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
+																>
+																	Xoá
+																</button>
+																<button className='btn'>Đóng</button>
+															</form>
+														</div>
+													</div>
+												</dialog>
+												<Link className='text-lime-500 hover:text-orange-500' href='#'>
+													Xem
 												</Link>
 											</div>
 										</div>

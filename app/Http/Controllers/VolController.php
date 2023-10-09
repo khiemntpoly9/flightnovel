@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chap;
 use App\Models\Vol;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -32,5 +33,49 @@ class VolController extends Controller
 		$vol->save();
 
 		return redirect()->route('team.novel', ['id' => $id])->with('success', 'Tạo chương thành công');
+	}
+
+	// Page Update Vol
+	public function VolUpdatePage(Request $request, $id, $id_vol)
+	{
+		$vol = Vol::where('id', $id_vol)->first();
+		return Inertia::render('Client/Vol/VolUpdate', [
+			'novel' => $id,
+			'vol' => $vol
+		]);
+	}
+
+	// Update Vol
+	public function VolUpdate(Request $request, $id, $id_vol)
+	{
+		// Validate
+		$request->validate([
+			'title' => ['required', 'string', 'max:255'],
+		], [
+			'title.required' => 'Vui lòng nhập tên chương',
+			'title.max' => 'Tên chương không được quá 255 ký tự',
+		]);
+
+		$vol = Vol::where('id', $id_vol)->first();
+		$vol->title = $request->title;
+		$vol->save();
+
+		return redirect()->route('team.novel', ['id' => $id])->with('success', 'Cập nhật chương thành công');
+	}
+
+	// Xoá Vol
+	public function VolDelete(Request $request, $id, $id_vol)
+	{
+
+		// Xoá các chap trước khi xoá vol
+		$chap = Chap::where('id_vol', $id_vol)->get();
+		foreach ($chap as $item) {
+			$item->delete();
+		}
+		// Xoá vol
+		$vol = Vol::where('id', $id_vol)->first();
+		$vol->delete();
+
+		return redirect()->route('team.novel', ['id' => $id])->with('success', 'Xoá chương thành công');
 	}
 }

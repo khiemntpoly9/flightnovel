@@ -1,10 +1,10 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import { useState } from 'react';
 import { Head, router } from '@inertiajs/react';
+import { useState } from 'react';
 
-export default function Vol({ auth, id_novel }) {
+export default function VolUpdate({ auth, novel, vol }) {
 	const [values, setValues] = useState({
-		title: '',
+		title: vol.title,
 	});
 	// Handle change input
 	const handleChange = (e) => {
@@ -18,11 +18,11 @@ export default function Vol({ auth, id_novel }) {
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		router.post(`/team/novel/${id_novel}/vol`, values);
+		router.patch(`/team/novel/${novel}/vol/${vol.id}`, values);
 	};
 	return (
 		<DefaultLayout auth={auth}>
-			<Head title='Vol' />
+			<Head title='Cập nhật chương' />
 			<div className='container mx-auto w-10/12'>
 				<form onSubmit={handleSubmit}>
 					{/* Tên Vol */}
@@ -45,7 +45,7 @@ export default function Vol({ auth, id_novel }) {
 							type='submit'
 							className='flex w-full justify-center rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600'
 						>
-							Thêm
+							Cập nhật
 						</button>
 					</div>
 				</form>
