@@ -21,6 +21,7 @@ return new class extends Migration {
 			$table->string('provider_id')->nullable();
 			$table->string('provider_token')->nullable();
 			$table->string('avatar')->nullable();
+			$table->string('slug');
 			$table->rememberToken();
 			$table->timestamps();
 			// Foreign Keys

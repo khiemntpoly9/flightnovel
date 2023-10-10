@@ -14,6 +14,7 @@ return new class extends Migration {
 			$table->bigIncrements('id');
 			$table->bigInteger('id_novel')->unsigned();
 			$table->string('title');
+			$table->string('slug');
 			$table->timestamps();
 			// Foreign Keys
 			$table->foreign('id_novel')->references('id')->on('novel');
