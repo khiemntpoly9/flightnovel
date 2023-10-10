@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Novel extends Model
 {
@@ -27,4 +28,9 @@ class Novel extends Model
 	];
 
 	protected $primaryKey = 'id';
+
+	public function follow(): BelongsTo
+	{
+		return $this->belongsTo(Follow::class, 'id_novel', 'id');
+	}
 }

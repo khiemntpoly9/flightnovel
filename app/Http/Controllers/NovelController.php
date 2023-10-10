@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categories;
 use App\Models\Detail;
+use App\Models\Follow;
 use App\Models\Novel;
 use App\Models\NovelCate;
 use App\Models\Team;
@@ -92,11 +93,42 @@ class NovelController extends Controller
 	// Novel User Read
 	public function NovelRead($id)
 	{
+		$status = ['success' => session('success'), 'error' => session('error')];
 		$novel = Novel::where('id', $id)->first();
 		$vol = Vol::where('id_novel', $id)->with('chap:id,id_vol,title,created_at')->get();
+		$follow = Follow::where('id_user', auth()->user()->id)->where('id_novel', $id)->first();
+		$follow_count = Follow::where('id_novel', $id)->count();
 		return Inertia::render('Client/Novel/NovelRead', [
 			'novel' => $novel,
 			'vol' => $vol,
+			'follow' => [
+				'status' => $follow,
+				'count' => $follow_count,
+			],
+			'status' => $status
 		]);
+	}
+
+	// Novel Follow
+	public function NovelFollow($id)
+	{
+		// Lấy id user
+		$id_user = auth()->user()->id;
+		$follow_store = Follow::create([
+			'id_user' => $id_user,
+			'id_novel' => $id,
+		]);
+
+		return redirect()->back()->with('success', 'Theo dõi truyện thành công');
+	}
+
+	// Novel UnFollow
+	public function NovelUnFollow($id)
+	{
+		// Lấy id user
+		$id_user = auth()->user()->id;
+		$follow_delete = Follow::where('id_user', $id_user)->where('id_novel', $id)->delete();
+
+		return redirect()->back()->with('success', 'Bỏ theo dõi truyện thành công');
 	}
 }
