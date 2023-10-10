@@ -18,11 +18,12 @@ class Novel extends Model
 		'illustrator',
 		'views',
 		'status',
+		'slug',
+		'is_publish',
 		'id_rate',
 		'id_team',
 		'id_detail',
 		'id_user',
-		'hidden',
 		'created_at',
 		'updated_at',
 	];
@@ -32,5 +33,10 @@ class Novel extends Model
 	public function follow(): BelongsTo
 	{
 		return $this->belongsTo(Follow::class, 'id_novel', 'id');
+	}
+
+	public function getRouteKeyName(): string
+	{
+		return 'slug';
 	}
 }

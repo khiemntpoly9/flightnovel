@@ -37,10 +37,11 @@ class TeamController extends Controller
 		}
 	}
 	// Hiện Novel chi tiết trong team
-	public function TeamNovel(Request $request, $id)
+	public function TeamNovel(Request $request)
 	{
-		$novel = Novel::where('id', $id)->first();
-		$vol = Vol::where('id_novel', $id)->with('chap:id,id_vol,title,created_at')->get();
+		// Lấy dữ liệu novel từ middleware
+		$novel = $request->get('novel');
+		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,slug,created_at')->get();
 		$status = ['success' => session('success'), 'error' => session('error')];
 		return Inertia::render('Client/Team/TeamNovel', [
 			'novel' => $novel,
@@ -60,7 +61,7 @@ class TeamController extends Controller
 	public function TeamDetailAdmin($id)
 	{
 		$team = Team::where('id', $id)->first();
-		return Inertia::render('Admin/Team/TeamDetail',[
+		return Inertia::render('Admin/Team/TeamDetail', [
 			'team' => $team,
 		]);
 	}

@@ -91,13 +91,12 @@ class NovelController extends Controller
 	}
 
 	// Novel User Read
-	public function NovelRead($id)
+	public function NovelRead(Novel $novel)
 	{
 		$status = ['success' => session('success'), 'error' => session('error')];
-		$novel = Novel::where('id', $id)->first();
-		$vol = Vol::where('id_novel', $id)->with('chap:id,id_vol,title,created_at')->get();
-		$follow = Follow::where('id_user', auth()->user()->id)->where('id_novel', $id)->first();
-		$follow_count = Follow::where('id_novel', $id)->count();
+		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,created_at')->get();
+		$follow = Follow::where('id_user', auth()->user()->id)->where('id_novel', $novel->id)->first();
+		$follow_count = Follow::where('id_novel', $novel->id)->count();
 		return Inertia::render('Client/Novel/NovelRead', [
 			'novel' => $novel,
 			'vol' => $vol,

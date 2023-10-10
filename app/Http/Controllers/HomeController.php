@@ -12,7 +12,7 @@ class HomeController extends Controller
 	public function HomeIndex()
 	{
 		// Lấy novel
-		$novels = Novel::where('hidden', 0)->orderBy('created_at', 'desc')->get();
+		$novels = Novel::where('is_publish', 1)->orderBy('created_at', 'desc')->get();
 		return Inertia::render('Client/Home', [
 			'novels' => $novels,
 			'canLogin' => Route::has('login'),

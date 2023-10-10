@@ -62,7 +62,7 @@ export default function Team({ auth, team_user, team, novel, status }) {
 								<div key={novel.id} className='card'>
 									<img src={novel.thumbnail} alt='' className='' />
 									<div className='name'>
-										<Link href={`/team/novel/${novel.id}`} className='mt-2 text-lg font-semibold'>
+										<Link href={`/team/novel/${novel.slug}`} className='mt-2 text-lg font-semibold'>
 											{novel.name_novel}
 										</Link>
 										<p className='mt-0 font-semibold'> Tác giả: {novel.author}</p>

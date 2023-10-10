@@ -15,6 +15,7 @@ class Chap extends Model
 		'id_vol',
 		'title',
 		'content',
+		'slug',
 		'created_at',
 		'updated_at',
 	];
@@ -22,5 +23,10 @@ class Chap extends Model
 	public function vol(): BelongsTo
 	{
 		return $this->belongsTo(Vol::class, 'id_vol', 'id');
+	}
+
+	public function getRouteKeyName(): string
+	{
+		return 'slug';
 	}
 }
