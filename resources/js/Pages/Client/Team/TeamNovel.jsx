@@ -86,9 +86,12 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 									>
 										Thêm vol
 									</Link>
-									<button className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'>
+									<Link
+										href={`/team/novel/${novel.id}/update`}
+										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+									>
 										Chỉnh sửa chi tiết truyện
-									</button>
+									</Link>
 								</div>
 							</div>
 						</div>

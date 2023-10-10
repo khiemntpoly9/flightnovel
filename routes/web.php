@@ -47,6 +47,9 @@ Route::middleware('auth')->prefix('team')->group(function () {
 	});
 	// Team User
 	Route::middleware('team.user')->group(function () {
+		// Novel
+		Route::get('/novel/{id}/update', [NovelController::class, 'NovelUp'])->name('novel.update.page');
+		Route::patch('/novel/{id}/update', [NovelController::class, 'NovelUpdate'])->name('novel.update');
 		// Vol
 		Route::get('/novel/{id}/vol', [VolController::class, 'VolIndex'])->name('vol.index');
 		Route::get('/novel/{id}/vol/{id_vol}', [VolController::class, 'VolUpdatePage'])->name('vol.update.page');

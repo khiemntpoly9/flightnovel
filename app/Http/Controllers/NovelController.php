@@ -23,14 +23,7 @@ class NovelController extends Controller
 		]);
 	}
 
-	public function NovelUp()
-	{
-		// Lấy categories
-		$categories = Categories::all();
-		return Inertia::render('Client/Novel/NovelUpdate', [
-			'categories' => $categories,
-		]);
-	}
+
 
 	// Thêm truyện
 	public function NovelCreate(Request $request)
@@ -89,6 +82,52 @@ class NovelController extends Controller
 		}
 
 		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
+	}
+
+	// update 
+	public function NovelUp($id_novel)
+	{
+		// Lấy id novel
+		$novel = Novel::where('id', $id_novel)->first();
+		// Lấy categories
+		$categories = Categories::all();
+		return Inertia::render('Client/Novel/NovelUpdate', [
+			'categories' => $categories,
+			'novel' => $novel,
+		]);
+	}
+
+	// Sửa truyện
+
+	public function NovelUpdate(Request $request, $id_novel)
+	{
+		// Lấy id novel
+		$novel = Novel::where('id', $id_novel)->first();
+
+		// Validate
+		$request->validate([
+			'name_novel' => ['required', 'string', 'max:255'],
+			'thumbnail' => ['image', 'mimes:png,jpg', 'max:3000'],
+			'author' => ['required', 'string', 'max:255'],
+			'illustrator' => ['required', 'string', 'max:255'],
+			'categories' => ['required'],
+			'summary' => ['required'],
+		], [
+			'name_novel.required' => 'Tên truyện không được để trống',
+			'name_novel.string' => 'Tên truyện phải là chuỗi',
+			'name_novel.max' => 'Tên truyện không được quá 255 ký tự',
+			'thumbnail.image' => 'Ảnh không đúng định dạng',
+			'thumbnail.mimes' => 'Ảnh phải là định dạng png, jpg',
+			'thumbnail.max' => 'Ảnh không được quá 3MB',
+			'author.required' => 'Tác giả không được để trống',
+			'author.string' => 'Tác giả phải là chuỗi',
+			'author.max' => 'Tác giả không được quá 255 ký tự',
+			'illustrator.required' => 'Họa sĩ không được để trống',
+			'illustrator.string' => 'Họa sĩ phải là chuỗi',
+			'illustrator.max' => 'Họa sĩ không được quá 255 ký tự',
+			'categories.required' => 'Thể loại không được để trống',
+			'summary.required' => 'Tóm tắt không được để trống',
+		]);
 	}
 
 	// admin novel
