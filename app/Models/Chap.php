@@ -15,6 +15,7 @@ class Chap extends Model
 		'id_vol',
 		'title',
 		'content',
+		'slug',
 		'created_at',
 		'updated_at',
 	];

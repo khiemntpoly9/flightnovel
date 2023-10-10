@@ -18,11 +18,12 @@ class Novel extends Model
 		'illustrator',
 		'views',
 		'status',
+		'slug',
+		'is_publish',
 		'id_rate',
 		'id_team',
 		'id_detail',
 		'id_user',
-		'hidden',
 		'created_at',
 		'updated_at',
 	];

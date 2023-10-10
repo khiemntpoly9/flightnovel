@@ -15,6 +15,7 @@ class Vol extends Model
 		'id',
 		'id_novel',
 		'title',
+		'slug',
 		'created_at',
 		'updated_at',
 	];
