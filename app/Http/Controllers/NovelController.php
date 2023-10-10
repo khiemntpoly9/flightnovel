@@ -7,7 +7,6 @@ use App\Models\Detail;
 use App\Models\Follow;
 use App\Models\Novel;
 use App\Models\NovelCate;
-use App\Models\Team;
 use App\Models\TeamUser;
 use App\Models\Vol;
 use Illuminate\Http\Request;
@@ -91,11 +90,17 @@ class NovelController extends Controller
 	}
 
 	// Novel User Read
-	public function NovelRead(Novel $novel)
+	public function NovelRead(Request $request, Novel $novel)
 	{
 		$status = ['success' => session('success'), 'error' => session('error')];
 		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,created_at')->get();
-		$follow = Follow::where('id_user', auth()->user()->id)->where('id_novel', $novel->id)->first();
+		// Lấy id user
+		$id_user = Auth()->user();
+		if (!$id_user) {
+			$follow = null;
+		} else {
+			$follow = Follow::where('id_user', $id_user)->where('id_novel', $novel->id)->first();
+		}
 		$follow_count = Follow::where('id_novel', $novel->id)->count();
 		return Inertia::render('Client/Novel/NovelRead', [
 			'novel' => $novel,
