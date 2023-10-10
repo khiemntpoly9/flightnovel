@@ -6,7 +6,6 @@ use App\Models\Novel;
 use App\Models\Team;
 use App\Models\TeamUser;
 use App\Models\Vol;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
