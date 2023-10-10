@@ -94,13 +94,15 @@ class NovelController extends Controller
 	{
 		$status = ['success' => session('success'), 'error' => session('error')];
 		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,created_at')->get();
-		// Lấy id user
-		$id_user = Auth()->user();
-		if (!$id_user) {
-			$follow = null;
-		} else {
+		// Check login
+		if (auth()->check()) {
+			// Lấy id user
+			$id_user = auth()->user()->id;
 			$follow = Follow::where('id_user', $id_user)->where('id_novel', $novel->id)->first();
+		} else {
+			$follow = null;
 		}
+		// Lấy số lượng follow
 		$follow_count = Follow::where('id_novel', $novel->id)->count();
 		return Inertia::render('Client/Novel/NovelRead', [
 			'novel' => $novel,
