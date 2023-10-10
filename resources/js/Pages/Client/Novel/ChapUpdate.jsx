@@ -22,7 +22,7 @@ export default function ChapUpdate({ auth, chap, list }) {
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		router.patch(`/team/novel/${list.id}/vol/${list.id_vol}/update-chap/${chap.id}`, values);
+		router.patch(`/team/novel/${list.novel}/${list.vol}/${chap.slug}/update`, values);
 	};
 	return (
 		<DefaultLayout auth={auth}>

@@ -15,7 +15,7 @@ return new class extends Migration {
 			$table->bigInteger('id_vol')->unsigned();
 			$table->string('title')->nullable();
 			$table->text('content')->nullable();
-			$table->string('slug');
+			$table->string('slug')->nullable()->unique();
 			$table->timestamps();
 			// Foreign Keys
 			$table->foreign('id_vol')->references('id')->on('vol');

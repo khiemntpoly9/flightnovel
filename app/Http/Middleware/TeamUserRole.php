@@ -12,8 +12,8 @@ class TeamUserRole
 {
 	public function handle(Request $request, Closure $next): Response
 	{
-		$id_novel = $request->route()->parameter('id');
-		$novel = Novel::where('id', $id_novel)->first();
+		$novel_slug = $request->route()->parameter('novel');
+		$novel = Novel::where('slug', $novel_slug)->first();
 		if (!$novel) {
 			return redirect()->route('team.index')->with('error', 'Truyện không tồn tại');
 		} else {
@@ -22,6 +22,7 @@ class TeamUserRole
 			if (!$user) {
 				return redirect()->route('team.index')->with('error', 'Bạn không có quyền cho truyện này');
 			}
+			$request->attributes->set('novel', $novel);
 			return $next($request);
 		}
 	}

@@ -14,7 +14,7 @@ export default function TruyenMoi({ novels }) {
 								<img className='h-full w-full object-cover' src={novel.thumbnail} alt='thumbnail' />
 							</figure>
 							<div className='p-2 text-center'>
-								<Link href={`/novel/${novel.id}`} className='hover:text-red-500'>
+								<Link href={`/novel/${novel.slug}`} className='hover:text-red-500'>
 									{novel.name_novel}
 								</Link>
 							</div>

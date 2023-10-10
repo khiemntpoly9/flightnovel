@@ -18,7 +18,7 @@ return new class extends Migration {
       $table->string('illustrator');
       $table->bigInteger('views')->default(0);
       $table->integer('status')->default(0);
-      $table->string('slug');
+      $table->string('slug')->nullable()->unique();
       $table->integer('is_publish')->unsigned()->default(0);
       $table->bigInteger('id_rate')->unsigned()->nullable();
       $table->bigInteger('id_team')->unsigned();

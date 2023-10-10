@@ -24,4 +24,9 @@ class Chap extends Model
 	{
 		return $this->belongsTo(Vol::class, 'id_vol', 'id');
 	}
+
+	public function getRouteKeyName(): string
+	{
+		return 'slug';
+	}
 }

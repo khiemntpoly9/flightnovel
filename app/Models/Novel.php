@@ -34,4 +34,9 @@ class Novel extends Model
 	{
 		return $this->belongsTo(Follow::class, 'id_novel', 'id');
 	}
+
+	public function getRouteKeyName(): string
+	{
+		return 'slug';
+	}
 }

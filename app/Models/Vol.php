@@ -28,4 +28,9 @@ class Vol extends Model
 	{
 		return $this->hasMany(Chap::class, 'id_vol', 'id');
 	}
+
+	public function getRouteKeyName(): string
+	{
+		return 'slug';
+	}
 }

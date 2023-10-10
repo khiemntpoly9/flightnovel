@@ -27,9 +27,9 @@ Route::get('/', [HomeController::class, 'HomeIndex'])->name('home');
 
 // Novel Read User
 Route::prefix('novel')->group(function () {
-	Route::get('/{id}', [NovelController::class, 'NovelRead'])->name('novel.read');
-	Route::get('/{id}/vol/{id_vol}', [VolController::class, 'VolRead'])->name('vol.read');
-	Route::get('/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapRead'])->name('chap.read');
+	Route::get('/{novel:slug}', [NovelController::class, 'NovelRead'])->name('novel.read');
+	// Route::get('/{novel:slug}/vol/{id_vol}', [VolController::class, 'VolRead'])->name('vol.read');
+	// Route::get('/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapRead'])->name('chap.read');
 });
 
 // Follow
@@ -60,21 +60,23 @@ Route::middleware('auth')->prefix('team')->group(function () {
 		Route::post('/create', [NovelController::class, 'NovelCreate'])->name('novel.create');
 		// Team User Role
 		Route::middleware('team.user')->group(function () {
-			Route::get('/{id}', [TeamController::class, 'TeamNovel'])->middleware('team.user')->name('team.novel');
-			// Vol
-			Route::prefix('{id}/vol')->group(function () {
-				Route::get('/', [VolController::class, 'VolIndex'])->name('vol.index');
-				Route::get('/{id_vol}', [VolController::class, 'VolUpdatePage'])->name('vol.update.page');
-				Route::patch('/{id_vol}', [VolController::class, 'VolUpdate'])->name('vol.update');
-				Route::post('/', [VolController::class, 'VolStore'])->name('vol.create');
-				Route::delete('/{id_vol}', [VolController::class, 'VolDelete'])->name('vol.delete');
-				// Chap
-				Route::prefix('{id_vol}/chap')->group(function () {
+			Route::get('/{novel:slug}', [TeamController::class, 'TeamNovel'])->name('team.novel');
+			Route::prefix('{novel:slug}')->group(function () {
+				Route::get('/create-vol', [VolController::class, 'VolIndex'])->name('vol.index');
+				Route::post('/create-vol', [VolController::class, 'VolStore'])->name('vol.create');
+				// Vol
+				Route::prefix('{vol:slug}')->group(function () {
+					Route::get('/edit', [VolController::class, 'VolUpdatePage'])->name('vol.update.page');
+					Route::patch('/update', [VolController::class, 'VolUpdate'])->name('vol.update');
+					Route::delete('/delete', [VolController::class, 'VolDelete'])->name('vol.delete');
+					// Chap
 					Route::get('/create-chap', [ChapController::class, 'ChapCreate'])->name('chap.create');
 					Route::post('/create-chap', [ChapController::class, 'ChapStore'])->name('chap.store');
-					Route::get('/update-chap/{id_chap}', [ChapController::class, 'ChapUpdate'])->name('chap.update');
-					Route::patch('/update-chap/{id_chap}', [ChapController::class, 'ChapUpdatePatch'])->name('chap.update.patch');
-					Route::delete('/delete/{id_chap}', [ChapController::class, 'ChapDelete'])->name('chap.delete');
+					Route::prefix('{chap:slug}')->group(function () {
+						Route::get('/edit', [ChapController::class, 'ChapUpdate'])->name('chap.update');
+						Route::patch('/update', [ChapController::class, 'ChapUpdatePatch'])->name('chap.update.patch');
+						Route::delete('/delete', [ChapController::class, 'ChapDelete'])->name('chap.delete');
+					});
 				});
 			});
 		});

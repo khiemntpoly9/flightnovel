@@ -81,7 +81,7 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 								{/* read */}
 								<div className='mt-2 flex flex-row justify-center gap-2 md:justify-start'>
 									<Link
-										href={`/team/novel/${novel.id}/vol`}
+										href={`/team/novel/${novel.slug}/create-vol`}
 										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
 									>
 										Thêm vol
@@ -127,14 +127,14 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 								</div>
 								<div>
 									<Link
-										href={`/team/novel/${novel.id}/vol/${vol.id}/chap/create-chap`}
+										href={`/team/novel/${novel.slug}/${vol.slug}/create-chap`}
 										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
 									>
 										Thêm chap
 									</Link>
 									<Link
 										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-										href={`/team/novel/${novel.id}/vol/${vol.id}`}
+										href={`/team/novel/${novel.slug}/${vol.slug}/edit`}
 									>
 										Chỉnh sửa
 									</Link>
@@ -158,7 +158,7 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 												<form method='dialog'>
 													<button
 														onClick={() => {
-															router.delete(`/team/novel/${novel.id}/vol/${vol.id}`);
+															router.delete(`/team/novel/${novel.slug}/${vol.slug}/delete`);
 														}}
 														className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
 													>
@@ -182,7 +182,7 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 											<div className='flex gap-3'>
 												<Link
 													className='text-orange-300 hover:text-orange-500'
-													href={`/team/novel/${novel.id}/vol/${vol.id}/chap/update-chap/${chap.id}`}
+													href={`/team/novel/${novel.slug}/${vol.slug}/${chap.slug}/edit`}
 												>
 													Chỉnh sửa
 												</Link>
@@ -208,7 +208,7 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 																<button
 																	onClick={() => {
 																		router.delete(
-																			`/team/novel/${novel.id}/vol/${vol.id}/chap/delete/${chap.id}`
+																			`/team/novel/${novel.slug}/${vol.slug}/${chap.slug}/delete`
 																		);
 																	}}
 																	className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
