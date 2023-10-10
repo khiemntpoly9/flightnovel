@@ -8,6 +8,7 @@ use App\Models\TeamUser;
 use App\Models\Vol;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class TeamController extends Controller
 {
@@ -70,6 +71,7 @@ class TeamController extends Controller
 		return Inertia::render('Client/Team/TeamCreate');
 	}
 
+	// Tạo team
 	public function TeamStore(Request $request)
 	{
 		// Để show dữ liệu từ form
@@ -87,6 +89,12 @@ class TeamController extends Controller
 			'team_name' => $request->team_name,
 			'team_detail' => $request->team_detail,
 		]);
+
+		// Cập nhật slug
+		$teamID = $team->id;
+		$newSlug = $teamID . '-' . Str::of($request->team_name)->slug('-');
+		$team->slug = $newSlug;
+		$team->save();
 
 		// Tạo mới team_user
 		TeamUser::create([

@@ -56,7 +56,7 @@ class VolController extends Controller
 	}
 
 	// Update Vol
-	public function VolUpdate(Request $request, $novel, $vol)
+	public function VolUpdate(Request $request, $novel, Vol $vol)
 	{
 		// Validate
 		$request->validate([
@@ -67,11 +67,11 @@ class VolController extends Controller
 			'title.max' => 'Tên chương không được quá 255 ký tự',
 		]);
 
-		$vol = Vol::where('slug', $vol)->first();
-		$vol->title = $request->title;
-		$newSlug = $vol->id . '-' . Str::of($request->title)->slug('-');
-		$vol->slug = $newSlug;
-		$vol->save();
+		// Lưu dữ liệu vào bảng vol
+		Vol::where('slug', $vol->slug)->update([
+			'title' => $request->title,
+			'slug' => $vol->id . '-' . Str::of($request->title)->slug('-')
+		]);
 
 		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Cập nhật chương thành công');
 	}

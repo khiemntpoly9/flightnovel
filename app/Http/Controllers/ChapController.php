@@ -47,10 +47,10 @@ class ChapController extends Controller
 	}
 
 	// Cập nhật chap
-	public function ChapUpdate(Request $request, $novel, $vol, $chap)
+	public function ChapUpdate(Request $request, $novel, $vol, Chap $chap)
 	{
 		$list = ['novel' => $novel, 'vol' => $vol];
-		$chap = Chap::where('slug', $chap)->first();
+		$chap = Chap::where('slug', $chap->slug)->first();
 		return Inertia::render('Client/Novel/ChapUpdate', [
 			'chap' => $chap,
 			'list' => $list
@@ -70,12 +70,12 @@ class ChapController extends Controller
 			'content.required' => 'Vui lòng nhập nội dung chương',
 		]);
 
-		$chap = Chap::find($chap->id);
-		$chap->title = $request->title;
-		$chap->content = $request->content;
-		$newSlug = $chap->id . '-' . Str::of($request->title)->slug('-');
-		$chap->slug = $newSlug;
-		$chap->save();
+		// Lưu dữ liệu vào bảng chap
+		Chap::where('id', $chap->id)->update([
+			'title' => $request->title,
+			'content' => $request->content,
+			'slug' => $chap->id . '-' . Str::of($request->title)->slug('-')
+		]);
 
 		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Cập nhật chap thành công');
 	}
