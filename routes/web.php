@@ -31,6 +31,13 @@ Route::prefix('novel')->group(function () {
 	Route::get('/{id}/vol/{id_vol}', [VolController::class, 'VolRead'])->name('vol.read');
 	Route::get('/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapRead'])->name('chap.read');
 });
+
+// Follow
+Route::middleware('auth')->prefix('follow')->group(function () {
+	Route::post('/{id}', [NovelController::class, 'NovelFollow'])->name('novel.follow');
+	Route::delete('/{id}', [NovelController::class, 'NovelUnFollow'])->name('novel.unfollow');
+});
+
 // Profile - Auth Role
 Route::middleware('auth')->prefix('profile')->group(function () {
 	Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');

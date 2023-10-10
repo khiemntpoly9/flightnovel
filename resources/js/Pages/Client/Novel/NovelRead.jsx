@@ -1,8 +1,37 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import moment from 'moment/moment';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
-export default function NovelRead({ auth, novel, vol }) {
+export default function NovelRead({ auth, novel, vol, follow, status }) {
+	// Toast
+	useEffect(() => {
+		// Success
+		if (status.success) {
+			toast.success(status.success, {
+				position: 'top-right',
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+		// Error
+		if (status.error) {
+			toast.error(status.error, {
+				position: 'top-right',
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	}, [status]);
 	return (
 		<DefaultLayout auth={auth}>
 			<div className='container mx-auto w-10/12'>
@@ -50,17 +79,23 @@ export default function NovelRead({ auth, novel, vol }) {
 								</div>
 
 								{/* read */}
-								{/* <div className='mt-2 flex flex-row justify-center gap-2 md:justify-start'>
-									<Link
-										href={`/team/novel/${novel.id}/vol`}
-										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-									>
-										Thêm vol
-									</Link>
-									<button className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'>
-										Chỉnh sửa chi tiết truyện
-									</button>
-								</div> */}
+								<div className='mt-2 flex flex-row justify-center gap-2 md:justify-start'>
+									{follow.status ? (
+										<button
+											className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+											onClick={() => router.delete(`/follow/${novel.id}`)}
+										>
+											Đã Theo dõi
+										</button>
+									) : (
+										<button
+											className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+											onClick={() => router.post(`/follow/${novel.id}`)}
+										>
+											Theo dõi
+										</button>
+									)}
+								</div>
 							</div>
 						</div>
 						{/* Container 2 -  */}
@@ -72,7 +107,7 @@ export default function NovelRead({ auth, novel, vol }) {
 								Số lượt đánh giá <br /> 4.6/5
 							</div>
 							<div className='text-center'>
-								Số lượt theo dõi <br /> 2589
+								Số lượt theo dõi <br /> {follow.count}
 							</div>
 							<div className='text-center'>
 								Số lượt bình luận <br /> 2589
