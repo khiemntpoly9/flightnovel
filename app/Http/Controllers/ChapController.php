@@ -87,4 +87,10 @@ class ChapController extends Controller
 		$chap->delete();
 		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Xoá chap thành công');
 	}
+
+	//Chapter
+	public function Chapter()
+	{
+		return  Inertia::render('Client/Novel/Chapter');
+	}
 }
