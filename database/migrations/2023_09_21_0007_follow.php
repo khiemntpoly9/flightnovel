@@ -18,6 +18,8 @@ return new class extends Migration {
 			// Foreign Keys
 			$table->foreign('id_user')->references('id')->on('users');
 			$table->foreign('id_novel')->references('id')->on('novel');
+			// Unique Constraint
+			$table->unique(['id_user', 'id_novel']);
 		});
 	}
 

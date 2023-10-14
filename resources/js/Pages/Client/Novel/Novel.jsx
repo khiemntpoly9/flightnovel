@@ -61,7 +61,7 @@ export default function Novel({ auth, categories }) {
 		formData.append('summary', values.summary);
 		formData.append('note', values.note);
 		formData.append('thumbnail', selectedFile);
-		router.post('/novel', formData);
+		router.post('/team/novel/create', formData);
 	};
 	return (
 		<DefaultLayout auth={auth}>

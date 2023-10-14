@@ -22,13 +22,12 @@ export default function Team({ team }) {
 								</th>
 								<th>Tên nhóm</th>
 								<th>Chi tiết</th>
-								<th>Sửa</th>
 								<th>Xóa</th>
 							</tr>
 						</thead>
 						<tbody>
 							{team.map((item) => (
-								<tr key={item.id_team}>
+								<tr key={item.id}>
 									<th>
 										<label>
 											<input type='checkbox' className='checkbox' />
@@ -36,9 +35,9 @@ export default function Team({ team }) {
 									</th>
 									<td>
 										<div className='flex items-center space-x-3'>
-											<div>
-												<div className='font-md'>{item.team_name}</div>
-											</div>
+											<Link className='font-md' href={`/admin/team/detail/${item.id}`}>
+												{item.team_name}
+											</Link>
 										</div>
 									</td>
 									<td>
@@ -50,11 +49,6 @@ export default function Team({ team }) {
 												></div>
 											</div>
 										</div>
-									</td>
-									<td>
-										<Link href={`/admin/team/detail/${item.id_team}`} className='btn bg-lime-400 md:btn-xs'>
-											Sửa
-										</Link>
 									</td>
 									<th>
 										<button

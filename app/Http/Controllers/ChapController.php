@@ -3,21 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chap;
+use App\Models\Vol;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class ChapController extends Controller
 {
-	public function ChapCreate(Request $request, $id, $id_vol)
+	public function ChapCreate(Request $request, $novel, $vol)
 	{
 		return Inertia::render('Client/Team/TeamChap', [
-			'id_novel' => $id,
-			'id_vol' => $id_vol,
+			'novel' => $novel,
+			'vol' => $vol,
 		]);
 	}
 
 	// Tạo chap
-	public function ChapStore(Request $request, $id, $id_vol)
+	public function ChapStore(Request $request, $novel, Vol $vol)
 	{
 		$request->validate([
 			'title' => ['required', 'string', 'min:5', 'max:255'],
@@ -29,20 +31,26 @@ class ChapController extends Controller
 			'content.required' => 'Vui lòng nhập nội dung chương',
 		]);
 
-		$chap = new Chap();
-		$chap->id_vol = $id_vol;
-		$chap->title = $request->title;
-		$chap->content = $request->content;
+		$chap = Chap::create([
+			'id_vol' => $vol->id,
+			'title' => $request->title,
+			'content' => $request->content,
+		]);
+
+		// Cập nhật slug
+		$chapID = $chap->id;
+		$newSlug = $chapID . '-' . Str::of($request->title)->slug('-');
+		$chap->slug = $newSlug;
 		$chap->save();
 
-		return redirect()->route('team.novel', ['id' => $id])->with('success', 'Tạo chương thành công');
+		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Tạo chương thành công');
 	}
 
 	// Cập nhật chap
-	public function ChapUpdate(Request $request, $id, $id_vol, $id_chap)
+	public function ChapUpdate(Request $request, $novel, $vol, Chap $chap)
 	{
-		$list = ['id' => $id, 'id_vol' => $id_vol];
-		$chap = Chap::where('id', $id_chap)->first();
+		$list = ['novel' => $novel, 'vol' => $vol];
+		$chap = Chap::where('slug', $chap->slug)->first();
 		return Inertia::render('Client/Novel/ChapUpdate', [
 			'chap' => $chap,
 			'list' => $list
@@ -50,7 +58,7 @@ class ChapController extends Controller
 	}
 
 	// Lưu cập nhật chap
-	public function ChapUpdatePatch(Request $request, $id, $id_vol, $id_chap)
+	public function ChapUpdatePatch(Request $request, $novel, $vol, Chap $chap)
 	{
 		$request->validate([
 			'title' => ['required', 'string', 'min:5', 'max:255'],
@@ -62,19 +70,21 @@ class ChapController extends Controller
 			'content.required' => 'Vui lòng nhập nội dung chương',
 		]);
 
-		$chap = Chap::find($id_chap);
-		$chap->title = $request->title;
-		$chap->content = $request->content;
-		$chap->save();
+		// Lưu dữ liệu vào bảng chap
+		Chap::where('id', $chap->id)->update([
+			'title' => $request->title,
+			'content' => $request->content,
+			'slug' => $chap->id . '-' . Str::of($request->title)->slug('-')
+		]);
 
-		return redirect()->route('team.novel', ['id' => $id])->with('success', 'Cập nhật chap thành công');
+		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Cập nhật chap thành công');
 	}
 
 	// Xoá chap
-	public function ChapDelete(Request $request, $id, $id_vol, $id_chap)
+	public function ChapDelete(Request $request, $novel, $vol, Chap $chap)
 	{
-		$chap = Chap::find($id_chap);
+		$chap = Chap::find($chap->id);
 		$chap->delete();
-		return redirect()->route('team.novel', ['id' => $id])->with('success', 'Xoá chương thành công');
+		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Xoá chap thành công');
 	}
 }

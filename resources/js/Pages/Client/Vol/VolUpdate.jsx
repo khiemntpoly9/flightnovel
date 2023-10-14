@@ -19,7 +19,7 @@ export default function VolUpdate({ auth, novel, vol }) {
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		router.patch(`/team/novel/${novel}/vol/${vol.id}`, values);
+		router.patch(`/team/novel/${novel}/${vol.slug}/update`, values);
 	};
 	return (
 		<DefaultLayout auth={auth}>

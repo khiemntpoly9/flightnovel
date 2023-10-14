@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-export default function TeamChap({ auth, id_novel, id_vol }) {
+export default function TeamChap({ auth, novel, vol }) {
 	const { errors } = usePage().props;
 	const [values, setValues] = useState({
 		title: '',
@@ -22,7 +22,7 @@ export default function TeamChap({ auth, id_novel, id_vol }) {
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		router.post(`/team/novel/${id_novel}/vol/${id_vol}/create-chap`, values);
+		router.post(`/team/novel/${novel}/${vol}/create-chap`, values);
 	};
 	return (
 		<DefaultLayout auth={auth}>

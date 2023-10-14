@@ -15,6 +15,7 @@ class Vol extends Model
 		'id',
 		'id_novel',
 		'title',
+		'slug',
 		'created_at',
 		'updated_at',
 	];
@@ -26,5 +27,10 @@ class Vol extends Model
 	public function chap(): HasMany
 	{
 		return $this->hasMany(Chap::class, 'id_vol', 'id');
+	}
+
+	public function getRouteKeyName(): string
+	{
+		return 'slug';
 	}
 }

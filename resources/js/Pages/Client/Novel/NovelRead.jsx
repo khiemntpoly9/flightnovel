@@ -1,10 +1,10 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import { Link, router } from '@inertiajs/react';
-import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 import moment from 'moment/moment';
+import { Link, router } from '@inertiajs/react';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
-const TeamNovel = ({ auth, novel, vol, status }) => {
+export default function NovelRead({ auth, novel, vol, follow, status }) {
 	// Toast
 	useEffect(() => {
 		// Success
@@ -80,31 +80,34 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 
 								{/* read */}
 								<div className='mt-2 flex flex-row justify-center gap-2 md:justify-start'>
-									<Link
-										href={`/team/novel/${novel.slug}/create-vol`}
-										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-									>
-										Thêm vol
-									</Link>
-									<Link
-										href={`/team/novel/${novel.id}/update`}
-										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-									>
-										Chỉnh sửa chi tiết truyện
-									</Link>
+									{follow.status ? (
+										<button
+											className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+											onClick={() => router.delete(`/follow/${novel.id}`)}
+										>
+											Đã Theo dõi
+										</button>
+									) : (
+										<button
+											className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+											onClick={() => router.post(`/follow/${novel.id}`)}
+										>
+											Theo dõi
+										</button>
+									)}
 								</div>
 							</div>
 						</div>
 						{/* Container 2 -  */}
 						<div className='grid grid-cols-4 border-b-2 py-3'>
 							<div className='text-center'>
-								Số lượt xem <br /> 13213
+								Số lượt xem <br /> {novel.views}
 							</div>
 							<div className='text-center'>
 								Số lượt đánh giá <br /> 4.6/5
 							</div>
 							<div className='text-center'>
-								Số lượt theo dõi <br /> 2589
+								Số lượt theo dõi <br /> {follow.count}
 							</div>
 							<div className='text-center'>
 								Số lượt bình luận <br /> 2589
@@ -128,51 +131,6 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 								<div className='flex items-center'>
 									<p className='rounded text-white'>{vol.title}</p>
 								</div>
-								<div>
-									<Link
-										href={`/team/novel/${novel.slug}/${vol.slug}/create-chap`}
-										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-									>
-										Thêm chap
-									</Link>
-									<Link
-										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-										href={`/team/novel/${novel.slug}/${vol.slug}/edit`}
-									>
-										Chỉnh sửa
-									</Link>
-									<button
-										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-										onClick={() => document.getElementById(`modal_delete_vol_${vol.id}`).showModal()}
-									>
-										Xoá chương
-									</button>
-									<dialog id={`modal_delete_vol_${vol.id}`} className='modal'>
-										<div className='modal-box'>
-											<form method='dialog'>
-												<button className='btn btn-circle btn-ghost btn-sm absolute right-2 top-2'>✕</button>
-											</form>
-											<h3 className='text-lg font-bold'>Xoá chương!</h3>
-											<p className='py-4 text-base font-normal'>Bạn có chắc muốn xoá chương {vol.title}?</p>
-											<p className='py-4 text-base font-normal'>
-												Đồng nghĩa với việc bạn sẽ xoá tất cả các chap trong chương này!
-											</p>
-											<div className='modal-action'>
-												<form method='dialog'>
-													<button
-														onClick={() => {
-															router.delete(`/team/novel/${novel.slug}/${vol.slug}/delete`);
-														}}
-														className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
-													>
-														Xoá
-													</button>
-													<button className='btn'>Đóng</button>
-												</form>
-											</div>
-										</div>
-									</dialog>
-								</div>
 							</div>
 						</div>
 						<div className='flex gap-2 p-2'>
@@ -183,46 +141,6 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 											<div>{chap.title}</div>
 											<div>{moment(chap.created_at).format('DD/MM/YYYY')}</div>
 											<div className='flex gap-3'>
-												<Link
-													className='text-orange-300 hover:text-orange-500'
-													href={`/team/novel/${novel.slug}/${vol.slug}/${chap.slug}/edit`}
-												>
-													Chỉnh sửa
-												</Link>
-												<button
-													className='text-red-300 hover:text-red-500'
-													onClick={() => document.getElementById(`modal_delete_${chap.id}`).showModal()}
-												>
-													Xoá
-												</button>
-												<dialog id={`modal_delete_${chap.id}`} className='modal'>
-													<div className='modal-box'>
-														<form method='dialog'>
-															<button className='btn btn-circle btn-ghost btn-sm absolute right-2 top-2'>
-																✕
-															</button>
-														</form>
-														<h3 className='text-lg font-bold'>Xoá chap!</h3>
-														<p className='py-4 text-base font-normal'>
-															Bạn có chắc muốn xoá chap {chap.title}?
-														</p>
-														<div className='modal-action'>
-															<form method='dialog'>
-																<button
-																	onClick={() => {
-																		router.delete(
-																			`/team/novel/${novel.slug}/${vol.slug}/${chap.slug}/delete`
-																		);
-																	}}
-																	className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
-																>
-																	Xoá
-																</button>
-																<button className='btn'>Đóng</button>
-															</form>
-														</div>
-													</div>
-												</dialog>
 												<Link className='text-lime-500 hover:text-orange-500' href='#'>
 													Xem
 												</Link>
@@ -241,6 +159,4 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 			</div>
 		</DefaultLayout>
 	);
-};
-
-export default TeamNovel;
+}

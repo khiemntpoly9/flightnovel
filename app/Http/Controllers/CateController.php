@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class CateController extends Controller
 {
@@ -28,9 +29,14 @@ class CateController extends Controller
 		]);
 
 		// Lưu dữ liệu vào bảng categories
-		Categories::create([
+		$category = Categories::create([
 			'name' => $request->name,
 		]);
+
+		// Cập nhật slug
+		$newSlug = Str::of($request->name)->slug('-');
+		$category->slug = $newSlug;
+		$category->save();
 
 		$request->session()->flash('success', 'Tạo thể loại thành công');
 		return redirect()->route('admin.categories');
@@ -61,6 +67,7 @@ class CateController extends Controller
 		// Lưu dữ liệu vào bảng categories
 		Categories::where('id', $request->id)->update([
 			'name' => $request->name,
+			'slug' => Str::of($request->name)->slug('-')
 		]);
 
 		$request->session()->flash('success', 'Cập nhật thể loại thành công');

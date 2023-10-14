@@ -6,18 +6,20 @@ use App\Models\Chap;
 use App\Models\Vol;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class VolController extends Controller
 {
-	public function VolIndex(Request $request, $id)
+	public function VolIndex(Request $request)
 	{
+		$novel = $request->get('novel');
 		return Inertia::render('Client/Vol/Vol', [
-			'id_novel' => $id,
+			'novel_slug' => $novel->slug,
 		]);
 	}
 
 	// Tạo vol
-	public function VolStore(Request $request, $id)
+	public function VolStore(Request $request)
 	{
 		// Validate
 		$request->validate([
@@ -27,27 +29,34 @@ class VolController extends Controller
 			'title.min' => 'Tên vol phải có ít nhất 5 ký tự',
 			'title.max' => 'Tên vol không được quá 255 ký tự',
 		]);
-
-		$vol = new Vol();
-		$vol->title = $request->title;
-		$vol->id_novel = $id;
+		// Lấy dữ liệu novel từ middleware
+		$novel = $request->get('novel');
+		// Tạo vol
+		$vol = Vol::create([
+			'id_novel' => $novel->id,
+			'title' => $request->title,
+		]);
+		// Cập nhật slug
+		$volID = $vol->id;
+		$newSlug = $volID . '-' . Str::of($request->title)->slug('-');
+		$vol->slug = $newSlug;
 		$vol->save();
 
-		return redirect()->route('team.novel', ['id' => $id])->with('success', 'Tạo chương thành công');
+		return redirect()->route('team.novel', ['novel' => $novel->slug])->with('success', 'Tạo chương thành công');
 	}
 
 	// Page Update Vol
-	public function VolUpdatePage(Request $request, $id, $id_vol)
+	public function VolUpdatePage(Request $request, $novel, $vol)
 	{
-		$vol = Vol::where('id', $id_vol)->first();
+		$vol = Vol::where('slug', $vol)->first();
 		return Inertia::render('Client/Vol/VolUpdate', [
-			'novel' => $id,
+			'novel' => $novel,
 			'vol' => $vol
 		]);
 	}
 
 	// Update Vol
-	public function VolUpdate(Request $request, $id, $id_vol)
+	public function VolUpdate(Request $request, $novel, Vol $vol)
 	{
 		// Validate
 		$request->validate([
@@ -58,26 +67,29 @@ class VolController extends Controller
 			'title.max' => 'Tên chương không được quá 255 ký tự',
 		]);
 
-		$vol = Vol::where('id', $id_vol)->first();
-		$vol->title = $request->title;
-		$vol->save();
+		// Lưu dữ liệu vào bảng vol
+		Vol::where('slug', $vol->slug)->update([
+			'title' => $request->title,
+			'slug' => $vol->id . '-' . Str::of($request->title)->slug('-')
+		]);
 
-		return redirect()->route('team.novel', ['id' => $id])->with('success', 'Cập nhật chương thành công');
+		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Cập nhật chương thành công');
 	}
 
 	// Xoá Vol
-	public function VolDelete(Request $request, $id, $id_vol)
+	public function VolDelete(Request $request, $novel, $vol)
 	{
-
+		// Lấy id vol
+		$volA = Vol::where('slug', $vol)->first();
 		// Xoá các chap trước khi xoá vol
-		$chap = Chap::where('id_vol', $id_vol)->get();
-		foreach ($chap as $item) {
-			$item->delete();
+		$chap = Chap::where('id_vol', $volA->id)->get();
+		if ($chap) {
+			foreach ($chap as $item) {
+				$item->delete();
+			}
 		}
 		// Xoá vol
-		$vol = Vol::where('id', $id_vol)->first();
-		$vol->delete();
-
-		return redirect()->route('team.novel', ['id' => $id])->with('success', 'Xoá chương thành công');
+		$volA->delete();
+		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Xoá chương thành công');
 	}
 }

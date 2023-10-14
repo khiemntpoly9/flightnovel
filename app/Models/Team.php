@@ -16,6 +16,7 @@ class Team extends Model
 		'id',
 		'team_name',
 		'team_detail',
+		'slug',
 		'created_at',
 		'updated_at',
 	];

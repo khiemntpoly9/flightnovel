@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Categories;
 use App\Models\Detail;
+use App\Models\Follow;
 use App\Models\Novel;
 use App\Models\NovelCate;
-use App\Models\Team;
 use App\Models\TeamUser;
+use App\Models\Vol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -130,7 +131,7 @@ class NovelController extends Controller
 		]);
 	}
 
-	// admin novel
+	// Admin Novel
 	public function NovelAdmin()
 	{
 		return Inertia::render('Admin/Novel/Novel');

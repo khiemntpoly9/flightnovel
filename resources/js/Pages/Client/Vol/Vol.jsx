@@ -2,7 +2,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { useState } from 'react';
 import { Head, router, usePage } from '@inertiajs/react';
 
-export default function Vol({ auth, id_novel }) {
+export default function Vol({ auth, novel_slug }) {
 	const { errors } = usePage().props;
 	const [values, setValues] = useState({
 		title: '',
@@ -19,17 +19,17 @@ export default function Vol({ auth, id_novel }) {
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		router.post(`/team/novel/${id_novel}/vol`, values);
+		router.post(`/team/novel/${novel_slug}/create-vol`, values);
 	};
 	return (
 		<DefaultLayout auth={auth}>
-			<Head title='Vol' />
+			<Head title='Thêm chương' />
 			<div className='container mx-auto w-10/12'>
 				<form onSubmit={handleSubmit}>
 					{/* Tên Vol */}
 					<div className='mb-2'>
 						<label htmlFor='title' className='mb-2 block text-sm font-medium leading-6 text-gray-900'>
-							Tên Vol
+							Tên Chương
 						</label>
 						<div>
 							<input
