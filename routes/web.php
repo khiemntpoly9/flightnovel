@@ -28,7 +28,7 @@ Route::get('/', [HomeController::class, 'HomeIndex'])->name('home');
 // Novel Read User
 Route::prefix('novel')->group(function () {
 	Route::get('/{novel:slug}', [NovelController::class, 'NovelRead'])->name('novel.read');
-	Route::get('/{novel:slug}/chap',[ChapController::class,'Chapter'])->name('novel.chapter');
+	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}',[ChapController::class,'Chapter'])->name('novel.chapter');
 	// Route::get('/{novel:slug}/vol/{id_vol}', [VolController::class, 'VolRead'])->name('vol.read');
 	// Route::get('/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapRead'])->name('chap.read');
 });

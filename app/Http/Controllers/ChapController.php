@@ -89,8 +89,9 @@ class ChapController extends Controller
 	}
 
 	//Chapter
-	public function Chapter()
+	public function Chapter(Request $request,$novel, $vol, Chap $chap)
 	{
-		return  Inertia::render('Client/Novel/Chapter');
+		$vol = Vol::where('slug',$vol)->first();
+		return  Inertia::render('Client/Novel/Chapter',['vol'=>$vol,'chap'=>$chap]);
 	}
 }

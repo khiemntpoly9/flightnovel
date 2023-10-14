@@ -93,7 +93,7 @@ class NovelController extends Controller
 	public function NovelRead(Request $request, Novel $novel)
 	{
 		$status = ['success' => session('success'), 'error' => session('error')];
-		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,created_at')->get();
+		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,slug,created_at')->get();
 		// Check login
 		if (auth()->check()) {
 			// Lấy id user
