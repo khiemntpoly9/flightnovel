@@ -141,7 +141,10 @@ export default function NovelRead({ auth, novel, vol, follow, status }) {
 											<div>{chap.title}</div>
 											<div>{moment(chap.created_at).format('DD/MM/YYYY')}</div>
 											<div className='flex gap-3'>
-												<Link className='text-lime-500 hover:text-orange-500' href='#'>
+												<Link
+													className='text-lime-500 hover:text-orange-500'
+													href={`/novel/${novel.slug}/${vol.slug}/${chap.slug}`}
+												>
 													Xem
 												</Link>
 											</div>

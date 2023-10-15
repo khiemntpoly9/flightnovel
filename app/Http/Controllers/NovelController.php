@@ -158,8 +158,8 @@ class NovelController extends Controller
 
 		foreach ($categoryIds as $cateId) {
 			// Lấy id của tiểu thuyết và id của thể loại từ form hoặc từ dữ liệu hiện có
-			$id_novel = $novel->id; // Điều này cần phải lấy từ dữ liệu tiểu thuyết
-			$id_categories = $cateId; // Điều này lấy từ biến vòng lặp $categoryIds
+			$id_novel = $novel->id; //  lấy từ dữ liệu tiểu thuyết
+			$id_categories = $cateId; //  lấy từ biến vòng lặp $categoryIds
 
 			// Tạo đối tượng NovelCate
 			$novelCate = new NovelCate();
@@ -176,14 +176,15 @@ class NovelController extends Controller
 	// Admin Novel
 	public function NovelAdmin()
 	{
-		return Inertia::render('Admin/Novel/Novel');
+		$novels = Novel::all();
+		return Inertia::render('Admin/Novel/Novel', ['novels' => $novels]);
 	}
 
 	// Novel User Read
 	public function NovelRead(Request $request, Novel $novel)
 	{
 		$status = ['success' => session('success'), 'error' => session('error')];
-		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,created_at')->get();
+		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,slug,created_at')->get();
 		// Check login
 		if (auth()->check()) {
 			// Lấy id user
