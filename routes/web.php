@@ -62,6 +62,10 @@ Route::middleware('auth')->prefix('team')->group(function () {
 		Route::middleware('team.user')->group(function () {
 			Route::get('/{novel:slug}', [TeamController::class, 'TeamNovel'])->name('team.novel');
 			Route::prefix('{novel:slug}')->group(function () {
+				//update novel
+				Route::get('/update-novel', [NovelController::class, 'NovelUp'])->name('novel.update.page');
+				Route::patch('/update-novel', [NovelController::class, 'NovelUpdate'])->name('novel.update');
+				//create vol
 				Route::get('/create-vol', [VolController::class, 'VolIndex'])->name('vol.index');
 				Route::post('/create-vol', [VolController::class, 'VolStore'])->name('vol.create');
 				// Vol

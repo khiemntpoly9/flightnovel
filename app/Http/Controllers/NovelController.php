@@ -86,24 +86,26 @@ class NovelController extends Controller
 	}
 
 	// update 
-	public function NovelUp($id_novel)
+	public function NovelUp($novel)
 	{
 		// Lấy id novel
-		$novel = Novel::where('id', $id_novel)->first();
+		$novel = Novel::where('slug', $novel)->first();
 		// Lấy categories
 		$categories = Categories::all();
+		$detail = Detail::find($novel->id_detail);
+		$details = $detail;
+
 		return Inertia::render('Client/Novel/NovelUpdate', [
 			'categories' => $categories,
-			'novel' => $novel,
+			'detail' => $details,
+			'novel' => $novel
 		]);
 	}
 
 	// Sửa truyện
 
-	public function NovelUpdate(Request $request, $id_novel)
+	public function NovelUpdate(Request $request, $novel)
 	{
-		// Lấy id novel
-		$novel = Novel::where('id', $id_novel)->first();
 
 		// Validate
 		$request->validate([
@@ -129,11 +131,100 @@ class NovelController extends Controller
 			'categories.required' => 'Thể loại không được để trống',
 			'summary.required' => 'Tóm tắt không được để trống',
 		]);
+
+
+
+
+		// Upload ảnh
+		$path = Storage::disk('digitalocean')->put('novel', $request->file('thumbnail'), 'public');
+
+		// sửa novel
+		Novel::where('slug', $novel->slug)->update([
+			'name_novel' => $request->name_novel,
+			'thumbnail' => 'https://flightnovel.sgp1.digitaloceanspaces.com/' . $path,
+			'author' => $request->author,
+			'illustrator' => $request->illustrator,
+			'id_user' => auth()->user()->id,
+		]);
+
+		// sửa dữ liệu bảng detail
+		$detail = Detail::where('id', $novel->id_detail)->update([
+			'summary' => $request->summary,
+			'note' => $request->note,
+		]);
+
+		// sửa truyện vào bảng novel_cate
+		$categoryIds = explode(',', $request->categories);
+
+		foreach ($categoryIds as $cateId) {
+			// Lấy id của tiểu thuyết và id của thể loại từ form hoặc từ dữ liệu hiện có
+			$id_novel = $novel->id; // Điều này cần phải lấy từ dữ liệu tiểu thuyết
+			$id_categories = $cateId; // Điều này lấy từ biến vòng lặp $categoryIds
+
+			// Tạo đối tượng NovelCate
+			$novelCate = new NovelCate();
+			$novelCate->id_novel = $id_novel;
+			$novelCate->id_categories = $id_categories;
+
+			// Cập nhật hoặc tạo mới bản ghi trong bảng NovelCate
+			$novelCate->update();
+		}
+
+		return redirect()->route('team.index')->with('success', 'Sửa truyện thành công');
 	}
 
 	// Admin Novel
 	public function NovelAdmin()
 	{
 		return Inertia::render('Admin/Novel/Novel');
+	}
+
+	// Novel User Read
+	public function NovelRead(Request $request, Novel $novel)
+	{
+		$status = ['success' => session('success'), 'error' => session('error')];
+		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,created_at')->get();
+		// Check login
+		if (auth()->check()) {
+			// Lấy id user
+			$id_user = auth()->user()->id;
+			$follow = Follow::where('id_user', $id_user)->where('id_novel', $novel->id)->first();
+		} else {
+			$follow = null;
+		}
+		// Lấy số lượng follow
+		$follow_count = Follow::where('id_novel', $novel->id)->count();
+		return Inertia::render('Client/Novel/NovelRead', [
+			'novel' => $novel,
+			'vol' => $vol,
+			'follow' => [
+				'status' => $follow,
+				'count' => $follow_count,
+			],
+			'status' => $status
+		]);
+	}
+
+	// Novel Follow
+	public function NovelFollow($id)
+	{
+		// Lấy id user
+		$id_user = auth()->user()->id;
+		$follow_store = Follow::create([
+			'id_user' => $id_user,
+			'id_novel' => $id,
+		]);
+
+		return redirect()->back()->with('success', 'Theo dõi truyện thành công');
+	}
+
+	// Novel UnFollow
+	public function NovelUnFollow($id)
+	{
+		// Lấy id user
+		$id_user = auth()->user()->id;
+		$follow_delete = Follow::where('id_user', $id_user)->where('id_novel', $id)->delete();
+
+		return redirect()->back()->with('success', 'Bỏ theo dõi truyện thành công');
 	}
 }

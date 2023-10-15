@@ -5,17 +5,18 @@ import { router, usePage } from '@inertiajs/react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-export default function NovelUpdate({ auth, categories, novel }) {
+export default function NovelUpdate({ auth, categories, novel, detail }) {
 	const { errors } = usePage().props;
 	const [values, setValues] = useState({
 		name_novel: novel.name_novel,
-		another_name: novel.another_name,
+		another_name: detail.another_name,
 		author: novel.author,
 		illustrator: novel.illustrator,
 		categories: [],
-		summary: novel.summary,
+		summary: detail.summary,
 		note: novel.note,
 	});
+
 	const [selectedFile, setSelectedFile] = useState(null);
 	// Handle change input
 	const handleChange = (e) => {
@@ -61,7 +62,7 @@ export default function NovelUpdate({ auth, categories, novel }) {
 		formData.append('summary', values.summary);
 		formData.append('note', values.note);
 		formData.append('thumbnail', selectedFile);
-		router.post('/novel', formData);
+		router.patch(`/team/novel/${novel.slug}/update-novel`, formData);
 	};
 	return (
 		<DefaultLayout auth={auth}>
