@@ -86,7 +86,8 @@ class NovelController extends Controller
 	// Admin Novel
 	public function NovelAdmin()
 	{
-		return Inertia::render('Admin/Novel/Novel');
+		$novels = Novel::all();
+		return Inertia::render('Admin/Novel/Novel',['novels'=> $novels]);
 	}
 
 	// Novel User Read
