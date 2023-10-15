@@ -86,18 +86,18 @@ class NovelController extends Controller
 	}
 
 	// update 
-	public function NovelUp($novel)
+	public function NovelUp(Request $request, $novel)
 	{
+
 		// Lấy id novel
 		$novel = Novel::where('slug', $novel)->first();
 		// Lấy categories
 		$categories = Categories::all();
 		$detail = Detail::find($novel->id_detail);
-		$details = $detail;
 
 		return Inertia::render('Client/Novel/NovelUpdate', [
 			'categories' => $categories,
-			'detail' => $details,
+			'detail' => $detail,
 			'novel' => $novel
 		]);
 	}
@@ -106,7 +106,7 @@ class NovelController extends Controller
 
 	public function NovelUpdate(Request $request, $novel)
 	{
-
+		dd($request->all());
 		// Validate
 		$request->validate([
 			'name_novel' => ['required', 'string', 'max:255'],
@@ -132,11 +132,21 @@ class NovelController extends Controller
 			'summary.required' => 'Tóm tắt không được để trống',
 		]);
 
+		if ($request->thumbnail) {
+			$path_old = Novel::where('slug', $novel)->first()->thumbnail;
+			// Xóa ảnh cũ (Áp dụng link DigitalOcean, vì có trường hợp link avatar của Google)
+			if ($path_old) {
+				$pos = strpos($path_old, 'thumbnail');
+				$path_old_cut = substr($path_old, $pos);
+				// Tiến hành xóa
+				// Storage::disk('digitalocean')->delete($path_old_cut);
+				dd($path_old_cut);
+			}
 
+			// Upload ảnh
+			// $path = Storage::disk('digitalocean')->put('novel', $request->file('thumbnail'), 'public');
+		}
 
-
-		// Upload ảnh
-		$path = Storage::disk('digitalocean')->put('novel', $request->file('thumbnail'), 'public');
 
 		// sửa novel
 		Novel::where('slug', $novel->slug)->update([
