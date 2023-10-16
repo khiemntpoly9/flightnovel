@@ -85,8 +85,8 @@ class NovelController extends Controller
 		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
 	}
 
-	// update 
-	public function NovelUp($novel)
+	// Novel Update Pape
+	public function NovelUpdatePage($novel)
 	{
 		// Lấy id novel
 		$novel = Novel::where('slug', $novel)->first();
@@ -103,13 +103,12 @@ class NovelController extends Controller
 	}
 
 	// Sửa truyện
-
 	public function NovelUpdate(Request $request, $novel)
 	{
-
+		dd($request->all());
 		// Validate
 		$request->validate([
-			'name_novel' => ['required', 'string', 'max:255'],
+			'name_novel' => ['required', 'string', 'max:255', 'min:5'],
 			'thumbnail' => ['image', 'mimes:png,jpg', 'max:3000'],
 			'author' => ['required', 'string', 'max:255'],
 			'illustrator' => ['required', 'string', 'max:255'],
@@ -119,6 +118,7 @@ class NovelController extends Controller
 			'name_novel.required' => 'Tên truyện không được để trống',
 			'name_novel.string' => 'Tên truyện phải là chuỗi',
 			'name_novel.max' => 'Tên truyện không được quá 255 ký tự',
+			'name_novel.min' => 'Tên truyện không được dưới 5 ký tự',
 			'thumbnail.image' => 'Ảnh không đúng định dạng',
 			'thumbnail.mimes' => 'Ảnh phải là định dạng png, jpg',
 			'thumbnail.max' => 'Ảnh không được quá 3MB',
@@ -132,13 +132,10 @@ class NovelController extends Controller
 			'summary.required' => 'Tóm tắt không được để trống',
 		]);
 
-
-
-
 		// Upload ảnh
 		$path = Storage::disk('digitalocean')->put('novel', $request->file('thumbnail'), 'public');
 
-		// sửa novel
+		// Sửa novel
 		Novel::where('slug', $novel->slug)->update([
 			'name_novel' => $request->name_novel,
 			'thumbnail' => 'https://flightnovel.sgp1.digitaloceanspaces.com/' . $path,
@@ -147,13 +144,13 @@ class NovelController extends Controller
 			'id_user' => auth()->user()->id,
 		]);
 
-		// sửa dữ liệu bảng detail
+		// Sửa dữ liệu bảng detail
 		$detail = Detail::where('id', $novel->id_detail)->update([
 			'summary' => $request->summary,
 			'note' => $request->note,
 		]);
 
-		// sửa truyện vào bảng novel_cate
+		// Sửa truyện vào bảng novel_cate
 		$categoryIds = explode(',', $request->categories);
 
 		foreach ($categoryIds as $cateId) {
@@ -169,7 +166,6 @@ class NovelController extends Controller
 			// Cập nhật hoặc tạo mới bản ghi trong bảng NovelCate
 			$novelCate->update();
 		}
-
 		return redirect()->route('team.index')->with('success', 'Sửa truyện thành công');
 	}
 

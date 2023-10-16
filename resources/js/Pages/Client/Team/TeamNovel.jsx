@@ -87,7 +87,7 @@ const TeamNovel = ({ auth, novel, vol, status }) => {
 										Thêm vol
 									</Link>
 									<Link
-										href={`/team/novel/${novel.slug}/update-novel`}
+										href={`/team/novel/${novel.slug}/update`}
 										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
 									>
 										Chỉnh sửa chi tiết truyện
