@@ -63,6 +63,7 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 		formData.append('note', values.note);
 		formData.append('thumbnail', selectedFile);
 		router.patch(`/team/novel/${novel.slug}/update`, formData);
+		console.log(values);
 	};
 	return (
 		<DefaultLayout auth={auth}>
