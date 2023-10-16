@@ -1,23 +1,30 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { router, usePage } from '@inertiajs/react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-export default function NovelUpdate({ auth, categories, novel, detail }) {
+export default function NovelUpdate({ auth, novel, detail, categories, novel_cate }) {
 	const { errors } = usePage().props;
+	const initialCategoryIds = novel_cate.map((item) => item.id_categories);
 	const [values, setValues] = useState({
 		name_novel: novel.name_novel,
 		another_name: detail.another_name,
 		author: novel.author,
 		illustrator: novel.illustrator,
-		categories: [],
+		categories: initialCategoryIds,
 		summary: detail.summary,
-		note: novel.note,
+		note: detail.note,
 	});
-
 	const [selectedFile, setSelectedFile] = useState(null);
+	const [checkboxStates, setCheckboxStates] = useState([]);
+	useEffect(() => {
+		const initialCheckboxStates = categories.map((category) =>
+			novel_cate.some((item) => item.id_categories === category.id)
+		);
+		setCheckboxStates(initialCheckboxStates);
+	}, [categories, novel_cate]);
 	// Handle change input
 	const handleChange = (e) => {
 		const key = e.target.id;
@@ -28,26 +35,17 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 		}));
 	};
 	// Handle change checkbox
-	const handleCheckbox = (e) => {
-		const cateId = e.target.id;
-		const isChecked = e.target.checked;
-
-		// Lấy mảng categories hiện tại
-		const updateCategories = [...values.categories];
-
-		if (isChecked) {
-			// Nếu được check thì thêm id đó vào mảng
-			updateCategories.push(cateId);
-		} else {
-			// Nếu không được check thì xóa id đó trong mảng
-			const index = updateCategories.indexOf(cateId);
-			if (index !== -1) {
-				updateCategories.splice(index, 1);
-			}
-		}
+	const handleCheckbox = (index) => {
+		const updatedCheckboxStates = [...checkboxStates];
+		updatedCheckboxStates[index] = !updatedCheckboxStates[index];
+		setCheckboxStates(updatedCheckboxStates);
+		// Lấy mảng categories hiện tại dựa trên trạng thái checkbox
+		const updatedCategories = categories
+			.filter((category, i) => updatedCheckboxStates[i])
+			.map((category) => category.id);
 		setValues((values) => ({
 			...values,
-			categories: updateCategories,
+			categories: updatedCategories,
 		}));
 	};
 	// Handle submit form
@@ -62,7 +60,7 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 		formData.append('summary', values.summary);
 		formData.append('note', values.note);
 		formData.append('thumbnail', selectedFile);
-		router.patch(`/team/novel/${novel.slug}/update`, formData);
+		router.post(`/team/novel/${novel.slug}/update`, formData);
 	};
 	return (
 		<DefaultLayout auth={auth}>
@@ -88,7 +86,7 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 									<input
 										id='name_novel'
 										type='text'
-										value={values.name_novel}
+										defaultValue={values.name_novel}
 										onChange={handleChange}
 										className={`${
 											errors && errors.name_novel ? 'mb-2 border-rose-600' : ''
@@ -110,7 +108,7 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 									<input
 										id='another_name'
 										type='text'
-										value={values.another_name}
+										defaultValue={values.another_name}
 										onChange={handleChange}
 										className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 									/>
@@ -125,7 +123,7 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 									<input
 										id='author'
 										type='text'
-										value={values.author}
+										defaultValue={values.author}
 										onChange={handleChange}
 										className={`${
 											errors && errors.author ? 'mb-2 border-rose-600' : ''
@@ -143,7 +141,7 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 									<input
 										id='illustrator'
 										type='text'
-										value={values.illustrator}
+										defaultValue={values.illustrator}
 										onChange={handleChange}
 										className={`${
 											errors && errors.illustrator ? 'mb-2 border-rose-600' : ''
@@ -159,14 +157,15 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 								<span className='block text-sm font-medium leading-6 text-gray-900'>Thể loại</span>
 							</div>
 							<div className='mb-2 flex flex-wrap items-center'>
-								{categories.map((category) => (
+								{categories.map((category, index) => (
 									<div key={category.id} className='mb-2 w-1/2 md:mb-0 md:flex md:w-1/3'>
 										<input
 											className='mr-1'
 											type='checkbox'
 											name='categories'
 											id={category.id}
-											onChange={handleCheckbox}
+											defaultChecked={checkboxStates[index]}
+											onChange={() => handleCheckbox(index)}
 										/>
 										<label
 											htmlFor={category.id}

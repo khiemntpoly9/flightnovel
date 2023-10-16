@@ -12,6 +12,7 @@ use App\Models\Vol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class NovelController extends Controller
 {
@@ -59,7 +60,7 @@ class NovelController extends Controller
 			'note' => $request->note,
 		]);
 		// Upload ảnh
-		$path = Storage::disk('digitalocean')->put('novel', $request->file('thumbnail'), 'public');
+		$path = Storage::disk('digitalocean')->put('thumbnail', $request->file('thumbnail'), 'public');
 		// Thêm truyện
 		$novel = Novel::create([
 			'name_novel' => $request->name_novel,
@@ -84,29 +85,41 @@ class NovelController extends Controller
 	}
 
 	// Novel Update Pape
-	public function NovelUpdatePage($novel)
+	public function NovelUpdatePage(Request $request)
 	{
 		// Lấy id novel
-		$novel = Novel::where('slug', $novel)->first();
+		$novel = $request->get('novel');
 		// Lấy categories
 		$categories = Categories::all();
+		// Lấy list categories
+		$novel_cate = NovelCate::where('id_novel', $novel->id)->get();
 		$detail = Detail::find($novel->id_detail);
 
 		return Inertia::render('Client/Novel/NovelUpdate', [
-			'categories' => $categories,
+			'novel' => $novel,
 			'detail' => $detail,
-			'novel' => $novel
+			'categories' => $categories,
+			'novel_cate' => $novel_cate,
 		]);
 	}
 
 	// Sửa truyện
-	public function NovelUpdate(Request $request, $novel)
+	public function NovelUpdate(Request $request)
 	{
-		dd($request->all());
+		// Get Novel
+		$novel = $request->get('novel');
 		// Validate
+		if ($request->hasFile('thumbnail')) {
+			$request->validate([
+				'thumbnail' => ['image', 'mimes:png,jpg', 'max:3000'],
+			], [
+				'thumbnail.image' => 'Ảnh không đúng định dạng',
+				'thumbnail.mimes' => 'Ảnh phải là định dạng png, jpg',
+				'thumbnail.max' => 'Ảnh không được quá 3MB',
+			]);
+		}
 		$request->validate([
 			'name_novel' => ['required', 'string', 'max:255', 'min:5'],
-			'thumbnail' => ['image', 'mimes:png,jpg', 'max:3000'],
 			'author' => ['required', 'string', 'max:255'],
 			'illustrator' => ['required', 'string', 'max:255'],
 			'categories' => ['required'],
@@ -116,9 +129,6 @@ class NovelController extends Controller
 			'name_novel.string' => 'Tên truyện phải là chuỗi',
 			'name_novel.max' => 'Tên truyện không được quá 255 ký tự',
 			'name_novel.min' => 'Tên truyện không được dưới 5 ký tự',
-			'thumbnail.image' => 'Ảnh không đúng định dạng',
-			'thumbnail.mimes' => 'Ảnh phải là định dạng png, jpg',
-			'thumbnail.max' => 'Ảnh không được quá 3MB',
 			'author.required' => 'Tác giả không được để trống',
 			'author.string' => 'Tác giả phải là chuỗi',
 			'author.max' => 'Tác giả không được quá 255 ký tự',
@@ -128,51 +138,48 @@ class NovelController extends Controller
 			'categories.required' => 'Thể loại không được để trống',
 			'summary.required' => 'Tóm tắt không được để trống',
 		]);
-		// Check ảnh
-		if ($request->thumbnail) {
-			$path_old = Novel::where('slug', $novel)->first()->thumbnail;
+		// Xóa thể loại truyện cũ
+		NovelCate::where('id_novel', $novel->id)->delete();
+		// Thêm thể loại truyện mới
+		$categoryIds = explode(',', $request->categories);
+		foreach ($categoryIds as $cateId) {
+			NovelCate::create([
+				'id_novel' => $novel->id,
+				'id_categories' => $cateId,
+			]);
+		}
+		// Check ảnh (true)
+		if ($request->hasFile('thumbnail')) {
+			$path_old = Novel::where('slug', $novel->slug)->first()->thumbnail;
 			// Xóa ảnh cũ (Áp dụng link DigitalOcean, vì có trường hợp link avatar của Google)
 			if ($path_old) {
 				$pos = strpos($path_old, 'thumbnail');
 				$path_old_cut = substr($path_old, $pos);
 				// Tiến hành xóa
-				// Storage::disk('digitalocean')->delete($path_old_cut);
-				dd($path_old_cut);
+				Storage::disk('digitalocean')->delete($path_old_cut);
 			}
 			// Upload ảnh
-			// $path = Storage::disk('digitalocean')->put('novel', $request->file('thumbnail'), 'public');
+			$path = Storage::disk('digitalocean')->put('thumbnail', $request->file('thumbnail'), 'public');
+			// Cập nhật thumbnail
+			Novel::where('slug', $novel->slug)->update([
+				'thumbnail' => 'https://flightnovel.sgp1.digitaloceanspaces.com/' . $path,
+			]);
 		}
 		// Sửa novel
 		Novel::where('slug', $novel->slug)->update([
 			'name_novel' => $request->name_novel,
-			// 'thumbnail' => 'https://flightnovel.sgp1.digitaloceanspaces.com/' . $path,
 			'author' => $request->author,
 			'illustrator' => $request->illustrator,
 			'id_user' => auth()->user()->id,
+			'slug' => $novel->id . '-' . Str::of($request->name_novel)->slug('-')
 		]);
-
 		// Sửa dữ liệu bảng detail
-		$detail = Detail::where('id', $novel->id_detail)->update([
+		Detail::where('id', $novel->id_detail)->update([
 			'summary' => $request->summary,
 			'note' => $request->note,
+			'another_name' => $request->another_name
 		]);
 
-		// Sửa truyện vào bảng novel_cate
-		$categoryIds = explode(',', $request->categories);
-
-		foreach ($categoryIds as $cateId) {
-			// Lấy id của tiểu thuyết và id của thể loại từ form hoặc từ dữ liệu hiện có
-			$id_novel = $novel->id; //  lấy từ dữ liệu tiểu thuyết
-			$id_categories = $cateId; //  lấy từ biến vòng lặp $categoryIds
-
-			// Tạo đối tượng NovelCate
-			$novelCate = new NovelCate();
-			$novelCate->id_novel = $id_novel;
-			$novelCate->id_categories = $id_categories;
-
-			// Cập nhật hoặc tạo mới bản ghi trong bảng NovelCate
-			$novelCate->update();
-		}
 		return redirect()->route('team.index')->with('success', 'Sửa truyện thành công');
 	}
 
