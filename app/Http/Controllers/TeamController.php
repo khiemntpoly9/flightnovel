@@ -6,9 +6,9 @@ use App\Models\Novel;
 use App\Models\Team;
 use App\Models\TeamUser;
 use App\Models\Vol;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Str;
 
 class TeamController extends Controller
 {
@@ -37,11 +37,10 @@ class TeamController extends Controller
 		}
 	}
 	// Hiện Novel chi tiết trong team
-	public function TeamNovel(Request $request)
+	public function TeamNovel(Request $request, $id)
 	{
-		// Lấy dữ liệu novel từ middleware
-		$novel = $request->get('novel');
-		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,slug,created_at')->get();
+		$novel = Novel::where('id', $id)->first();
+		$vol = Vol::where('id_novel', $id)->with('chap:id,id_vol,title,created_at')->get();
 		$status = ['success' => session('success'), 'error' => session('error')];
 		return Inertia::render('Client/Team/TeamNovel', [
 			'novel' => $novel,
@@ -58,20 +57,11 @@ class TeamController extends Controller
 		]);
 	}
 
-	public function TeamDetailAdmin($id)
-	{
-		$team = Team::where('id', $id)->first();
-		return Inertia::render('Admin/Team/TeamDetail', [
-			'team' => $team,
-		]);
-	}
-
 	public function TeamCreate()
 	{
 		return Inertia::render('Client/Team/TeamCreate');
 	}
 
-	// Tạo team
 	public function TeamStore(Request $request)
 	{
 		// Để show dữ liệu từ form
@@ -89,12 +79,6 @@ class TeamController extends Controller
 			'team_name' => $request->team_name,
 			'team_detail' => $request->team_detail,
 		]);
-
-		// Cập nhật slug
-		$teamID = $team->id;
-		$newSlug = $teamID . '-' . Str::of($request->team_name)->slug('-');
-		$team->slug = $newSlug;
-		$team->save();
 
 		// Tạo mới team_user
 		TeamUser::create([
