@@ -7,23 +7,41 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default function NovelUpdate({ auth, novel, detail, categories, novel_cate }) {
 	const { errors } = usePage().props;
-	const initialCategoryIds = novel_cate.map((item) => item.id_categories);
 	const [values, setValues] = useState({
 		name_novel: novel.name_novel,
 		another_name: detail.another_name,
 		author: novel.author,
 		illustrator: novel.illustrator,
-		categories: initialCategoryIds,
+		categories: [],
 		summary: detail.summary,
 		note: detail.note,
 	});
 	const [selectedFile, setSelectedFile] = useState(null);
+	// Set trạng thái checkbox
 	const [checkboxStates, setCheckboxStates] = useState([]);
+	// Lấy mảng id thể loại đã checked
 	useEffect(() => {
-		const initialCheckboxStates = categories.map((category) =>
-			novel_cate.some((item) => item.id_categories === category.id)
-		);
+		const initialCheckboxStates = categories.map((category) => {
+			let check = false;
+			novel_cate.forEach((item) => {
+				if (item.id_categories === category.id) {
+					check = true;
+				}
+			});
+			return check;
+		});
 		setCheckboxStates(initialCheckboxStates);
+		// Lấy mảng id thể loại đã checked
+		const checkedCategoryIds = initialCheckboxStates
+			.map((checked, index) => (checked ? categories[index].id : null))
+			.filter((id) => id !== null);
+		if (checkedCategoryIds) {
+			// Set giá trị cho values categories
+			setValues((values) => ({
+				...values,
+				categories: checkedCategoryIds,
+			}));
+		}
 	}, [categories, novel_cate]);
 	// Handle change input
 	const handleChange = (e) => {
@@ -36,16 +54,19 @@ export default function NovelUpdate({ auth, novel, detail, categories, novel_cat
 	};
 	// Handle change checkbox
 	const handleCheckbox = (index) => {
-		const updatedCheckboxStates = [...checkboxStates];
-		updatedCheckboxStates[index] = !updatedCheckboxStates[index];
-		setCheckboxStates(updatedCheckboxStates);
-		// Lấy mảng categories hiện tại dựa trên trạng thái checkbox
-		const updatedCategories = categories
-			.filter((category, i) => updatedCheckboxStates[i])
+		// Lấy tất cả các giá trị checkbox
+		const checkboxStates = categories.map((category) => {
+			const checked = document.getElementById(`categories-${category.id}`).checked;
+			return checked;
+		});
+		// Lấy mảng id thể loại đã checked
+		const checkedCategoryIds = categories
+			.filter((category) => document.getElementById(`categories-${category.id}`).checked)
 			.map((category) => category.id);
+		// Set giá trị cho categories
 		setValues((values) => ({
 			...values,
-			categories: updatedCategories,
+			categories: checkedCategoryIds,
 		}));
 	};
 	// Handle submit form
@@ -158,14 +179,14 @@ export default function NovelUpdate({ auth, novel, detail, categories, novel_cat
 							</div>
 							<div className='mb-2 flex flex-wrap items-center'>
 								{categories.map((category, index) => (
-									<div key={category.id} className='mb-2 w-1/2 md:mb-0 md:flex md:w-1/3'>
+									<div key={index} className='mb-2 w-1/2 md:mb-0 md:flex md:w-1/3'>
 										<input
 											className='mr-1'
 											type='checkbox'
 											name='categories'
-											id={category.id}
+											id={`categories-${category.id}`}
 											defaultChecked={checkboxStates[index]}
-											onChange={() => handleCheckbox(index)}
+											onClick={() => handleCheckbox(index)}
 										/>
 										<label
 											htmlFor={category.id}
