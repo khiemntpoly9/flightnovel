@@ -63,11 +63,10 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 		formData.append('note', values.note);
 		formData.append('thumbnail', selectedFile);
 		router.patch(`/team/novel/${novel.slug}/update`, formData);
-		console.log(values);
 	};
 	return (
 		<DefaultLayout auth={auth}>
-			<Head title='Novel' />
+			<Head title='Cập nhật Novel' />
 			<div className='container mx-auto w-10/12 bg-white'>
 				<div className='flex min-h-full flex-1 flex-col justify-center lg:px-8'>
 					<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -116,7 +115,6 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 										className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
 									/>
 								</div>
-
 								{/* Tác giả */}
 								<div className='mb-2 flex items-center justify-between'>
 									<label htmlFor='author' className='block text-sm font-medium leading-6 text-gray-900'>
@@ -135,7 +133,6 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 									/>
 									{errors && errors.author && <p className='text-sm italic text-red-500'>{errors.author}</p>}
 								</div>
-
 								{/* Họa sĩ */}
 								<div className='mb-2 flex items-center justify-between'>
 									<label htmlFor='illustrator' className='block text-sm font-medium leading-6 text-gray-900'>
@@ -230,13 +227,6 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 								<label className='block text-sm font-medium leading-6 text-gray-900'>Chú thích</label>
 							</div>
 							<div className='mb-2'>
-								{/* <input
-									id='note'
-									type='textarea'
-									value={values.note}
-									onChange={handleChange}
-									className={`w-full appearance-none rounded border p-2 shadow focus:outline-none`}
-								/> */}
 								<div>
 									<CKEditor
 										id='note'
@@ -264,7 +254,7 @@ export default function NovelUpdate({ auth, categories, novel, detail }) {
 									type='submit'
 									className='flex w-full justify-center rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600'
 								>
-									Sửa
+									Cập nhật
 								</button>
 							</div>
 						</form>

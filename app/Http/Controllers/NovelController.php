@@ -24,8 +24,6 @@ class NovelController extends Controller
 		]);
 	}
 
-
-
 	// Thêm truyện
 	public function NovelCreate(Request $request)
 	{
@@ -88,7 +86,6 @@ class NovelController extends Controller
 	// Novel Update Pape
 	public function NovelUpdatePage($novel)
 	{
-
 		// Lấy id novel
 		$novel = Novel::where('slug', $novel)->first();
 		// Lấy categories
@@ -131,8 +128,7 @@ class NovelController extends Controller
 			'categories.required' => 'Thể loại không được để trống',
 			'summary.required' => 'Tóm tắt không được để trống',
 		]);
-
-
+		// Check ảnh
 		if ($request->thumbnail) {
 			$path_old = Novel::where('slug', $novel)->first()->thumbnail;
 			// Xóa ảnh cũ (Áp dụng link DigitalOcean, vì có trường hợp link avatar của Google)
@@ -143,11 +139,9 @@ class NovelController extends Controller
 				// Storage::disk('digitalocean')->delete($path_old_cut);
 				dd($path_old_cut);
 			}
-
 			// Upload ảnh
 			// $path = Storage::disk('digitalocean')->put('novel', $request->file('thumbnail'), 'public');
 		}
-
 		// Sửa novel
 		Novel::where('slug', $novel->slug)->update([
 			'name_novel' => $request->name_novel,
