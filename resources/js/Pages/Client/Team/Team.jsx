@@ -54,6 +54,15 @@ export default function Team({ auth, team_user, team, novel, status }) {
 						<strong>Chi tiết: </strong>{' '}
 						<span dangerouslySetInnerHTML={{ __html: `${team.team.team_detail}` }}></span>
 					</div>
+					{/* Edit team */}
+					<div>
+						<Link
+							href={`/team/update/${team.team.id}`}
+							className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+						>
+							Chỉnh sửa chi tiết nhóm
+						</Link>
+					</div>
 					{/* Show truyện */}
 					<div className='mt-2'>
 						<span className='text-xl font-bold'>Danh sách truyện</span>

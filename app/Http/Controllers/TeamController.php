@@ -62,6 +62,37 @@ class TeamController extends Controller
 		return Inertia::render('Client/Team/TeamCreate');
 	}
 
+	public function TeamUpdateIndex(Request $request, $id)
+	{
+		$team = Team::where('id', $id)->first();
+		return Inertia::render('Client/Team/TeamUpdate',[
+			'team'=>$team
+		]);
+	}
+	public function TeamUpdate(Request $request, $id)
+	{
+		$request->validate([
+			'team_name' => ['required', 'string', 'max:255', 'min:5'],
+			'team_detail' => ['required', 'string'],
+			'slug' => ['string', 'max:255'],
+		], [
+			'team_name.required' => 'Tên nhóm không được để trống',
+			'team_name.string' => 'Tên nhóm phải là chuỗi',
+			'team_name.max' => 'Tên nhóm không được quá 255 ký tự',
+			'team_name.min' => 'Tên nhóm không được dưới 5 ký tự',
+			'team_detail.required' => 'Chi tiết không được để trống',
+			'team_detail.string' => 'Chi tiết phải là chuỗi',
+			'slug.max' => 'Slug không được quá 255 ký tự',
+			'slug.string' => 'Slug phải là chuỗi',
+		]);
+		Team::where('id',$id)->update([
+			'team_name'=> $request->team_name,
+			'team_detail'=> $request->team_detail,
+			'slug'=> $request->slug,
+		]);
+		return redirect()->route('team.index');
+	}
+
 	public function TeamStore(Request $request)
 	{
 		// Để show dữ liệu từ form
