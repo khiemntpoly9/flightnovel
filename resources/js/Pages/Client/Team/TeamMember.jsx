@@ -1,7 +1,54 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
+import { router, usePage } from '@inertiajs/react';
+import { toast } from 'react-toastify';
 
-export default function TeamMember(auth) {
+export default function TeamMember({ auth, team, status }) {
+	const [values, setValues] = useState({
+		email: '',
+	});
+	// Handle change input
+	const handleChange = (e) => {
+		const key = e.target.id;
+		const value = e.target.value;
+		setValues((values) => ({
+			...values,
+			[key]: value,
+		}));
+	};
+	// Handle submit form
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		router.post(`/team/${team.slug}/add-member`, values);
+	};
+	// Toast
+	useEffect(() => {
+		// Success
+		if (status.success) {
+			toast.success(status.success, {
+				position: 'top-right',
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+		// Error
+		if (status.error) {
+			toast.error(status.error, {
+				position: 'top-right',
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	}, [status]);
 	return (
 		<DefaultLayout auth={auth}>
 			<Head title='Thêm thành viên' />
@@ -13,16 +60,17 @@ export default function TeamMember(auth) {
 						</h2>
 					</div>
 					<div className='mt-5 sm:mx-auto sm:w-full sm:max-w-md'>
-						<form encType='multipart/form-data'>
+						<form onSubmit={handleSubmit}>
 							{/* email thành viên */}
 							<div className='mb-2'>
-								<label htmlFor='team_name' className='mb-2 block text-sm font-medium leading-6 text-gray-900'>
+								<label htmlFor='email' className='mb-2 block text-sm font-medium leading-6 text-gray-900'>
 									Nhập email thành viên
 								</label>
 								<div>
 									<input
-										id='team_email'
+										id='email'
 										type='email'
+										onChange={handleChange}
 										className=' w-full appearance-none rounded border p-2 shadow focus:outline-none'
 									/>
 								</div>
