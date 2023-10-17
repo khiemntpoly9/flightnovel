@@ -22,4 +22,9 @@ class Team extends Model
 	];
 
 	protected $primaryKey = 'id';
+
+	public function getRouteKeyName(): string
+	{
+		return 'slug';
+	}
 }

@@ -57,7 +57,7 @@ export default function Team({ auth, team_user, team, novel, status }) {
 					{/* Edit team */}
 					<div>
 						<Link
-							href={`/team/update/${team.team.id}`}
+							href={`/team/${team.team.slug}/edit`}
 							className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
 						>
 							Chỉnh sửa chi tiết nhóm

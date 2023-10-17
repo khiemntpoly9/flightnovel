@@ -6,9 +6,9 @@ use App\Models\Novel;
 use App\Models\Team;
 use App\Models\TeamUser;
 use App\Models\Vol;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class TeamController extends Controller
 {
@@ -62,19 +62,17 @@ class TeamController extends Controller
 		return Inertia::render('Client/Team/TeamCreate');
 	}
 
-	public function TeamUpdateIndex(Request $request, $id)
+	public function TeamUpdateIndex(Request $request, Team $team)
 	{
-		$team = Team::where('id', $id)->first();
-		return Inertia::render('Client/Team/TeamUpdate',[
-			'team'=>$team
+		return Inertia::render('Client/Team/TeamUpdate', [
+			'team' => $team
 		]);
 	}
-	public function TeamUpdate(Request $request, $id)
+	public function TeamUpdate(Request $request, Team $team)
 	{
 		$request->validate([
 			'team_name' => ['required', 'string', 'max:255', 'min:5'],
 			'team_detail' => ['required', 'string'],
-			'slug' => ['string', 'max:255'],
 		], [
 			'team_name.required' => 'Tên nhóm không được để trống',
 			'team_name.string' => 'Tên nhóm phải là chuỗi',
@@ -82,15 +80,13 @@ class TeamController extends Controller
 			'team_name.min' => 'Tên nhóm không được dưới 5 ký tự',
 			'team_detail.required' => 'Chi tiết không được để trống',
 			'team_detail.string' => 'Chi tiết phải là chuỗi',
-			'slug.max' => 'Slug không được quá 255 ký tự',
-			'slug.string' => 'Slug phải là chuỗi',
 		]);
-		Team::where('id',$id)->update([
-			'team_name'=> $request->team_name,
-			'team_detail'=> $request->team_detail,
-			'slug'=> $request->slug,
+		Team::where('id', $team->id)->update([
+			'team_name' => $request->team_name,
+			'team_detail' => $request->team_detail,
+			'slug' => $team->id . '-' . Str::of($request->team_name)->slug('-'),
 		]);
-		return redirect()->route('team.index');
+		return redirect()->route('team.index')->with('success', 'Cập nhật thành công');
 	}
 
 	public function TeamStore(Request $request)
@@ -110,6 +106,11 @@ class TeamController extends Controller
 			'team_name' => $request->team_name,
 			'team_detail' => $request->team_detail,
 		]);
+
+		// Cập nhật slug
+		$newSlug = $team->id . '-' . Str::of($request->team_name)->slug('-');
+		$team->slug = $newSlug;
+		$team->save();
 
 		// Tạo mới team_user
 		TeamUser::create([

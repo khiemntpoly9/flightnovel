@@ -28,7 +28,7 @@ Route::get('/', [HomeController::class, 'HomeIndex'])->name('home');
 // Novel Read User
 Route::prefix('novel')->group(function () {
 	Route::get('/{novel:slug}', [NovelController::class, 'NovelRead'])->name('novel.read');
-	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}',[ChapController::class,'Chapter'])->name('novel.chapter');
+	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}', [ChapController::class, 'Chapter'])->name('novel.chapter');
 	// Route::get('/{novel:slug}/vol/{id_vol}', [VolController::class, 'VolRead'])->name('vol.read');
 	// Route::get('/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapRead'])->name('chap.read');
 });
@@ -50,14 +50,12 @@ Route::middleware('auth')->prefix('profile')->group(function () {
 // Team Role - Auth Role
 Route::middleware('auth')->prefix('team')->group(function () {
 	Route::get('/', [TeamController::class, 'TeamIndex'])->name('team.index');
-	Route::get('/update/{id}', [TeamController::class, 'TeamUpdateIndex'])->name('team.update');
-	Route::post('/update/{id}', [TeamController::class, 'TeamUpdate'])->name('team.updatedata');
+	Route::get('/{team:slug}/edit', [TeamController::class, 'TeamUpdateIndex'])->name('team.edit');
+	Route::patch('/{team:slug}/update', [TeamController::class, 'TeamUpdate'])->name('team.update');
 	// Team Role
 	Route::middleware('team')->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');
 		Route::post('/create', [TeamController::class, 'TeamStore'])->name('team.store');
-
-
 	});
 	// Novel
 	Route::prefix('novel')->group(function () {
