@@ -55,12 +55,18 @@ export default function Team({ auth, team_user, team, novel, status }) {
 						<span dangerouslySetInnerHTML={{ __html: `${team.team.team_detail}` }}></span>
 					</div>
 					{/* Edit team */}
-					<div>
+					<div className='flex'>
 						<Link
 							href={`/team/${team.team.slug}/edit`}
 							className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
 						>
 							Chỉnh sửa chi tiết nhóm
+						</Link>
+						<Link
+							href={`/team/${team.team.slug}/add-member`}
+							className='ml-1 rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+						>
+							Thêm thành viên
 						</Link>
 					</div>
 					{/* Show truyện */}

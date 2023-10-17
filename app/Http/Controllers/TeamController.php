@@ -6,6 +6,7 @@ use App\Models\Novel;
 use App\Models\Team;
 use App\Models\TeamUser;
 use App\Models\Vol;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -120,5 +121,37 @@ class TeamController extends Controller
 		]);
 
 		return redirect()->route('team.index');
+	}
+	//thêm thành viên
+	public function TeamMember(Team $team)
+	{
+		$status = ['success' => session('success'), 'error' => session('error')];
+		return Inertia::render('Client/Team/TeamMember',['team'=>$team,'status' => $status]);
+	}
+	public function AddMember(Request $request, Team $team)
+	{
+		$request->validate([
+			'email' => ['required', 'string', 'max:255', 'min:5'],
+		], [
+			'email.required' => 'Email không được để trống',
+			'email.max' => 'Email không được quá 255 ký tự',
+			'email.min' => 'Email không được dưới 5 ký tự',
+		]);
+		$user = User::where('email', $request->email)->first();
+		if(!$user){
+			return  redirect()->back()->with('error', 'Tài khoản không tồn tại');
+		} else {
+			$team_user = TeamUser::where('id_user', $user->id)->first();
+			
+			if($team_user){
+				return redirect()->back()->with('error', 'Tài khoản đã có nhóm');
+			}
+			TeamUser::create([
+				'id_user' => $user->id,
+				'id_team' => $team->id,
+				'team_role' => 0,
+			]);
+			return redirect()->route('team.index')->with('success', 'Thêm thành viên thành công');
+		}
 	}
 }
