@@ -72,6 +72,11 @@ class NovelController extends Controller
 			'id_user' => auth()->user()->id,
 		]);
 
+		// Cập nhật slug
+		$newSlug = $novel->id . '-' . Str::of($request->name_novel)->slug('-');
+		$novel->slug = $newSlug;
+		$novel->save();
+
 		// Thêm truyện vào bảng novel_cate
 		$categoryIds = explode(',', $request->categories);
 		foreach ($categoryIds as $cateId) {
