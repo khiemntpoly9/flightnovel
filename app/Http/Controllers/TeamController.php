@@ -121,4 +121,9 @@ class TeamController extends Controller
 
 		return redirect()->route('team.index');
 	}
+	//thêm thành viên
+	public function TeamMember()
+	{
+		return Inertia::render('Client/Team/TeamMember');
+	}
 }

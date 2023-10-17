@@ -52,6 +52,7 @@ Route::middleware('auth')->prefix('team')->group(function () {
 	Route::get('/', [TeamController::class, 'TeamIndex'])->name('team.index');
 	Route::get('/{team:slug}/edit', [TeamController::class, 'TeamUpdateIndex'])->name('team.edit');
 	Route::patch('/{team:slug}/update', [TeamController::class, 'TeamUpdate'])->name('team.update');
+	Route::get('/member',[TeamController::class, 'TeamMember'])->name('team.member');
 	// Team Role
 	Route::middleware('team')->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');
