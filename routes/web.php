@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\CateController;
 use App\Http\Controllers\ChapController;
 use App\Http\Controllers\HomeController;
@@ -45,6 +46,7 @@ Route::middleware('auth')->prefix('profile')->group(function () {
 	Route::get('/update', [ProfileController::class, 'updateAccount'])->name('profile.create');
 	Route::patch('/update', [ProfileController::class, 'update'])->name('profile.update');
 	Route::post('/update/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+	Route::get('/changepass', [ProfileController::class, 'changePasswordPage'])->name('profile.changepass.page');
 });
 
 // Team Role - Auth Role
@@ -52,8 +54,8 @@ Route::middleware('auth')->prefix('team')->group(function () {
 	Route::get('/', [TeamController::class, 'TeamIndex'])->name('team.index');
 	Route::get('/{team:slug}/edit', [TeamController::class, 'TeamUpdateIndex'])->name('team.edit');
 	Route::patch('/{team:slug}/update', [TeamController::class, 'TeamUpdate'])->name('team.update');
-	Route::get('/{team:slug}/add-member',[TeamController::class, 'TeamMember'])->name('team.member');
-	Route::post('/{team:slug}/add-member',[TeamController::class, 'AddMember'])->name('team.addmember');
+	Route::get('/{team:slug}/add-member', [TeamController::class, 'TeamMember'])->name('team.member');
+	Route::post('/{team:slug}/add-member', [TeamController::class, 'AddMember'])->name('team.addmember');
 	// Team Role
 	Route::middleware('team')->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');
