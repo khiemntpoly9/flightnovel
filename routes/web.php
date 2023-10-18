@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\CateController;
 use App\Http\Controllers\ChapController;
 use App\Http\Controllers\CommentController;
@@ -52,6 +53,7 @@ Route::middleware('auth')->prefix('profile')->group(function () {
 	Route::get('/update', [ProfileController::class, 'updateAccount'])->name('profile.create');
 	Route::patch('/update', [ProfileController::class, 'update'])->name('profile.update');
 	Route::post('/update/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+	Route::get('/changepass', [ProfileController::class, 'changePasswordPage'])->name('profile.changepass.page');
 });
 
 // Team Role - Auth Role

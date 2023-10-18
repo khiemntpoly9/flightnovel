@@ -156,6 +156,9 @@ export default function Edit({ auth }) {
 							<div className='py-1  text-sm md:text-base'>
 								Tham gia: {moment(auth.user.created_at).format('DD/MM/YYYY - HH:mm:ss')}
 							</div>
+							<Link href={route('profile.changepass.page')} className='btn py-1'>
+								Đổi mật khẩu
+							</Link>
 						</div>
 					</div>
 				</div>

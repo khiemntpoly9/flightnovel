@@ -31,6 +31,10 @@ class ProfileController extends Controller
 		return Inertia::render('Client/Profile/Partials/UpdateProfileInformationForm');
 	}
 
+	public function changePasswordPage()
+	{
+		return Inertia::render('Client/Profile/Partials/UpdatePasswordForm');
+	}
 
 	/**
 	 * Update the user's profile information.
