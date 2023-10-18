@@ -1,10 +1,12 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import moment from 'moment/moment';
-import { Link, router } from '@inertiajs/react';
+import Comment from '@/Components/Comment';
+import { Link, router, usePage } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 
-export default function NovelRead({ auth, novel, vol, follow, status }) {
+export default function NovelRead({ auth, novel, vol, follow, comments, status }) {
+	const { errors } = usePage().props;
 	// Toast
 	useEffect(() => {
 		// Success
@@ -159,6 +161,7 @@ export default function NovelRead({ auth, novel, vol, follow, status }) {
 						</div>
 					</div>
 				))}
+				<Comment novel={novel} comments={comments} user={auth} error={errors} />
 			</div>
 		</DefaultLayout>
 	);

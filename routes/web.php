@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CateController;
 use App\Http\Controllers\ChapController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NovelController;
 use App\Http\Controllers\ProfileController;
@@ -39,6 +40,12 @@ Route::middleware('auth')->prefix('follow')->group(function () {
 	Route::delete('/{id}', [NovelController::class, 'NovelUnFollow'])->name('novel.unfollow');
 });
 
+// Comment
+Route::middleware('auth')->prefix('comment')->group(function () {
+	Route::post('/post', [CommentController::class, 'CommentCreate'])->name('novel.comment');
+	Route::delete('/{id}/delete', [CommentController::class, 'NovelCommentDelete'])->name('novel.comment.delete');
+});
+
 // Profile - Auth Role
 Route::middleware('auth')->prefix('profile')->group(function () {
 	Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -52,8 +59,8 @@ Route::middleware('auth')->prefix('team')->group(function () {
 	Route::get('/', [TeamController::class, 'TeamIndex'])->name('team.index');
 	Route::get('/{team:slug}/edit', [TeamController::class, 'TeamUpdateIndex'])->name('team.edit');
 	Route::patch('/{team:slug}/update', [TeamController::class, 'TeamUpdate'])->name('team.update');
-	Route::get('/{team:slug}/add-member',[TeamController::class, 'TeamMember'])->name('team.member');
-	Route::post('/{team:slug}/add-member',[TeamController::class, 'AddMember'])->name('team.addmember');
+	Route::get('/{team:slug}/add-member', [TeamController::class, 'TeamMember'])->name('team.member');
+	Route::post('/{team:slug}/add-member', [TeamController::class, 'AddMember'])->name('team.addmember');
 	// Team Role
 	Route::middleware('team')->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');

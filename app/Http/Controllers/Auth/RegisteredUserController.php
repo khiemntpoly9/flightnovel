@@ -48,6 +48,7 @@ class RegisteredUserController extends Controller
 			'name' => $request->name,
 			'email' => $request->email,
 			'password' => Hash::make($request->password),
+			'avatar' => 'https://png.pngtree.com/png-vector/20190704/ourlarge/pngtree-businessman-user-avatar-free-vector-png-image_1538405.jpg'
 		]);
 
 		// Cập nhật slug
