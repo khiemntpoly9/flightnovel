@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\CateController;
 use App\Http\Controllers\ChapController;
 use App\Http\Controllers\CommentController;
@@ -44,7 +43,7 @@ Route::middleware('auth')->prefix('follow')->group(function () {
 // Comment
 Route::middleware('auth')->prefix('comment')->group(function () {
 	Route::post('/post', [CommentController::class, 'CommentCreate'])->name('novel.comment');
-	Route::delete('/{id}/delete', [CommentController::class, 'NovelCommentDelete'])->name('novel.comment.delete');
+	Route::delete('/{id}/delete', [CommentController::class, 'NovelCommentDelete'])->middleware(['user.comment'])->name('novel.comment.delete');
 });
 
 // Profile - Auth Role

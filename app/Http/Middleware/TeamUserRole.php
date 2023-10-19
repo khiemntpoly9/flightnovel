@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TeamUserRole
 {
+	// Xác thực user có trong nhóm truyện không
 	public function handle(Request $request, Closure $next): Response
 	{
 		$novel_slug = $request->route()->parameter('novel');

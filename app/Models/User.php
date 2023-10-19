@@ -44,4 +44,10 @@ class User extends Authenticatable
 	{
 		return $this->belongsTo(Role::class, 'id_role', 'id');
 	}
+
+	// isAdmin
+	public function isAdmin()
+	{
+		return $this->role->short_role === 'admin';
+	}
 }

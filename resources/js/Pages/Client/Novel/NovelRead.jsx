@@ -112,7 +112,7 @@ export default function NovelRead({ auth, novel, vol, follow, comments, status }
 								Số lượt theo dõi <br /> {follow.count}
 							</div>
 							<div className='text-center'>
-								Số lượt bình luận <br /> 2589
+								Số lượt bình luận <br /> {comments.length}
 							</div>
 						</div>
 						{/* Container 3 */}
@@ -161,7 +161,7 @@ export default function NovelRead({ auth, novel, vol, follow, comments, status }
 						</div>
 					</div>
 				))}
-				<Comment novel={novel} comments={comments} user={auth} error={errors} />
+				<Comment novel={novel} comments={comments} user={auth.user} error={errors} />
 			</div>
 		</DefaultLayout>
 	);
