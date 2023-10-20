@@ -26,7 +26,6 @@ export default function ResetPassword({ token, email }) {
 	return (
 		<DefaultLayout>
 			<Head title='Khôi phục mật khẩu' />
-
 			<div className='container'>
 				<div className='m-auto w-1/2'>
 					<form onSubmit={submit}>

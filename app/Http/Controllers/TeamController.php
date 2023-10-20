@@ -122,11 +122,11 @@ class TeamController extends Controller
 
 		return redirect()->route('team.index');
 	}
-	//thêm thành viên
+	// Thêm thành viên
 	public function TeamMember(Team $team)
 	{
 		$status = ['success' => session('success'), 'error' => session('error')];
-		return Inertia::render('Client/Team/TeamMember',['team'=>$team,'status' => $status]);
+		return Inertia::render('Client/Team/TeamMember', ['team' => $team, 'status' => $status]);
 	}
 	public function AddMember(Request $request, Team $team)
 	{
@@ -138,12 +138,12 @@ class TeamController extends Controller
 			'email.min' => 'Email không được dưới 5 ký tự',
 		]);
 		$user = User::where('email', $request->email)->first();
-		if(!$user){
-			return  redirect()->back()->with('error', 'Tài khoản không tồn tại');
+		if (!$user) {
+			return redirect()->back()->with('error', 'Tài khoản không tồn tại');
 		} else {
 			$team_user = TeamUser::where('id_user', $user->id)->first();
-			
-			if($team_user){
+
+			if ($team_user) {
 				return redirect()->back()->with('error', 'Tài khoản đã có nhóm');
 			}
 			TeamUser::create([

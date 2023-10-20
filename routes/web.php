@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\CateController;
 use App\Http\Controllers\ChapController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NovelController;
 use App\Http\Controllers\ProfileController;
@@ -38,6 +38,12 @@ Route::prefix('novel')->group(function () {
 Route::middleware('auth')->prefix('follow')->group(function () {
 	Route::post('/{id}', [NovelController::class, 'NovelFollow'])->name('novel.follow');
 	Route::delete('/{id}', [NovelController::class, 'NovelUnFollow'])->name('novel.unfollow');
+});
+
+// Comment
+Route::middleware('auth')->prefix('comment')->group(function () {
+	Route::post('/post', [CommentController::class, 'CommentCreate'])->name('novel.comment');
+	Route::delete('/{id}/delete', [CommentController::class, 'NovelCommentDelete'])->middleware(['user.comment'])->name('novel.comment.delete');
 });
 
 // Profile - Auth Role

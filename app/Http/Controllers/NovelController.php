@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
+use App\Models\Comment;
 use App\Models\Detail;
 use App\Models\Follow;
 use App\Models\Novel;
@@ -208,6 +209,8 @@ class NovelController extends Controller
 		} else {
 			$follow = null;
 		}
+		// Comment
+		$comments = Comment::where('id_novel', $novel->id)->with('user:id,name,avatar')->orderBy('created_at', 'desc')->get();
 		// Lấy số lượng follow
 		$follow_count = Follow::where('id_novel', $novel->id)->count();
 		return Inertia::render('Client/Novel/NovelRead', [
@@ -217,6 +220,7 @@ class NovelController extends Controller
 				'status' => $follow,
 				'count' => $follow_count,
 			],
+			'comments' => $comments,
 			'status' => $status
 		]);
 	}

@@ -67,20 +67,12 @@ export default function Edit({ auth }) {
 				<div className='mt-2'>
 					{/* avatar */}
 					<div className='mb-5 flex items-center justify-center '>
-						<div className='relative '>
-							{auth.user.avatar ? (
-								<img
-									src={auth.user.avatar}
-									alt=''
-									className='h-28 w-28 rounded-full outline outline-4 outline-offset-2 outline-gray-300 md:h-44 md:w-44'
-								/>
-							) : (
-								<img
-									src='https://png.pngtree.com/png-vector/20190704/ourlarge/pngtree-businessman-user-avatar-free-vector-png-image_1538405.jpg'
-									alt=''
-									className='h-28 w-28 rounded-full outline outline-4 outline-offset-2 outline-gray-300 md:h-44 md:w-44'
-								/>
-							)}
+						<div className='relative'>
+							<img
+								src={auth.user.avatar}
+								alt=''
+								className='h-28 w-28 rounded-full outline outline-4 outline-offset-2 outline-gray-300 md:h-44 md:w-44'
+							/>
 							<div className='absolute bottom-2 right-1 cursor-pointer rounded-full bg-gray-300 hover:bg-gray-500 hover:text-white focus:outline-none'>
 								<button
 									className='cursor-pointer rounded-full bg-gray-300 p-2 hover:bg-gray-500'

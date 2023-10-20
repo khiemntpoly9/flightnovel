@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
 		'admin' => \App\Http\Middleware\AdminRole::class,
 		'team' => \App\Http\Middleware\TeamRole::class,
 		'team.user' => \App\Http\Middleware\TeamUserRole::class,
+		'user.comment' => \App\Http\Middleware\UserComment::class,
 	];
 }
