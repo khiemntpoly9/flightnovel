@@ -9,7 +9,7 @@ class Comment extends Model
 {
     use HasFactory;
     protected $table = 'comment';
-    protected $fillable = ['id', 'id_novel', 'id_user', 'content', 'parent_id', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'id_novel', 'id_user', 'content', 'created_at', 'updated_at'];
     protected $primaryKey = 'id';
     public function novel()
     {
