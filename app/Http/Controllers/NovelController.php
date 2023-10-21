@@ -211,7 +211,7 @@ class NovelController extends Controller
 		}
 		// Comment
 		// $comments = Comment::where('id_novel', $novel->id)->with('user:id,name,avatar')->orderBy('created_at', 'desc')->get();
-		$comments = Comment::where('id_novel', $novel->id)->with('user:id,name,avatar')->orderBy('created_at', 'desc')->paginate(5);
+		$comments = Comment::where('id_novel', $novel->id)->with('user:id,name,avatar')->orderBy('created_at', 'desc')->paginate($perPage = 6, $columns = ['*'], $pageName = 'comment');
 		// Lấy số lượng follow
 		$follow_count = Follow::where('id_novel', $novel->id)->count();
 		return Inertia::render('Client/Novel/NovelRead', [
