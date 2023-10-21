@@ -23,7 +23,6 @@ class CommentController extends Controller
 			'id_novel' => $request->id_novel,
 			'id_user' => auth()->user()->id,
 			'content' => $request->content,
-			'parent_id' => $request->parent_id,
 		]);
 		// Trả về dữ liệu
 		return redirect()->back();

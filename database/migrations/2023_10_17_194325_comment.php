@@ -15,7 +15,6 @@ return new class extends Migration {
 			$table->bigInteger('id_novel')->unsigned();
 			$table->bigInteger('id_user')->unsigned();
 			$table->text('content')->nullable();
-			$table->bigInteger('parent_id')->unsigned()->nullable();
 			$table->timestamps();
 			// Foreign Keys
 			$table->foreign('id_novel')->references('id')->on('novel');
