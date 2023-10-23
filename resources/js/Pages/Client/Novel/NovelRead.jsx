@@ -8,7 +8,6 @@ import Rating from '@/Components/Rating';
 
 export default function NovelRead({ auth, novel, vol, follow, rating, comments, status }) {
 	const { errors } = usePage().props;
-	console.log(rating);
 	// Toast
 	useEffect(() => {
 		// Success
