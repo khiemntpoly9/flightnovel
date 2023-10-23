@@ -20,7 +20,6 @@ class Novel extends Model
 		'status',
 		'slug',
 		'is_publish',
-		'id_rate',
 		'id_team',
 		'id_detail',
 		'id_user',

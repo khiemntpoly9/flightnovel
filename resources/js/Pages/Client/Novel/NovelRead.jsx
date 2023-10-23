@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import Rating from '@/Components/Rating';
 
-export default function NovelRead({ auth, novel, vol, follow, rating, comments, status }) {
+export default function NovelRead({ auth, novel_main, vol, follow, rating, comments, status }) {
 	const { errors } = usePage().props;
 	// Toast
 	useEffect(() => {
@@ -44,32 +44,29 @@ export default function NovelRead({ auth, novel, vol, follow, rating, comments, 
 						{/* Container 1 */}
 						<div className='grid grid-cols-4 gap-3 border-b-2 pb-3'>
 							<div className='col-span-4 sm:col-span-1'>
-								<img src={novel.thumbnail} alt='thumb' className='rounded' />
+								<img src={novel_main.novel.thumbnail} alt='thumb' className='rounded' />
 							</div>
 							<div className='col-span-4 sm:col-span-3'>
 								{/* name */}
-								<span className='text-2xl font-semibold'>{novel.name_novel}</span>
+								<span className='text-2xl font-semibold'>{novel_main.novel.name_novel}</span>
 								{/* category */}
 								<div className='mt-2 flex gap-2'>
-									<a className='rounded-full bg-slate-500 px-3 py-2 text-white hover:bg-slate-400' href='#'>
-										Action
-									</a>
-									<a className='rounded-full bg-slate-500 px-3 py-2 text-white hover:bg-slate-400' href='#'>
-										Action
-									</a>
-									<a className='rounded-full bg-slate-500 px-3 py-2 text-white hover:bg-slate-400' href='#'>
-										Action
-									</a>
-									<a className='rounded-full bg-slate-500 px-3 py-2 text-white hover:bg-slate-400' href='#'>
-										Action
-									</a>
+									{novel_main.categories.map((category) => (
+										<Link
+											key={category.categories.id}
+											className='rounded-full bg-slate-500 px-3 py-2 text-white hover:bg-slate-400'
+											href='#'
+										>
+											{category.categories.name}
+										</Link>
+									))}
 								</div>
 								{/* author */}
 								<div className='mt-2'>
 									<p className='font-semibold'>
 										Tác giả: {''}
 										<a className='font-medium' href='#'>
-											{novel.author}
+											{novel_main.novel.author}
 										</a>
 									</p>
 								</div>
@@ -86,14 +83,14 @@ export default function NovelRead({ auth, novel, vol, follow, rating, comments, 
 									{follow.status ? (
 										<button
 											className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-											onClick={() => router.delete(`/follow/${novel.id}`)}
+											onClick={() => router.delete(`/follow/${novel_main.novel.id}`)}
 										>
 											Đã Theo dõi
 										</button>
 									) : (
 										<button
 											className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-											onClick={() => router.post(`/follow/${novel.id}`)}
+											onClick={() => router.post(`/follow/${novel_main.novel.id}`)}
 										>
 											Theo dõi
 										</button>
@@ -111,7 +108,7 @@ export default function NovelRead({ auth, novel, vol, follow, rating, comments, 
 												<h3 className='text-lg font-bold'>Đánh giá</h3>
 												{/* Stars */}
 												<div className='starbar-rating flex justify-center gap-1'>
-													<Rating novel={novel.id} />
+													<Rating novel={novel_main.novel.id} />
 												</div>
 											</div>
 											<form method='dialog' className='modal-backdrop'>
@@ -125,10 +122,18 @@ export default function NovelRead({ auth, novel, vol, follow, rating, comments, 
 						{/* Container 2 -  */}
 						<div className='grid grid-cols-4 border-b-2 py-3'>
 							<div className='text-center'>
-								Số lượt xem <br /> {novel.views}
+								Số lượt xem <br /> {novel_main.novel.views}
 							</div>
 							<div className='text-center'>
-								Đánh giá <br /> {rating.average}/10
+								{rating.count ? (
+									<>
+										Đánh giá <br /> {rating.average}/10
+									</>
+								) : (
+									<>
+										Đánh giá <br /> Chưa có đánh giá
+									</>
+								)}
 							</div>
 							<div className='text-center'>
 								Số lượt theo dõi <br /> {follow.count}
@@ -139,10 +144,19 @@ export default function NovelRead({ auth, novel, vol, follow, rating, comments, 
 						</div>
 						{/* Container 3 */}
 						<div className='grid grid-cols-1 border-b-2 py-3'>
-							<span>Tên khác: Konosuba</span>
+							<span>
+								Tên khác: {novel_main.detail.another_name ? novel_main.detail.another_name : <>Không có</>}
+							</span>
 						</div>
 						<div className='grid grid-cols-1 py-3'>
-							<span>Tóm tắt: Konosuba</span>
+							<span>
+								Tóm tắt:{' '}
+								<span
+									dangerouslySetInnerHTML={{
+										__html: `${novel_main.detail.summary ? novel_main.detail.summary : <>Không có</>}`,
+									}}
+								></span>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -183,7 +197,7 @@ export default function NovelRead({ auth, novel, vol, follow, rating, comments, 
 						</div>
 					</div>
 				))}
-				<Comment novel={novel} comments={comments} user={auth.user} error={errors} />
+				<Comment novel={novel_main.novel} comments={comments} user={auth.user} error={errors} />
 			</div>
 		</DefaultLayout>
 	);

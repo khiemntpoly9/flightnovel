@@ -201,6 +201,11 @@ class NovelController extends Controller
 	public function NovelRead(Request $request, Novel $novel)
 	{
 		$status = ['success' => session('success'), 'error' => session('error')];
+		// Detail Novel
+		$detail = Detail::where('id', $novel->id_detail)->first();
+		// Categories
+		$categories = NovelCate::where('id_novel', $novel->id)->with('categories:id,name,slug')->get();
+		// Vol
 		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,slug,created_at')->get();
 		// Check login
 		if (auth()->check()) {
@@ -218,7 +223,7 @@ class NovelController extends Controller
 			$totalRating += $item->rating;
 		}
 		if ($countRating > 0) {
-			$averageRating = $totalRating / $countRating;
+			$averageRating = round($totalRating / $countRating, 1);
 		} else {
 			$averageRating = 0; // Tránh lỗi chia cho 0 nếu mảng rỗng.
 		}
@@ -227,7 +232,11 @@ class NovelController extends Controller
 		// Lấy số lượng follow
 		$follow_count = Follow::where('id_novel', $novel->id)->count();
 		return Inertia::render('Client/Novel/NovelRead', [
-			'novel' => $novel,
+			'novel_main' => [
+				'novel' => $novel,
+				'detail' => $detail,
+				'categories' => $categories,
+			],
 			'vol' => $vol,
 			'follow' => [
 				'status' => $follow,
