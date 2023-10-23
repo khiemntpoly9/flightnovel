@@ -274,4 +274,9 @@ class NovelController extends Controller
 
 		return redirect()->back()->with('success', 'Bỏ theo dõi truyện thành công');
 	}
+
+	//search
+	public function Search(){
+		return Inertia::render('Client/Search/Search');
+	}
 }

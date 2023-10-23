@@ -51,6 +51,10 @@ Route::middleware('auth')->prefix('comment')->group(function () {
 Route::middleware('auth')->prefix('rating')->group(function () {
 	Route::post('/post', [RatingController::class, 'RatingCreate'])->name('novel.rating');
 });
+// Search
+Route::prefix('search')->group(function () {
+	Route::get('/', [NovelController::class,'Search'])->name('novel.search');
+});
 
 // Profile - Auth Role
 Route::middleware('auth')->prefix('profile')->group(function () {
