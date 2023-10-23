@@ -8,6 +8,7 @@ use App\Models\Detail;
 use App\Models\Follow;
 use App\Models\Novel;
 use App\Models\NovelCate;
+use App\Models\Rating;
 use App\Models\TeamUser;
 use App\Models\Vol;
 use Illuminate\Http\Request;
@@ -200,6 +201,11 @@ class NovelController extends Controller
 	public function NovelRead(Request $request, Novel $novel)
 	{
 		$status = ['success' => session('success'), 'error' => session('error')];
+		// Detail Novel
+		$detail = Detail::where('id', $novel->id_detail)->first();
+		// Categories
+		$categories = NovelCate::where('id_novel', $novel->id)->with('categories:id,name,slug')->get();
+		// Vol
 		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,slug,created_at')->get();
 		// Check login
 		if (auth()->check()) {
@@ -209,17 +215,37 @@ class NovelController extends Controller
 		} else {
 			$follow = null;
 		}
+		// Rating
+		$rating = Rating::where('id_novel', $novel->id)->get();
+		$countRating = $rating->count();
+		$totalRating = 0;
+		foreach ($rating as $item) {
+			$totalRating += $item->rating;
+		}
+		if ($countRating > 0) {
+			$averageRating = round($totalRating / $countRating, 1);
+		} else {
+			$averageRating = 0; // Tránh lỗi chia cho 0 nếu mảng rỗng.
+		}
 		// Comment
-		// $comments = Comment::where('id_novel', $novel->id)->with('user:id,name,avatar')->orderBy('created_at', 'desc')->get();
 		$comments = Comment::where('id_novel', $novel->id)->with('user:id,name,avatar')->orderBy('created_at', 'desc')->paginate($perPage = 6, $columns = ['*'], $pageName = 'comment');
 		// Lấy số lượng follow
 		$follow_count = Follow::where('id_novel', $novel->id)->count();
 		return Inertia::render('Client/Novel/NovelRead', [
-			'novel' => $novel,
+			'novel_main' => [
+				'novel' => $novel,
+				'detail' => $detail,
+				'categories' => $categories,
+			],
 			'vol' => $vol,
 			'follow' => [
 				'status' => $follow,
 				'count' => $follow_count,
+			],
+			'rating' => [
+				'count' => $countRating,
+				'total' => $totalRating,
+				'average' => $averageRating,
 			],
 			'comments' => $comments,
 			'status' => $status
