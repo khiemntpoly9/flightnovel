@@ -6,7 +6,6 @@ import moment from 'moment/moment';
 import Pagination from './Pagination';
 
 export default function Comment({ novel, comments, user, error }) {
-	console.log(comments);
 	const [values, setValues] = useState({
 		id_novel: novel.id,
 		content: '',

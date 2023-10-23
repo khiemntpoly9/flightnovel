@@ -10,14 +10,15 @@ return new class extends Migration {
 	 */
 	public function up(): void
 	{
-		Schema::create('rate', function (Blueprint $table) {
+		Schema::create('rating', function (Blueprint $table) {
 			$table->bigIncrements('id');
+			$table->bigInteger('id_novel')->unsigned();
 			$table->bigInteger('id_user')->unsigned();
-			$table->string('comment');
-			$table->integer('point');
+			$table->integer('rating')->nullable();
 			$table->timestamps();
 			// Foreign Keys
-			$table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+			$table->foreign('id_novel')->references('id')->on('novel');
+			$table->foreign('id_user')->references('id')->on('users');
 		});
 	}
 
@@ -26,6 +27,6 @@ return new class extends Migration {
 	 */
 	public function down(): void
 	{
-		Schema::dropIfExists('rate');
+		Schema::dropIfExists('rating');
 	}
 };

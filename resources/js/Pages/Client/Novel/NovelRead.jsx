@@ -4,9 +4,11 @@ import Comment from '@/Components/Comment';
 import { Link, router, usePage } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
+import Rating from '@/Components/Rating';
 
-export default function NovelRead({ auth, novel, vol, follow, comments, status }) {
+export default function NovelRead({ auth, novel, vol, follow, rating, comments, status }) {
 	const { errors } = usePage().props;
+	console.log(rating);
 	// Toast
 	useEffect(() => {
 		// Success
@@ -97,6 +99,27 @@ export default function NovelRead({ auth, novel, vol, follow, comments, status }
 											Theo dõi
 										</button>
 									)}
+									<button
+										className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+										onClick={() => document.getElementById('modal_rate').showModal()}
+									>
+										Đánh giá
+									</button>
+									{/* Modal rate */}
+									<div>
+										<dialog id='modal_rate' className='modal'>
+											<div className='modal-box'>
+												<h3 className='text-lg font-bold'>Đánh giá</h3>
+												{/* Stars */}
+												<div className='starbar-rating flex justify-center gap-1'>
+													<Rating novel={novel.id} />
+												</div>
+											</div>
+											<form method='dialog' className='modal-backdrop'>
+												<button>close</button>
+											</form>
+										</dialog>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -106,7 +129,7 @@ export default function NovelRead({ auth, novel, vol, follow, comments, status }
 								Số lượt xem <br /> {novel.views}
 							</div>
 							<div className='text-center'>
-								Số lượt đánh giá <br /> 4.6/5
+								Đánh giá <br /> {rating.average}/10
 							</div>
 							<div className='text-center'>
 								Số lượt theo dõi <br /> {follow.count}

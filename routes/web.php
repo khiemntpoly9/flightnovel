@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NovelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\VolController;
 use Illuminate\Foundation\Application;
@@ -44,6 +45,11 @@ Route::middleware('auth')->prefix('follow')->group(function () {
 Route::middleware('auth')->prefix('comment')->group(function () {
 	Route::post('/post', [CommentController::class, 'CommentCreate'])->name('novel.comment');
 	Route::delete('/{id}/delete', [CommentController::class, 'NovelCommentDelete'])->middleware(['user.comment'])->name('novel.comment.delete');
+});
+
+// Rating
+Route::middleware('auth')->prefix('rating')->group(function () {
+	Route::post('/post', [RatingController::class, 'RatingCreate'])->name('novel.rating');
 });
 
 // Profile - Auth Role
