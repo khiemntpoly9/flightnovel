@@ -6,6 +6,7 @@ export default function Header({ auth }) {
 	const [isMenuOpenBtn, setIsMenuOpenBtn] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isUserOpen, setIsUserOpen] = useState(false);
+
 	const statusMenu = () => {
 		// fix user
 		setIsUserOpen(false);
@@ -95,11 +96,7 @@ export default function Header({ auth }) {
 											Danh sách truyện
 										</a>
 									</li>
-									<li>
-										<a className='text-white' href='#'>
-											Tác giả
-										</a>
-									</li>
+
 									<li>
 										<a className='text-white' href='#'>
 											Cộng đồng
@@ -121,7 +118,23 @@ export default function Header({ auth }) {
 					</div>
 					{/* Navbar End */}
 					<div className='w-auto'>
+						{/* {search} */}
 						<div className='flex gap-4'>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								fill='none'
+								viewBox='0 0 24 24'
+								strokeWidth={1.5}
+								stroke='#fff'
+								className='h-7 w-7'
+							>
+								<path
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z'
+								/>
+							</svg>
+
 							{/* heart */}
 							<div className='flex content-center'>
 								<a href='#'>
@@ -212,19 +225,7 @@ export default function Header({ auth }) {
 									</div>
 								</div>
 							</li>
-							<li>
-								<details open>
-									<summary>Thể loại</summary>
-									<ul>
-										<li>
-											<a>Action</a>
-										</li>
-										<li>
-											<a>Action</a>
-										</li>
-									</ul>
-								</details>
-							</li>
+
 							<li>
 								<a>Danh sách truyện</a>
 							</li>

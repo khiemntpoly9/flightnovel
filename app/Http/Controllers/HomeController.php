@@ -13,10 +13,12 @@ class HomeController extends Controller
 	{
 		// Lấy novel
 		$novels = Novel::where('is_publish', 1)->orderBy('created_at', 'desc')->get();
+
 		return Inertia::render('Client/Home', [
 			'novels' => $novels,
 			'canLogin' => Route::has('login'),
 			'canRegister' => Route::has('register'),
+
 		]);
 	}
 }
