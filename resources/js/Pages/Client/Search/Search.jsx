@@ -1,6 +1,29 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Link } from '@inertiajs/react';
-export default function Search({ auth }) {
+import { useState } from 'react';
+import { router } from '@inertiajs/react';
+export default function Search({ auth, categories }) {
+	const [values, setValues] = useState({
+		name_novel: '',
+		author: '',
+		illustrator: '',
+		categories: [],
+	});
+	// Handle change input
+	const handleChange = (e) => {
+		const key = e.target.id;
+		const value = e.target.value;
+		setValues((values) => ({
+			...values,
+			[key]: value,
+		}));
+	};
+	// Handle submit form
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(values);
+		router.post('/search', values);
+	};
 	return (
 		<DefaultLayout auth={auth}>
 			<div className='container mx-auto w-10/12'>
@@ -48,12 +71,14 @@ export default function Search({ auth }) {
 					</ul>
 				</div>
 				{/* End Breadcrumbs */}
-				<form>
+				<form onSubmit={handleSubmit}>
 					{/* {seacrh} */}
 					<div className='relative mt-2 flex flex-col'>
 						<div className='flex w-full'>
 							<input
+								id='name_novel'
 								type='text'
+								onChange={handleChange}
 								placeholder='Tên Tác Phẩm...'
 								className=' w-full flex-1 rounded-l-md border px-4  py-2 text-sm outline-none md:py-3  md:text-base'
 							/>
@@ -96,10 +121,10 @@ export default function Search({ auth }) {
 									Tình trạng
 								</label>
 								<select className='select select-accent select-sm mt-1 w-full max-w-xs md:select-md'>
-									<option defaultValue={0}>Tất cả</option>
-									<option value={1}>Đang tiến hành</option>
+									<option>Tất cả</option>
+									<option value={0}>Đang tiến hành</option>
+									<option value={1}>Hoàn thành</option>
 									<option value={2}>Tạm ngưng</option>
-									<option value={3}>Hoàn thành</option>
 								</select>
 							</div>
 						</div>
@@ -109,45 +134,21 @@ export default function Search({ auth }) {
 							<div className='mt-2'>
 								{/* checkbox ngang 3 */}
 								<div className='grid grid-flow-row grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5'>
-									<div className='mb-4 flex items-center'>
-										<input
-											id='action'
-											type='checkbox'
-											className='h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
-										/>
-										<label
-											htmlFor='action'
-											className='ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-										>
-											Action
-										</label>
-									</div>
-									<div className='mb-4 flex items-center'>
-										<input
-											id='action2'
-											type='checkbox'
-											className='h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
-										/>
-										<label
-											htmlFor='action2'
-											className='ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-										>
-											Action2
-										</label>
-									</div>
-									<div className='mb-4 flex items-center'>
-										<input
-											id='action3'
-											type='checkbox'
-											className='h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
-										/>
-										<label
-											htmlFor='action3'
-											className='ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-										>
-											Action3
-										</label>
-									</div>
+									{categories.map((category) => (
+										<div key={category.id} className='mb-4 flex items-center'>
+											<input
+												id={category.id}
+												type='checkbox'
+												className='h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
+											/>
+											<label
+												htmlFor={category.id}
+												className='ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
+											>
+												{category.name}
+											</label>
+										</div>
+									))}
 								</div>
 							</div>
 						</div>

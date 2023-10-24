@@ -204,7 +204,7 @@ export default function Header({ auth }) {
 										/>
 									</div>
 									<div className=''>
-										<Link href={route('novel.search')}>
+										<Link href={route('search.index')}>
 											<button className='btn bg-green-400 text-white'>
 												<svg
 													xmlns='http://www.w3.org/2000/svg'
