@@ -18,6 +18,8 @@ class CateController extends Controller
 		]);
 	}
 
+
+
 	public function CateStore(Request $request)
 	{
 		// Kiểm tra dữ liệu đầu vào
