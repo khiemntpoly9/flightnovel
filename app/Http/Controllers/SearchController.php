@@ -10,12 +10,17 @@ use Inertia\Inertia;
 
 class SearchController extends Controller
 {
-	//search
-	public function Search()
+	// Get categories
+	public function GetCategories()
 	{
 		$categories = Categories::all();
+		return $categories;
+	}
+	// Search
+	public function Search()
+	{
 		return Inertia::render('Client/Search/Search', [
-			'categories' => $categories,
+			'categories' => $this->GetCategories(),
 		]);
 	}
 
@@ -29,7 +34,10 @@ class SearchController extends Controller
 			'name_novel.string' => 'Tên truyện phải là chuỗi',
 			'name_novel.max' => 'Tên truyện không được quá 255 ký tự',
 		]);
-		$novel = Novel::search('xuan')->get();
-		dd($novel);
+		$novel = Novel::search($request->name_novel)->where('is_publish', 1)->get();
+		return Inertia::render('Client/Search/Search', [
+			'categories' => $this->GetCategories(),
+			'novel' => $novel,
+		]);
 	}
 }

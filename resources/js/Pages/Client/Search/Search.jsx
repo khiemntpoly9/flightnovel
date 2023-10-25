@@ -2,7 +2,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Link } from '@inertiajs/react';
 import { useState } from 'react';
 import { router } from '@inertiajs/react';
-export default function Search({ auth, categories }) {
+export default function Search({ auth, categories, novel }) {
 	const [values, setValues] = useState({
 		name_novel: '',
 		author: '',
@@ -21,7 +21,6 @@ export default function Search({ auth, categories }) {
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(values);
 		router.post('/search', values);
 	};
 	return (
@@ -159,61 +158,18 @@ export default function Search({ auth, categories }) {
 				<hr className='my-8 h-px  border-2 bg-gray-200  dark:bg-gray-700 ' />
 				<div className='mb-10 mt-3'>
 					<div className='bottom grid grid-cols-3 gap-2 text-center font-bold sm:grid-cols-4 lg:grid-cols-6'>
-						<div className='card '>
-							<img
-								src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-								alt=''
-								className=''
-							/>
-							<div className='name'>
-								<h2>konosuba</h2>
+						{novel?.map((novel, index) => (
+							<div key={index} className='card bg-base-100 shadow-xl'>
+								<figure className='h-40 md:h-44 lg:h-40 xl:h-44'>
+									<img className='h-full w-full object-cover' src={novel.thumbnail} alt='thumbnail' />
+								</figure>
+								<div className='p-2 text-center'>
+									<Link href={`/novel/${novel.slug}`} className='hover:text-red-500'>
+										{novel.name_novel}
+									</Link>
+								</div>
 							</div>
-						</div>
-						<div className='card '>
-							<img
-								src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-								alt=''
-							/>
-							<div className='name'>
-								<h2>konosuba</h2>
-							</div>
-						</div>
-						<div className='card'>
-							<img
-								src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-								alt=''
-							/>
-							<div className='name'>
-								<h2>konosuba</h2>
-							</div>
-						</div>
-						<div className='card '>
-							<img
-								src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-								alt=''
-							/>
-							<div className='name'>
-								<h2>konosuba</h2>
-							</div>
-						</div>
-						<div className='card '>
-							<img
-								src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-								alt=''
-							/>
-							<div className='name'>
-								<h2>konosuba</h2>
-							</div>
-						</div>
-						<div className='card '>
-							<img
-								src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-								alt=''
-							/>
-							<div className='name'>
-								<h2>konosuba</h2>
-							</div>
-						</div>
+						))}
 					</div>
 				</div>
 			</div>

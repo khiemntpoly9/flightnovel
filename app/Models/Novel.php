@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Laravel\Scout\Searchable;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Attributes\SearchUsingFullText;
 
 class Novel extends Model
 {
-	use HasFactory;
+	use HasFactory, Searchable;
 	protected $table = 'novel';
 	protected $fillable = [
 		'id',
@@ -37,5 +40,16 @@ class Novel extends Model
 	public function getRouteKeyName(): string
 	{
 		return 'slug';
+	}
+
+	#[SearchUsingPrefix('name_novel')]
+	public function toSearchableArray(): array
+	{
+		return [
+			'name_novel' => $this->name_novel,
+			'slug' => $this->slug,
+			'author' => $this->author,
+			'illustrator' => $this->illustrator,
+		];
 	}
 }
