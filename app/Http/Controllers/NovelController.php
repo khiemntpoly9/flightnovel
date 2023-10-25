@@ -60,6 +60,7 @@ class NovelController extends Controller
 		$detail = Detail::create([
 			'summary' => $request->summary,
 			'note' => $request->note,
+			'another_name' => $request->another_name
 		]);
 		// Upload ảnh
 		$path = Storage::disk('digitalocean')->put('thumbnail', $request->file('thumbnail'), 'public');

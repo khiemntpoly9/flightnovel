@@ -118,23 +118,24 @@ export default function Header({ auth }) {
 					</div>
 					{/* Navbar End */}
 					<div className='w-auto'>
-						{/* {search} */}
+						{/* search */}
 						<div className='flex gap-4'>
-							<svg
-								xmlns='http://www.w3.org/2000/svg'
-								fill='none'
-								viewBox='0 0 24 24'
-								strokeWidth={1.5}
-								stroke='#fff'
-								className='h-7 w-7'
-							>
-								<path
-									strokeLinecap='round'
-									strokeLinejoin='round'
-									d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z'
-								/>
-							</svg>
-
+							<Link href={route('search.index')}>
+								<svg
+									xmlns='http://www.w3.org/2000/svg'
+									fill='none'
+									viewBox='0 0 24 24'
+									strokeWidth={1.5}
+									stroke='#fff'
+									className='h-7 w-7'
+								>
+									<path
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z'
+									/>
+								</svg>
+							</Link>
 							{/* heart */}
 							<div className='flex content-center'>
 								<a href='#'>
@@ -204,22 +205,24 @@ export default function Header({ auth }) {
 										/>
 									</div>
 									<div className=''>
-										<button className='btn bg-green-400 text-white'>
-											<svg
-												xmlns='http://www.w3.org/2000/svg'
-												fill='none'
-												viewBox='0 0 24 24'
-												strokeWidth={1.5}
-												stroke='white'
-												className='h-6 w-6'
-											>
-												<path
-													strokeLinecap='round'
-													strokeLinejoin='round'
-													d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z'
-												/>
-											</svg>
-										</button>
+										<Link href={route('search.index')}>
+											<button className='btn bg-green-400 text-white'>
+												<svg
+													xmlns='http://www.w3.org/2000/svg'
+													fill='none'
+													viewBox='0 0 24 24'
+													strokeWidth={1.5}
+													stroke='white'
+													className='h-6 w-6'
+												>
+													<path
+														strokeLinecap='round'
+														strokeLinejoin='round'
+														d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z'
+													/>
+												</svg>
+											</button>
+										</Link>
 									</div>
 								</div>
 							</li>
