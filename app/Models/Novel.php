@@ -42,7 +42,8 @@ class Novel extends Model
 		return 'slug';
 	}
 
-	#[SearchUsingPrefix('name_novel')]
+	#[SearchUsingPrefix(['name_novel', 'author', 'illustrator'])]
+	// #[SearchUsingFullText(['name_novel', 'author', 'illustrator'])]
 	public function toSearchableArray(): array
 	{
 		return [

@@ -24,20 +24,39 @@ class SearchController extends Controller
 		]);
 	}
 
+
 	public function SearchAll(Request $request)
 	{
+
 		// Validate
 		$request->validate([
-			'name_novel' => ['required', 'string', 'max:255'],
+			'search' => ['nullable', 'string', 'max:255'],
+
 		], [
-			'name_novel.required' => 'Tên truyện không được để trống',
-			'name_novel.string' => 'Tên truyện phải là chuỗi',
-			'name_novel.max' => 'Tên truyện không được quá 255 ký tự',
+
+			'search.string' => 'Tên truyện phải là chuỗi',
+			'search.max' => 'Tên truyện không được quá 255 ký tự',
 		]);
-		$novel = Novel::search($request->name_novel)->where('is_publish', 1)->get();
+
+		$search = $request->search;
+
+		$novel = Novel::where('is_publish', 1)
+			->where(function ($query) use ($search) {
+				$query->where('name_novel', 'like', "%{$search}%")
+					->orWhere('author', 'like', "%{$search}%")
+					->orWhere('illustrator', 'like', "%{$search}%");
+			})
+			->orderBy('created_at', 'desc')
+			->get();
+
 		return Inertia::render('Client/Search/Search', [
 			'categories' => $this->GetCategories(),
 			'novel' => $novel,
 		]);
 	}
+
+	public function SearchSelectbox(Request $request)
+	{
+	}
+
 }
