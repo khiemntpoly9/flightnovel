@@ -37,12 +37,18 @@ class Novel extends Model
 		return $this->belongsTo(Follow::class, 'id_novel', 'id');
 	}
 
+	public function novelcate(): BelongsTo
+	{
+		return $this->belongsTo(NovelCate::class, 'id', 'id_novel');
+	}
+
 	public function getRouteKeyName(): string
 	{
 		return 'slug';
 	}
 
-	#[SearchUsingPrefix('name_novel')]
+	#[SearchUsingPrefix(['name_novel', 'author', 'illustrator'])]
+	// #[SearchUsingFullText(['name_novel', 'author', 'illustrator'])]
 	public function toSearchableArray(): array
 	{
 		return [
