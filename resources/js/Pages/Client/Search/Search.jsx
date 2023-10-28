@@ -5,6 +5,7 @@ import { router } from '@inertiajs/react';
 export default function Search({ auth, categories, novel }) {
 	const [values, setValues] = useState({
 		search: '',
+		select: '',
 		categories: [],
 	});
 	// Handle change input
@@ -16,7 +17,29 @@ export default function Search({ auth, categories, novel }) {
 			[key]: value,
 		}));
 	};
-	console.log(values);
+	// Handle change checkbox
+	const handleCheckbox = (e) => {
+		const cateId = e.target.id;
+		const isChecked = e.target.checked;
+
+		// Lấy mảng categories hiện tại
+		const updateCategories = [...values.categories];
+
+		if (isChecked) {
+			// Nếu được check thì thêm id đó vào mảng
+			updateCategories.push(cateId);
+		} else {
+			// Nếu không được check thì xóa id đó trong mảng
+			const index = updateCategories.indexOf(cateId);
+			if (index !== -1) {
+				updateCategories.splice(index, 1);
+			}
+		}
+		setValues((values) => ({
+			...values,
+			categories: updateCategories,
+		}));
+	};
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -98,11 +121,15 @@ export default function Search({ auth, categories, novel }) {
 								<label htmlFor='hoasi' className='text-base font-bold'>
 									Tình trạng
 								</label>
-								<select className='select select-accent select-sm mt-1 w-full max-w-xs md:select-md'>
-									<option>Tất cả</option>
-									<option value={0}>Đang tiến hành</option>
-									<option value={1}>Hoàn thành</option>
-									<option value={2}>Tạm ngưng</option>
+								<select
+									id='select'
+									onChange={handleChange}
+									className='select select-accent select-sm mt-1 w-full max-w-xs md:select-md'
+								>
+									<option value={0}>Tất cả</option>
+									<option value={1}>Đang tiến hành</option>
+									<option value={2}>Hoàn thành</option>
+									<option value={3}>Tạm ngưng</option>
 								</select>
 							</div>
 						</div>
@@ -117,6 +144,8 @@ export default function Search({ auth, categories, novel }) {
 											<input
 												id={category.id}
 												type='checkbox'
+												name='categories'
+												onChange={handleCheckbox}
 												className='h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600'
 											/>
 											<label

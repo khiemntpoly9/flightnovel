@@ -24,10 +24,8 @@ class SearchController extends Controller
 		]);
 	}
 
-
 	public function SearchAll(Request $request)
 	{
-
 		// Validate
 		$request->validate([
 			'search' => ['nullable', 'string', 'max:255'],
@@ -39,24 +37,33 @@ class SearchController extends Controller
 		]);
 
 		$search = $request->search;
+		$status = $request->select;
+		$categories = $request->categories;
+		$query = Novel::where('is_publish', 1)->with('novelcate');
 
-		$novel = Novel::where('is_publish', 1)
-			->where(function ($query) use ($search) {
-				$query->where('name_novel', 'like', "%{$search}%")
-					->orWhere('author', 'like', "%{$search}%")
-					->orWhere('illustrator', 'like', "%{$search}%");
-			})
-			->orderBy('created_at', 'desc')
-			->get();
+		// check điều kiện status
+		if ($status) {
+			$query->where('status', $status);
+		}
+
+		// check categories
+		if ($categories) {
+			$query->whereHas('novelcate', function ($query) use ($categories) {
+				$query->whereIn('id_categories', $categories);
+			});
+		}
+
+		// check Tên tác giả ,họa sĩ, tên truyện
+		$query->where(function ($query) use ($search) {
+			$query->where('name_novel', 'like', "%{$search}%")
+				->orWhere('author', 'like', "%{$search}%")
+				->orWhere('illustrator', 'like', "%{$search}%");
+		});
+		$novel = $query->orderBy('created_at', 'desc')->get();
 
 		return Inertia::render('Client/Search/Search', [
 			'categories' => $this->GetCategories(),
 			'novel' => $novel,
 		]);
 	}
-
-	public function SearchSelectbox(Request $request)
-	{
-	}
-
 }
