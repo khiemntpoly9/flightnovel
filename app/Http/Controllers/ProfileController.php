@@ -70,7 +70,7 @@ class ProfileController extends Controller
 			'avatar' => 'https://flightnovel.sgp1.digitaloceanspaces.com/' . $path,
 		]);
 		$request->session()->flash('success', 'Cập nhật ảnh đại diện thành công');
-		return redirect()->route('profile.edit');
+		return redirect()->back();
 	}
 
 	public function update(Request $request)
