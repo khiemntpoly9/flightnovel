@@ -181,7 +181,7 @@ export default function NovelRead({ auth, novel_main, vol, follow, rating, comme
 											<div className='flex gap-3'>
 												<Link
 													className='text-lime-500 hover:text-orange-500'
-													href={`/novel/${novel.slug}/${vol.slug}/${chap.slug}`}
+													href={`/novel/${novel_main.novel.slug}/${vol.slug}/${chap.slug}`}
 												>
 													Xem
 												</Link>

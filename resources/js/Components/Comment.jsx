@@ -10,6 +10,7 @@ export default function Comment({ novel, comments, user, error }) {
 		id_novel: novel.id,
 		content: '',
 	});
+	console.log(comments);
 	// handle change input
 	const handleChange = (e) => {
 		if (e && e.target && e.target.id) {
@@ -148,7 +149,7 @@ export default function Comment({ novel, comments, user, error }) {
 					))}
 				</div>
 			</div>
-			<Pagination links={comments.links} />
+			{comments.links && comments.links.length > 3 && <Pagination links={comments.links} />}
 		</div>
 	);
 }
