@@ -10,7 +10,6 @@ export default function Comment({ novel, comments, user, error }) {
 		id_novel: novel.id,
 		content: '',
 	});
-	console.log(comments);
 	// handle change input
 	const handleChange = (e) => {
 		if (e && e.target && e.target.id) {
