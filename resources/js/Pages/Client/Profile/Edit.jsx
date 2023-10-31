@@ -1,8 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import moment from 'moment/moment';
 import { Link, Head, router, usePage } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { useState } from 'react';
 
 export default function Edit({ auth }) {
 	const [selectedFile, setSelectedFile] = useState(null);
@@ -12,6 +11,12 @@ export default function Edit({ auth }) {
 		const formData = new FormData();
 		formData.append('avatar', selectedFile);
 		router.post(route('profile.avatar'), formData);
+		// Đóng modal
+		setTimeout(() => {
+			if (!errors.avatar) {
+				document.getElementById('my_modal_4').close();
+			}
+		}, 3000);
 	};
 	return (
 		<AuthenticatedLayout
