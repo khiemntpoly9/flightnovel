@@ -2,7 +2,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Link } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
-export default function Team({ auth, team_user, team, novel, status }) {
+export default function Team({ auth, team_user, team_member, team, novel, status }) {
 	// Toast
 	useEffect(() => {
 		// Success
@@ -70,20 +70,40 @@ export default function Team({ auth, team_user, team, novel, status }) {
 						</Link>
 					</div>
 					{/* Show truyện */}
-					<div className='mt-2'>
-						<span className='text-xl font-bold'>Danh sách truyện</span>
-						<div className='bottom relative mb-4 grid grid-cols-3 gap-2 py-2 sm:grid-cols-4 lg:grid-cols-6'>
-							{novel.map((novel) => (
-								<div key={novel.id} className='card'>
-									<img src={novel.thumbnail} alt='' className='' />
-									<div className='name'>
-										<Link href={`/team/novel/${novel.slug}`} className='mt-2 text-lg font-semibold'>
-											{novel.name_novel}
-										</Link>
-										<p className='mt-0 font-semibold'> Tác giả: {novel.author}</p>
+					<div className='relative w-full py-6'>
+						{/* list member */}
+						<div className='my-7'>
+							<span className='text-xl font-bold'>Danh sách thành viên</span>
+							<div className='flex flex-row'>
+								{team_member.map(({user},index) => (
+									<div>
+										<div key={index} className='flex flex-row p-3 rounded-sm'>
+											<img src={user.avatar} alt='' className='h-12 w-10 mx-3'/>
+											<div> 
+												<h4>{user.name}</h4>
+												<h4>{user.email}</h4>
+											</div>
+										</div>
 									</div>
-								</div>
-							))}
+								))}
+							</div>
+						</div>
+						{/* list novel */}
+						<div>
+							<span className='text-xl font-bold'>Danh sách truyện</span>
+							<div className='bottom grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8 mt-5 mb-5'>
+								{novel.map((novel) => (
+									<div key={novel.id} className='card bg-base-100 shadow-xl rounded-t-md'>
+										<img src={novel.thumbnail} alt='' className='h-full w-full object-cover rounded-t-md' />
+										<div className='my-3'>
+											<Link href={`/team/novel/${novel.slug}`} className='mt-2 text-lg font-semibold'>
+												{novel.name_novel}
+											</Link>
+											<p className='mt-1 font-semibold'> Tác giả: {novel.author}</p>
+										</div>
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
 					<Link className='btn' href={route('novel.index')}>
