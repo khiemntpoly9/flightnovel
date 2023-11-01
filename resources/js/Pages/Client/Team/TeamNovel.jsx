@@ -12,7 +12,7 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 	const [values, setValues] = useState({
 		select: novel_main.novel.is_publish,
 	});
-	console.log(novel_main);
+	console.log(values);
 	// Handle change input
 	const handleChange = (e) => {
 		const key = e.target.id;
@@ -21,11 +21,12 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 			...values,
 			[key]: value,
 		}));
+		handleSubmit();
 	};
 	// Handle submit form
 	const handleSubmit = (e) => {
-		e.preventDefault();
-		router.patch(`/team/novel/${novel_main.novel.slug}/update`, values);
+		// e.preventDefault();
+		router.post(`/team/novel/${novel_main.novel.slug}/public`, values);
 	};
 	// Toast
 	useEffect(() => {
@@ -160,12 +161,6 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 											<option value={0}>Ẩn</option>
 											<option value={1}>Hiện</option>
 										</select>
-										<button
-											className=' text-whitehover:bg-green-600 mt-1 h-12 rounded bg-green-500 p-3 text-sm font-bold text-white  md:text-base'
-											type='submit'
-										>
-											Lưu
-										</button>
 									</form>
 								</div>
 							</div>

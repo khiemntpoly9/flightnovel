@@ -86,11 +86,11 @@ Route::middleware('auth')->prefix('team')->group(function () {
 		// Team User Role
 		Route::middleware('team.user')->group(function () {
 			Route::get('/{novel:slug}', [TeamController::class, 'TeamNovel'])->name('team.novel');
-			Route::post('/{novel:slug}/update', [TeamController::class, 'SelectPublic'])->name('team.public');
 			Route::prefix('{novel:slug}')->group(function () {
 				// Update Novel
 				Route::get('/edit', [NovelController::class, 'NovelUpdatePage'])->name('novel.edit');
 				Route::post('/update', [NovelController::class, 'NovelUpdate'])->name('novel.update');
+				Route::post('/public', [NovelController::class, 'SelectPublic'])->name('novel.public');
 				// Create Vol
 				Route::get('/create-vol', [VolController::class, 'VolIndex'])->name('vol.index');
 				Route::post('/create-vol', [VolController::class, 'VolStore'])->name('vol.create');

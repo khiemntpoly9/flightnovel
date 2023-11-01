@@ -207,11 +207,4 @@ class TeamController extends Controller
 		}
 	}
 
-	// ẩn hiện
-	public function SelectPublic(Request $request, $novel)
-	{
-		Novel::Where('id', $novel->id)->update(['is_publish' => $request->select]);
-
-		return redirect()->route('team.index')->with('success', 'Dữ liệu đã được cập nhật');
-	}
 }
