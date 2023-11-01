@@ -12,7 +12,7 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 	const [values, setValues] = useState({
 		select: novel_main.novel.is_publish,
 	});
-	console.log(values);
+	console.log(novel_main);
 	// Handle change input
 	const handleChange = (e) => {
 		const key = e.target.id;
@@ -25,7 +25,7 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		router.post(`/team/novel/${novel_main.novel.slug}/update`, values);
+		router.patch(`/team/novel/${novel_main.novel.slug}/update`, values);
 	};
 	// Toast
 	useEffect(() => {
@@ -148,6 +148,7 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 										</dialog>
 									</div>
 								</div>
+								{/* public */}
 								<div className='mt-2'>
 									<form onSubmit={handleSubmit} className='flex flex-row gap-2'>
 										<select

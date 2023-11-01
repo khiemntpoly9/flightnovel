@@ -24,6 +24,7 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
  */
+
 // Home
 Route::get('/', [HomeController::class, 'HomeIndex'])->name('home');
 
@@ -85,6 +86,7 @@ Route::middleware('auth')->prefix('team')->group(function () {
 		// Team User Role
 		Route::middleware('team.user')->group(function () {
 			Route::get('/{novel:slug}', [TeamController::class, 'TeamNovel'])->name('team.novel');
+			Route::post('/{novel:slug}/update', [TeamController::class, 'SelectPublic'])->name('team.public');
 			Route::prefix('{novel:slug}')->group(function () {
 				// Update Novel
 				Route::get('/edit', [NovelController::class, 'NovelUpdatePage'])->name('novel.edit');
