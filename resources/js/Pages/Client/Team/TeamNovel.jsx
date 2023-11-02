@@ -22,7 +22,6 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 	};
 	// Change status publish
 	const changePublic = (value) => {
-		console.log(value);
 		router.post(`/team/novel/${novel_main.novel.slug}/public`, { value });
 	};
 	// Toast

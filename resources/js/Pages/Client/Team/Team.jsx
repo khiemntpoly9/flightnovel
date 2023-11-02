@@ -69,46 +69,57 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 							Thêm thành viên
 						</Link>
 					</div>
-					{/* Show truyện */}
-					<div className='relative w-full py-6'>
-						{/* list member */}
-						<div className='my-7'>
-							<span className='text-xl font-bold'>Danh sách thành viên</span>
-							<div className='flex flex-row'>
-								{team_member.map(({user},index) => (
-									<div>
-										<div key={index} className='flex flex-row p-3 rounded-sm'>
-											<img src={user.avatar} alt='' className='h-12 w-10 mx-3'/>
-											<div> 
-												<h4>{user.name}</h4>
-												<h4>{user.email}</h4>
+					{/*  */}
+					<div className='flex flex-col lg:flex-row'>
+						{/* Left */}
+						<div className='w-full lg:w-8/12'>
+							<div className='relative w-full py-6'>
+								{/* Show truyện */}
+								<div>
+									<span className='text-xl font-bold'>Danh sách truyện</span>
+									<div className='bottom mb-5 mt-5 grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6'>
+										{novel.map((novel) => (
+											<div key={novel.id} className='card rounded-t-md bg-base-100 shadow-xl'>
+												<img
+													src={novel.thumbnail}
+													alt=''
+													className='h-full w-full rounded-t-md object-cover'
+												/>
+												<div className='my-3 p-2'>
+													<Link href={`/team/novel/${novel.slug}`} className='mt-2 text-lg font-semibold'>
+														{novel.name_novel}
+													</Link>
+													<p className='mt-1 font-semibold'> Tác giả: {novel.author}</p>
+												</div>
+											</div>
+										))}
+									</div>
+								</div>
+							</div>
+							<Link className='btn' href={route('novel.index')}>
+								Thêm truyện
+							</Link>
+						</div>
+						{/* Right */}
+						<div className='w-full lg:w-4/12'>
+							{/* list member */}
+							<div className='py-6'>
+								<span className='text-xl font-bold'>Danh sách thành viên</span>
+								<div className='mt-2 flex gap-2'>
+									{team_member.map(({ user }, index) => (
+										<div key={index}>
+											<div className='flex gap-2'>
+												<img className='h-10 w-10 rounded-full object-cover' src={user.avatar} />
+												<div className='flex items-center'>
+													<span>{user.name}</span>
+												</div>
 											</div>
 										</div>
-									</div>
-								))}
-							</div>
-						</div>
-						{/* list novel */}
-						<div>
-							<span className='text-xl font-bold'>Danh sách truyện</span>
-							<div className='bottom grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8 mt-5 mb-5'>
-								{novel.map((novel) => (
-									<div key={novel.id} className='card bg-base-100 shadow-xl rounded-t-md'>
-										<img src={novel.thumbnail} alt='' className='h-full w-full object-cover rounded-t-md' />
-										<div className='my-3'>
-											<Link href={`/team/novel/${novel.slug}`} className='mt-2 text-lg font-semibold'>
-												{novel.name_novel}
-											</Link>
-											<p className='mt-1 font-semibold'> Tác giả: {novel.author}</p>
-										</div>
-									</div>
-								))}
+									))}
+								</div>
 							</div>
 						</div>
 					</div>
-					<Link className='btn' href={route('novel.index')}>
-						Thêm truyện
-					</Link>
 				</div>
 			</DefaultLayout>
 		);
