@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Novel;
 use App\Models\Team;
 use App\Models\TeamUser;
+use App\Models\Detail;
+use App\Models\NovelCate;
+use App\Models\Comment;
 use App\Models\Vol;
+use App\Models\Rating;
+use App\Models\Follow;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -42,13 +47,60 @@ class TeamController extends Controller
 	// Hiện Novel chi tiết trong team
 	public function TeamNovel(Request $request, $id)
 	{
+		// Novel
 		$novel = Novel::where('id', $id)->first();
+		// Detail
+		$detail = Detail::where('id', $novel->id_detail)->first();
+		// Categireis
+		$categories = NovelCate::where('id_novel', $novel->id)->with('categories:id,name,slug')->get();
+		// Vol
 		$vol = Vol::where('id_novel', $id)->with('chap:id,id_vol,title,created_at')->get();
+		// Status
 		$status = ['success' => session('success'), 'error' => session('error')];
+		// follow
+		if (auth()->check()) {
+			// Lấy id user
+			$id_user = auth()->user()->id;
+			$follow = Follow::where('id_user', $id_user)->where('id_novel', $novel->id)->first();
+		} else {
+			$follow = null;
+		}
+		// Rating
+		$rating = Rating::where('id_novel', $novel->id)->get();
+		$countRating = $rating->count();
+		$totalRating = 0;
+		foreach ($rating as $item) {
+			$totalRating += $item->rating;
+		}
+		if ($countRating > 0) {
+			$averageRating = round($totalRating / $countRating, 1);
+		} else {
+			$averageRating = 0; // Tránh lỗi chia cho 0 nếu mảng rỗng.
+		}
+		// Comment
+		$comments = Comment::where('id_novel', $novel->id)->with('user:id,name,avatar')->orderBy('created_at', 'desc')->paginate($perPage = 6, $columns = ['*'], $pageName = 'comment');
+		// Lấy số lượng follow
+		$follow_count = Follow::where('id_novel', $novel->id)->count();
 		return Inertia::render('Client/Team/TeamNovel', [
-			'novel' => $novel,
+			'novel_main' => [
+				'novel' => $novel,
+				'detail' => $detail,
+				'categories' => $categories,
+			],
 			'vol' => $vol,
+			'follow' => [
+				'status' => $follow,
+				'count' => $follow_count,
+			],
+			'rating' => [
+				'count' => $countRating,
+				'total' => $totalRating,
+				'average' => $averageRating,
+			],
+			'comments' => $comments,
 			'status' => $status,
+
+
 		]);
 	}
 
@@ -156,4 +208,5 @@ class TeamController extends Controller
 			return redirect()->route('team.index')->with('success', 'Thêm thành viên thành công');
 		}
 	}
+
 }

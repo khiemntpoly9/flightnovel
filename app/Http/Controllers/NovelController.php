@@ -275,4 +275,10 @@ class NovelController extends Controller
 
 		return redirect()->back()->with('success', 'Bỏ theo dõi truyện thành công');
 	}
+	// Ẩn - hiện
+	public function SelectPublic(Request $request, Novel $novel)
+	{
+		Novel::Where('id', $novel->id)->update(['is_publish' => $request->value]);
+		return redirect()->back()->with('success', 'Cập nhật trạng thái truyện');
+	}
 }
