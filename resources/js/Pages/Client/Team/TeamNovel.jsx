@@ -4,15 +4,12 @@ import { Link, router, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import moment from 'moment/moment';
-import Rating from '@/Components/Rating';
 
 const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) => {
 	const { errors } = usePage().props;
-	// console.log(novel_main.novel.is_publish);
 	const [values, setValues] = useState({
 		select: novel_main.novel.is_publish,
 	});
-	console.log(values);
 	// Handle change input
 	const handleChange = (e) => {
 		const key = e.target.id;
@@ -21,12 +18,12 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 			...values,
 			[key]: value,
 		}));
-		handleSubmit();
+		changePublic(value);
 	};
-	// Handle submit form
-	const handleSubmit = (e) => {
-		// e.preventDefault();
-		router.post(`/team/novel/${novel_main.novel.slug}/public`, values);
+	// Change status publish
+	const changePublic = (value) => {
+		console.log(value);
+		router.post(`/team/novel/${novel_main.novel.slug}/public`, { value });
 	};
 	// Toast
 	useEffect(() => {
@@ -97,7 +94,6 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 										<span className='font-medium'>Đang tiến hành</span>
 									</p>
 								</div>
-
 								{/* read */}
 								<div className='mt-2 flex flex-row justify-center gap-1 md:justify-start'>
 									<Link
@@ -112,63 +108,25 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 									>
 										Chỉnh sửa chi tiết truyện
 									</Link>
-									{follow.status ? (
-										<button
-											className='rounded-full	bg-header-a p-2 text-center text-white hover:bg-orange-400'
-											onClick={() => router.delete(`/follow/${novel_main.novel.id}`)}
-										>
-											Đã Theo dõi
-										</button>
-									) : (
-										<button
-											className='rounded-full	bg-header-a p-2 text-center text-white hover:bg-orange-400'
-											onClick={() => router.post(`/follow/${novel_main.novel.id}`)}
-										>
-											Theo dõi
-										</button>
-									)}
-									<button
-										className='rounded-full	bg-header-a p-2 text-center text-white hover:bg-orange-400'
-										onClick={() => document.getElementById('modal_rate').showModal()}
-									>
-										Đánh giá
-									</button>
-									{/* Modal rate */}
-									<div>
-										<dialog id='modal_rate' className='modal'>
-											<div className='modal-box'>
-												<h3 className='text-lg font-bold'>Đánh giá</h3>
-												{/* Stars */}
-												<div className='starbar-rating flex justify-center gap-1'>
-													<Rating novel={novel_main.novel.id} />
-												</div>
-											</div>
-											<form method='dialog' className='modal-backdrop'>
-												<button>close</button>
-											</form>
-										</dialog>
-									</div>
 								</div>
 								{/* public */}
 								<div className='mt-2'>
-									<form onSubmit={handleSubmit} className='flex flex-row gap-2'>
-										<select
-											id='select'
-											value={values.select}
-											onChange={handleChange}
-											className='select select-accent select-sm mt-1 w-32 max-w-xs md:select-md'
-										>
-											<option value={0}>Ẩn</option>
-											<option value={1}>Hiện</option>
-										</select>
-									</form>
+									<select
+										id='select'
+										value={values.select}
+										onChange={handleChange}
+										className='select select-accent select-sm mt-1 w-32 max-w-xs md:select-md'
+									>
+										<option value={0}>Ẩn</option>
+										<option value={1}>Công khai</option>
+									</select>
 								</div>
 							</div>
 						</div>
 						{/* Container 2 -  */}
 						<div className='grid grid-cols-4 border-b-2 py-3'>
 							<div className='text-center'>
-								Số lượt xem <br /> 13213
+								Số lượt xem <br /> {novel_main.novel.views}
 							</div>
 							<div className='text-center'>
 								{rating.count ? (

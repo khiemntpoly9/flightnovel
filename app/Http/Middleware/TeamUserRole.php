@@ -14,7 +14,18 @@ class TeamUserRole
 	public function handle(Request $request, Closure $next): Response
 	{
 		$novel_slug = $request->route()->parameter('novel');
+		// Kiểm tra xem có truyền slug hay không
+		if ($novel_slug) {
+			// Kiểm tra xem slug có phải là string hay không
+			if (is_string($novel_slug)) {
+				$novel_slug = $request->route()->parameter('novel');
+			} else {
+				// Lấy slug từ route
+				$novel_slug = $request->route()->parameter('novel')['slug'];
+			}
+		}
 		$novel = Novel::where('slug', $novel_slug)->first();
+		// dd($novel);
 		if (!$novel) {
 			return redirect()->route('team.index')->with('error', 'Truyện không tồn tại');
 		} else {
