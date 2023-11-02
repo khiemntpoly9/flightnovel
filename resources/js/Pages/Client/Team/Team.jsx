@@ -56,18 +56,22 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 					</div>
 					{/* Edit team */}
 					<div className='flex'>
-						<Link
-							href={`/team/${team.team.slug}/edit`}
-							className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-						>
-							Chỉnh sửa chi tiết nhóm
-						</Link>
-						<Link
-							href={`/team/${team.team.slug}/add-member`}
-							className='ml-1 rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-						>
-							Thêm thành viên
-						</Link>
+						{team_user.team_role === 1 ? (
+							<Link
+								href={`/team/${team.team.slug}/edit`}
+								className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+							>
+								Chỉnh sửa chi tiết nhóm
+							</Link>
+						) : null}
+						{team_user.team_role === 1 ? (
+							<Link
+								href={`/team/${team.team.slug}/add-member`}
+								className='ml-1 rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+							>
+								Thêm thành viên
+							</Link>
+						) : null}
 					</div>
 					{/*  */}
 					<div className='flex flex-col lg:flex-row'>
@@ -102,7 +106,6 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 						</div>
 						{/* Right */}
 						<div className='w-full lg:w-4/12'>
-							{/* list member */}
 							<div className='py-6'>
 								<span className='text-xl font-bold'>Danh sách thành viên</span>
 								<div className='mt-2 flex gap-2'>
@@ -113,6 +116,7 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 												<div className='flex items-center'>
 													<span>{user.name}</span>
 												</div>
+												{team_user.team_role === 1 ? <button className='btn btn-error'>Xóa</button> : null}
 											</div>
 										</div>
 									))}
