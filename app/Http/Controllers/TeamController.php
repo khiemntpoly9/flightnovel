@@ -210,4 +210,25 @@ class TeamController extends Controller
 		}
 	}
 
+	public function DeleteMember(Request $request, Team $team, $id)
+	{
+
+		$teamID = Team::where('slug', $team->slug)->first()->id;
+		$team_user = TeamUser::where('id_team', $teamID)->where('id_user', $id)->first(); // Tìm team_user cụ thể cần xóa
+		// dd($team_user);
+
+		if ($team_user) {
+			if ($team_user->team_role === 0) {
+				// Nếu tìm thấy, thì mới xóa nó
+				$team_user->delete();
+				return redirect()->route('team.index')->with('success', 'Xóa thành viên thành công');
+			} elseif ($team_user->team_role === 1) {
+				return redirect()->route('team.index')->with('error', 'Bạn không thể xóa chính bạn');
+			}
+		} else {
+			// Nếu không tìm thấy, bạn có thể xử lý lỗi hoặc trả về thông báo không tìm thấy
+			return redirect()->route('team.index')->with('error', 'Không tìm thấy thành viên để xóa');
+		}
+	}
+
 }
