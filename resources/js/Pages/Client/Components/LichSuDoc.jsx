@@ -8,7 +8,7 @@ export default function LichSuDoc() {
 					<div className='absolute left-20 top-2 text-xs font-bold uppercase text-black underline'>
 						vừa đọc
 					</div> */}
-				<h1 className='font-bold uppercase text-black underline'>Truyện vừa đọc</h1>
+				<h1 className='font-bold uppercase text-black'>Truyện vừa đọc</h1>
 			</div>
 			<div className='bottom relative'>
 				<div className='card grid grid-cols-3 gap-2 rounded-md py-1'>
