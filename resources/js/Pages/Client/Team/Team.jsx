@@ -1,5 +1,5 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 export default function Team({ auth, team_user, team_member, team, novel, status }) {
@@ -56,18 +56,22 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 					</div>
 					{/* Edit team */}
 					<div className='flex'>
-						<Link
-							href={`/team/${team.team.slug}/edit`}
-							className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-						>
-							Chỉnh sửa chi tiết nhóm
-						</Link>
-						<Link
-							href={`/team/${team.team.slug}/add-member`}
-							className='ml-1 rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
-						>
-							Thêm thành viên
-						</Link>
+						{team_user.team_role === 1 ? (
+							<Link
+								href={`/team/${team.team.slug}/edit`}
+								className='rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+							>
+								Chỉnh sửa chi tiết nhóm
+							</Link>
+						) : null}
+						{team_user.team_role === 1 ? (
+							<Link
+								href={`/team/${team.team.slug}/add-member`}
+								className='ml-1 rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+							>
+								Thêm thành viên
+							</Link>
+						) : null}
 					</div>
 					{/*  */}
 					<div className='flex flex-col lg:flex-row'>
@@ -102,20 +106,40 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 						</div>
 						{/* Right */}
 						<div className='w-full lg:w-4/12'>
-							{/* list member */}
 							<div className='py-6'>
 								<span className='text-xl font-bold'>Danh sách thành viên</span>
 								<div className='mt-2 flex gap-2'>
-									{team_member.map(({ user }, index) => (
-										<div key={index}>
-											<div className='flex gap-2'>
-												<img className='h-10 w-10 rounded-full object-cover' src={user.avatar} />
-												<div className='flex items-center'>
-													<span>{user.name}</span>
-												</div>
-											</div>
-										</div>
-									))}
+									<div className='h-96 overflow-x-auto'>
+										<table className='table table-pin-rows'>
+											<tbody>
+												{team_member.map(({ user }, index) => (
+													<tr key={index}>
+														<td>
+															<div className='flex gap-2'>
+																<img className='h-10 w-10 rounded-full object-cover' src={user.avatar} />
+																<div className='flex items-center'>
+																	<span>{user.name}</span>
+																</div>
+																{team_user.team_role === 1 ? (
+																	<button
+																		onClick={() => {
+																			if (window.confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
+																				// Nếu người dùng xác nhận xóa, thực hiện lệnh xóa ở đây
+																				router.delete(`/team/${team.team.slug}/delete/${user.id}`);
+																			}
+																		}}
+																		className='btn btn-error btn-sm'
+																	>
+																		Xóa
+																	</button>
+																) : null}
+															</div>
+														</td>
+													</tr>
+												))}
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
