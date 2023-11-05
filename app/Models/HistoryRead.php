@@ -15,7 +15,9 @@ class HistoryRead extends Model
 		'id',
 		'id_user',
 		'id_novel',
+		'id_chap',
 		'created_at',
+		'updated_at',
 	];
 
 	public function user(): BelongsTo
@@ -26,5 +28,10 @@ class HistoryRead extends Model
 	public function novel(): BelongsTo
 	{
 		return $this->belongsTo(Novel::class, 'id_novel', 'id');
+	}
+
+	public function chap(): BelongsTo
+	{
+		return $this->belongsTo(Chap::class, 'id_chap', 'id');
 	}
 }

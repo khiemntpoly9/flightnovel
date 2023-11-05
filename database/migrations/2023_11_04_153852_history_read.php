@@ -14,14 +14,12 @@ return new class extends Migration {
 			$table->bigIncrements('id');
 			$table->bigInteger('id_user')->unsigned();
 			$table->bigInteger('id_novel')->unsigned();
+			$table->bigInteger('id_chap')->unsigned();
 			$table->timestamps();
 			// Foreign Keys
 			$table->foreign('id_novel')->references('id')->on('novel');
 			$table->foreign('id_user')->references('id')->on('users');
-		});
-		// Remove updated_at
-		Schema::table('history_read', function (Blueprint $table) {
-			$table->dropColumn('updated_at');
+			$table->foreign('id_chap')->references('id')->on('chap');
 		});
 	}
 
