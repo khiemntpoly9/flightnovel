@@ -32,13 +32,16 @@ Route::get('/', [HomeController::class, 'HomeIndex'])->name('home');
 Route::prefix('novel')->group(function () {
 	Route::get('/{novel:slug}', [NovelController::class, 'NovelRead'])->name('novel.read');
 	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}', [ChapController::class, 'Chapter'])->name('novel.chapter');
-	Route::get('/view/{id}',[NovelController::class,'NovelUpdateView'])->name('novel.chapter');
+	Route::get('/view/{id}', [NovelController::class, 'NovelUpdateView'])->name('novel.chapter');
+
+
 	// Route::get('/{novel:slug}/vol/{id_vol}', [VolController::class, 'VolRead'])->name('vol.read');
 	// Route::get('/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapRead'])->name('chap.read');
 });
 
 // Follow
 Route::middleware('auth')->prefix('follow')->group(function () {
+
 	Route::post('/{id}', [NovelController::class, 'NovelFollow'])->name('novel.follow');
 	Route::delete('/{id}', [NovelController::class, 'NovelUnFollow'])->name('novel.unfollow');
 });
@@ -52,6 +55,10 @@ Route::middleware('auth')->prefix('comment')->group(function () {
 // Rating
 Route::middleware('auth')->prefix('rating')->group(function () {
 	Route::post('/post', [RatingController::class, 'RatingCreate'])->name('novel.rating');
+});
+// NovelFollow
+Route::middleware('auth')->prefix('theodoi')->group(function () {
+	Route::get('/', [NovelController::class, 'FollowIndex'])->name('follow.index');
 });
 // Search
 Route::prefix('search')->group(function () {

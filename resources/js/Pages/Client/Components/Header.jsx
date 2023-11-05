@@ -260,7 +260,7 @@ export default function Header({ auth }) {
 									<Link href={route('profile.edit')}>Trang cá nhân</Link>
 								</li>
 								<li onClick={() => statusUser()}>
-									<Link href='/profile'>Hệ thống</Link>
+									<Link href={route('follow.index')}>Truyện theo dõi</Link>
 								</li>
 								<li onClick={() => statusUser()}>
 									<Link href='/team'>Nhóm dịch</Link>
