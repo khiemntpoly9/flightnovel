@@ -91,10 +91,11 @@ class NovelController extends Controller
 
 		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
 	}
-	public function NovelUpdateView($id){
-		$novel = Novel::where('id',$id)->first();
+	public function NovelUpdateView($id)
+	{
+		$novel = Novel::where('id', $id)->first();
 		Novel::where('id', $id)->update([
-			'views' => $novel->views +1,
+			'views' => $novel->views + 1,
 		]);
 	}
 	// Novel Update Pape
@@ -285,5 +286,16 @@ class NovelController extends Controller
 	{
 		Novel::Where('id', $novel->id)->update(['is_publish' => $request->value]);
 		return redirect()->back()->with('success', 'Cập nhật trạng thái truyện');
+	}
+
+	public function FollowIndex()
+	{
+		$id_user = auth()->user()->id;
+		$novel = Novel::join('follow', 'novel.id', '=', 'follow.id_novel')
+			->where('follow.id_user', $id_user)
+			->get();
+		return Inertia::render('Client/Novel/NovelFollow', [
+			'novel' => $novel,
+		]);
 	}
 }
