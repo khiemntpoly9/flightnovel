@@ -9,7 +9,6 @@ export default function Chapter({ auth, vol, chap }) {
 		setTimeout(() => {
 			if (!checkView) {
 				checkView = true;
-				console.log(checkView);
 			}
 		}, 5000);
 

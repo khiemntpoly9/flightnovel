@@ -27,4 +27,12 @@ class HistoryReadController extends Controller
 		}
 		return $historyRead;
 	}
+
+	// Lấy danh sách lịch sử đọc
+	public function HistoryReadList($id_user)
+	{
+		$historyReadList = HistoryRead::where('id_user', $id_user)->with('novel')->with(['chap' => function ($query) {
+			$query->with('vol'); }])->orderBy('updated_at', 'desc')->get();
+		return $historyReadList;
+	}
 }

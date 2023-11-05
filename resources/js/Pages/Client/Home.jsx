@@ -7,8 +7,7 @@ import TruyenDaHoanThanh from '@/Pages/Client/Components/TruyenDaHoanThanh';
 import TruyenVuaDang from '@/Pages/Client/Components/TruyenVuaDang';
 import { Head } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
-export default function Home({ auth, novels }) {
-	console.log(auth);
+export default function Home({ auth, novels, historyReadList }) {
 	return (
 		<>
 			<DefaultLayout auth={auth}>
@@ -24,7 +23,7 @@ export default function Home({ auth, novels }) {
 							</div>
 							{auth.user && (
 								<div className='order-1 mx-auto w-10/12 lg:order-2 lg:m-0 lg:w-4/12'>
-									<LichSuDoc />
+									<LichSuDoc historyReadList={historyReadList} />
 								</div>
 							)}
 							{/* <div className='order-1 mx-auto w-10/12	lg:order-2 lg:m-0 lg:w-4/12'>
