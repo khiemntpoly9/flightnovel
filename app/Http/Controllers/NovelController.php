@@ -91,10 +91,12 @@ class NovelController extends Controller
 
 		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
 	}
-	public function NovelUpdateView($id){
-		$novel = Novel::where('id',$id)->first();
+	// Views Novel
+	public function NovelUpdateView($id)
+	{
+		$novel = Novel::where('id', $id)->first();
 		Novel::where('id', $id)->update([
-			'views' => $novel->views +1,
+			'views' => $novel->views + 1,
 		]);
 	}
 	// Novel Update Pape

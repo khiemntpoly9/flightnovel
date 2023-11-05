@@ -88,10 +88,10 @@ class ChapController extends Controller
 		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Xoá chap thành công');
 	}
 
-	//Chapter
-	public function Chapter(Request $request,$novel, $vol, Chap $chap)
+	// Chapter
+	public function Chapter(Request $request, $novel, $vol, Chap $chap)
 	{
-		$vol = Vol::where('slug',$vol)->first();
-		return  Inertia::render('Client/Novel/Chapter',['vol'=>$vol,'chap'=>$chap]);
+		$vol = Vol::where('slug', $vol)->first();
+		return Inertia::render('Client/Novel/Chapter', ['vol' => $vol, 'chap' => $chap]);
 	}
 }
