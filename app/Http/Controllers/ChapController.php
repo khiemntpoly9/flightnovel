@@ -10,6 +10,16 @@ use Illuminate\Support\Str;
 
 class ChapController extends Controller
 {
+	// Khai báo biến
+	protected $NovelController;
+	protected $HistoryReadController;
+	// Khởi tạo
+	public function __construct(NovelController $NovelController, HistoryReadController $HistoryReadController)
+	{
+		$this->NovelController = $NovelController;
+		$this->HistoryReadController = $HistoryReadController;
+	}
+	// Tạo chap
 	public function ChapCreate(Request $request, $novel, $vol)
 	{
 		return Inertia::render('Client/Team/TeamChap', [
@@ -88,10 +98,17 @@ class ChapController extends Controller
 		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Xoá chap thành công');
 	}
 
-	//Chapter
-	public function Chapter(Request $request,$novel, $vol, Chap $chap)
+	// Chapter
+	public function Chapter(Request $request, $novel, $vol, Chap $chap)
 	{
-		$vol = Vol::where('slug',$vol)->first();
-		return  Inertia::render('Client/Novel/Chapter',['vol'=>$vol,'chap'=>$chap]);
+		$vol = Vol::where('slug', $vol)->first();
+		$id_user = auth()->user()->id;
+		if ($id_user) {
+			// Lấy thông tin novel
+			$novel = $this->NovelController->NovelGetSlug($novel);
+			// Tạo lịch sử đọc
+			$this->HistoryReadController->HistoryReadCreate($id_user, $novel->id, $chap->id);
+		}
+		return Inertia::render('Client/Novel/Chapter', ['vol' => $vol, 'chap' => $chap]);
 	}
 }

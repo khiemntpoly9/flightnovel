@@ -263,7 +263,7 @@ export default function Header({ auth }) {
 									<Link href={route('follow.index')}>Truyện theo dõi</Link>
 								</li>
 								<li onClick={() => statusUser()}>
-									<Link href='/team'>Nhóm dịch</Link>
+									<Link href={route('team.index')}>Nhóm dịch</Link>
 								</li>
 								<li
 									onClick={() => {

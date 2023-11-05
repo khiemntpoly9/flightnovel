@@ -18,6 +18,12 @@ use Illuminate\Support\Str;
 
 class NovelController extends Controller
 {
+	// Novel Get Slug
+	public function NovelGetSlug($slug)
+	{
+		$novel = Novel::where('slug', $slug)->first();
+		return $novel;
+	}
 	public function NovelIndex()
 	{
 		// Lấy categories
@@ -26,7 +32,6 @@ class NovelController extends Controller
 			'categories' => $categories,
 		]);
 	}
-
 	// Thêm truyện
 	public function NovelCreate(Request $request)
 	{
@@ -91,6 +96,7 @@ class NovelController extends Controller
 
 		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
 	}
+	// Views Novel
 	public function NovelUpdateView($id)
 	{
 		$novel = Novel::where('id', $id)->first();
