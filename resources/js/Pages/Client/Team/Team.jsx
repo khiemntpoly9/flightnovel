@@ -121,17 +121,21 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 																	<span>{user.name}</span>
 																</div>
 																{team_user.team_role === 1 ? (
-																	<button
-																		onClick={() => {
-																			if (window.confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
-																				// Nếu người dùng xác nhận xóa, thực hiện lệnh xóa ở đây
-																				router.delete(`/team/${team.team.slug}/delete/${user.id}`);
-																			}
-																		}}
-																		className='btn btn-error btn-sm'
-																	>
-																		Xóa
-																	</button>
+																	user.id !== auth.user.id ? (
+																		<button
+																			onClick={() => {
+																				if (
+																					window.confirm('Bạn có chắc chắn muốn xóa người dùng này không?')
+																				) {
+																					// Nếu người dùng xác nhận xóa, thực hiện lệnh xóa ở đây
+																					router.delete(`/team/${team.team.slug}/delete/${user.id}`);
+																				}
+																			}}
+																			className='btn btn-error btn-sm'
+																		>
+																			Xóa
+																		</button>
+																	) : null
 																) : null}
 															</div>
 														</td>
