@@ -2,7 +2,7 @@ import { Link } from '@inertiajs/react';
 
 export default function TruyenMoi({ novels }) {
 	return (
-		<div className='new_LN relative w-full py-6'>
+		<div className='new_LN relative w-full'>
 			<div className='top relative h-7 w-96'>
 				<h1 className='font-bold uppercase text-black'>Truyện mới</h1>
 			</div>

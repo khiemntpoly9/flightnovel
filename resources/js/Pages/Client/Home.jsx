@@ -17,7 +17,7 @@ export default function Home({ auth, novels, historyReadList }) {
 						<SlideNoiBat />
 					</div>
 					<div className='mt-2 w-full'>
-						<div className='flex flex-col justify-center gap-2 lg:flex-row'>
+						<div className='flex flex-col justify-center gap-4 lg:flex-row'>
 							<div className={`order-2 ${auth.user ? 'lg:w-6/12' : ''} mx-auto w-10/12 lg:order-1 lg:m-0`}>
 								<TruyenMoi novels={novels} />
 							</div>
