@@ -39,6 +39,7 @@ Route::prefix('novel')->group(function () {
 
 // Follow
 Route::middleware('auth')->prefix('follow')->group(function () {
+
 	Route::post('/{id}', [NovelController::class, 'NovelFollow'])->name('novel.follow');
 	Route::delete('/{id}', [NovelController::class, 'NovelUnFollow'])->name('novel.unfollow');
 });
@@ -52,6 +53,10 @@ Route::middleware('auth')->prefix('comment')->group(function () {
 // Rating
 Route::middleware('auth')->prefix('rating')->group(function () {
 	Route::post('/post', [RatingController::class, 'RatingCreate'])->name('novel.rating');
+});
+// NovelFollow
+Route::middleware('auth')->prefix('theodoi')->group(function () {
+	Route::get('/', [NovelController::class, 'FollowIndex'])->name('follow.index');
 });
 // Search
 Route::prefix('search')->group(function () {
