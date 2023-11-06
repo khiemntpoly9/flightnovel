@@ -4,6 +4,7 @@ use App\Http\Controllers\CateController;
 use App\Http\Controllers\ChapController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NovelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProviderController;
@@ -42,8 +43,10 @@ Route::middleware('auth')->prefix('follow')->group(function () {
 	Route::get('/', [NovelController::class, 'FollowIndex'])->name('follow.index');
 	Route::post('/{id}', [NovelController::class, 'NovelFollow'])->name('novel.follow');
 	Route::delete('/{id}', [NovelController::class, 'NovelUnFollow'])->name('novel.unfollow');
-
 });
+
+// Notification
+Route::get('/notify-novel', [NotificationController::class, 'index'])->name('notification.novel');
 
 // Comment
 Route::middleware('auth')->prefix('comment')->group(function () {
