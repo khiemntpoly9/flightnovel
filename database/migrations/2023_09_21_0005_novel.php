@@ -25,7 +25,6 @@ return new class extends Migration {
       $table->bigInteger('id_user')->unsigned();
       $table->timestamps();
       // Foreign Keys
-      $table->foreign('id_rate')->references('id')->on('rate');
       $table->foreign('id_team')->references('id')->on('team');
       $table->foreign('id_detail')->references('id')->on('detail');
       $table->foreign('id_user')->references('id')->on('users');
