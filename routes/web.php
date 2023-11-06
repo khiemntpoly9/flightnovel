@@ -11,6 +11,7 @@ use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -131,6 +132,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 	Route::patch('/categories', [CateController::class, 'CateUpdate'])->name('admin.categories.update');
 	Route::delete('/categories/{id}', [CateController::class, 'CateDelete'])->name('admin.categories.delete');
 	Route::get('/categories/detail/{id}', [CateController::class, 'CateDetail'])->name('admin.categories.detail');
+	Route::get('/user', [UserController::class, 'UserIndex'])->name('admin.user');
+	Route::delete('/user-delete/{id}', [UserController::class, 'UserDelete'])->name('admin.user.delete');
 	Route::get('/team', [TeamController::class, 'TeamAdmin'])->name('admin.team');
 	Route::get('/team/detail/{id}', [TeamController::class, 'TeamDetailAdmin'])->name('admin.teamdetail');
 	Route::get('/novel', [NovelController::class, 'NovelAdmin'])->name('admin.novel');
