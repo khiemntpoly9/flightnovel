@@ -10,13 +10,13 @@ use Illuminate\Notifications\Notification;
 class NotifyNovel extends Notification
 {
 	use Queueable;
-	public $novel;
+	public $notify_novel;
 	/**
 	 * Create a new notification instance.
 	 */
-	public function __construct($novel)
+	public function __construct($notify_novel)
 	{
-		$this->novel = $novel;
+		$this->notify_novel = $notify_novel;
 	}
 	/**
 	 * Get the notification's delivery channels.
@@ -31,8 +31,8 @@ class NotifyNovel extends Notification
 	public function toArray(object $notifiable): array
 	{
 		return [
-			'novel' => $this->novel['name_novel'],
-			'chap' => $this->novel['name_chap'],
+			'novel' => $this->notify_novel['name_novel'],
+			'chap' => $this->notify_novel['title'],
 		];
 	}
 }

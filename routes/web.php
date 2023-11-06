@@ -47,7 +47,7 @@ Route::middleware('auth')->prefix('follow')->group(function () {
 });
 
 // Notification
-Route::get('/notify-novel', [NotificationController::class, 'index'])->name('notification.novel');
+// Route::get('/notify-novel/{id}/{slug_chap}', [NotificationController::class, 'index'])->name('notification.novel');
 
 // Comment
 Route::middleware('auth')->prefix('comment')->group(function () {
