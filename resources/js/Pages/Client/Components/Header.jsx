@@ -47,7 +47,7 @@ export default function Header({ auth, notify }) {
 							</label>
 						</div>
 						{/* Notify */}
-						<div className='dropdown dropdown-end'>
+						<div className='dropdown-end dropdown'>
 							<label tabIndex={0} className='btn btn-circle btn-ghost'>
 								<div className='indicator'>
 									<svg
@@ -64,7 +64,7 @@ export default function Header({ auth, notify }) {
 										/>
 									</svg>
 									<span className='badge indicator-item badge-secondary bg-red-600 text-white'>
-										{notify.length}
+										{notify ? notify.length : '0'}
 									</span>
 								</div>
 							</label>
@@ -75,7 +75,7 @@ export default function Header({ auth, notify }) {
 							>
 								<div className='card-body'>
 									<ul>
-										{notify.map((item, index) => (
+										{notify?.map((item, index) => (
 											<li key={index}>
 												<span>
 													Truyện {item.data.novel} vừa cập nhật chap mới! {item.data.chap}

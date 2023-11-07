@@ -24,6 +24,13 @@ class NovelController extends Controller
 		$novel = Novel::where('slug', $slug)->first();
 		return $novel;
 	}
+	// novel lấy tất cả
+	public function NovelGetAllPublic()
+	{
+		$novels = Novel::where('is_publish', 1)->orderBy('created_at', 'desc')->get();
+		return $novels;
+	}
+
 	// Novel Get  Id
 	public function NovelGetId($id)
 	{
@@ -308,6 +315,13 @@ class NovelController extends Controller
 			->get();
 		return Inertia::render('Client/Novel/NovelFollow', [
 			'novel' => $novel,
+		]);
+	}
+
+	public function NovelList(Request $request)
+	{
+		return Inertia::render('Client/Novel/ListNovel', [
+			'novels' => $this->NovelGetAllPublic(),
 		]);
 	}
 }
