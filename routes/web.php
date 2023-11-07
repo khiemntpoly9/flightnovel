@@ -31,12 +31,14 @@ Route::get('/', [HomeController::class, 'HomeIndex'])->name('home');
 
 // Novel Read User
 Route::prefix('novel')->group(function () {
+	Route::get('/list', [NovelController::class, 'NovelList'])->name('novel.list');
 	Route::get('/{novel:slug}', [NovelController::class, 'NovelRead'])->name('novel.read');
 	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}', [ChapController::class, 'Chapter'])->name('novel.chapter');
 	Route::post('/view/{id}', [NovelController::class, 'NovelUpdateView'])->name('novel.view');
 	// Route::get('/{novel:slug}/vol/{id_vol}', [VolController::class, 'VolRead'])->name('vol.read');
 	// Route::get('/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapRead'])->name('chap.read');
 });
+
 
 // Follow
 Route::middleware('auth')->prefix('follow')->group(function () {
