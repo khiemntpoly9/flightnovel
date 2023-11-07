@@ -22,6 +22,7 @@ class ViewNovel extends Model
 	];
 
 	protected $primaryKey = 'id';
+	public $timestamps = false;
 
 	public function novel(): BelongsTo
 	{

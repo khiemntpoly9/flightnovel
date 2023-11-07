@@ -110,17 +110,6 @@ class NovelController extends Controller
 
 		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
 	}
-	// Views Novel (Tính view)
-	public function NovelUpdateView($id)
-	{
-		$novel = ViewNovel::where('id_novel', $id)->first();
-		ViewNovel::where('id_novel', $id)->update([
-			'views' => $novel->views + 1,
-			'daily_views' => $novel->daily_views + 1,
-			'weekly_views' => $novel->weekly_views + 1,
-			'monthly_views' => $novel->monthly_views + 1,
-		]);
-	}
 	// Novel Update Pape
 	public function NovelUpdatePage(Request $request)
 	{

@@ -1,24 +1,7 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import moment from 'moment/moment';
-import { useEffect, useState } from 'react';
-import { router } from '@inertiajs/react';
 
 export default function Chapter({ auth, vol, chap }) {
-	let checkView = false;
-	useEffect(() => {
-		setTimeout(() => {
-			if (!checkView) {
-				checkView = true;
-			}
-		}, 5000);
-
-		return () => {
-			if (checkView) {
-				checkView = false;
-				router.post(`/novel/view/${vol.id_novel}`);
-			}
-		};
-	}, []);
 	return (
 		<DefaultLayout auth={auth}>
 			<div className='bg-yellow-400'>
