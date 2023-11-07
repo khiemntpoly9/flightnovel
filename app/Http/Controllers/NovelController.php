@@ -24,13 +24,12 @@ class NovelController extends Controller
 		$novel = Novel::where('slug', $slug)->first();
 		return $novel;
 	}
-	// novel lấy tất cả
+	// Novel lấy tất cả (public)
 	public function NovelGetAllPublic()
 	{
 		$novels = Novel::where('is_publish', 1)->orderBy('created_at', 'desc')->get();
 		return $novels;
 	}
-
 	// Novel Get  Id
 	public function NovelGetId($id)
 	{
@@ -318,7 +317,7 @@ class NovelController extends Controller
 		]);
 	}
 
-	public function NovelList(Request $request)
+	public function NovelList()
 	{
 		return Inertia::render('Client/Novel/ListNovel', [
 			'novels' => $this->NovelGetAllPublic(),

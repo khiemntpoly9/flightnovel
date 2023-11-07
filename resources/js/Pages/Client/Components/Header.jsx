@@ -16,9 +16,9 @@ export default function Header({ auth, notify }) {
 						<div className='hidden lg:block'>
 							<ul className='menu menu-horizontal'>
 								<li>
-									<a className='text-white' href='#'>
+									<Link href={route('novel.list')} className='text-white'>
 										Danh sách truyện
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</div>
@@ -47,7 +47,7 @@ export default function Header({ auth, notify }) {
 							</label>
 						</div>
 						{/* Notify */}
-						<div className='dropdown-end dropdown'>
+						<div className='dropdown dropdown-end'>
 							<label tabIndex={0} className='btn btn-circle btn-ghost'>
 								<div className='indicator'>
 									<svg
