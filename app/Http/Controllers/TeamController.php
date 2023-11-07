@@ -8,6 +8,7 @@ use App\Models\TeamUser;
 use App\Models\Detail;
 use App\Models\NovelCate;
 use App\Models\Comment;
+use App\Models\ViewNovel;
 use App\Models\Vol;
 use App\Models\Rating;
 use App\Models\Follow;
@@ -56,6 +57,8 @@ class TeamController extends Controller
 		$categories = NovelCate::where('id_novel', $novel->id)->with('categories:id,name,slug')->get();
 		// Vol
 		$vol = Vol::where('id_novel', $id)->with('chap:id,id_vol,title,created_at')->get();
+		// Views
+		$views = ViewNovel::where('id_novel', $novel->id)->first();
 		// Status
 		$status = ['success' => session('success'), 'error' => session('error')];
 		// follow
@@ -85,6 +88,7 @@ class TeamController extends Controller
 		return Inertia::render('Client/Team/TeamNovel', [
 			'novel_main' => [
 				'novel' => $novel,
+				'views' => $views,
 				'detail' => $detail,
 				'categories' => $categories,
 			],
