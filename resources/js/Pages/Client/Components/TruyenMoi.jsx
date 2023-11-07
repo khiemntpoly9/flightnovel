@@ -1,7 +1,6 @@
 import { Link } from '@inertiajs/react';
 
 export default function TruyenMoi({ novels }) {
-	console.log(novels);
 	return (
 		<div className='new_LN relative w-full'>
 			<div className='top relative h-7 w-96'>
