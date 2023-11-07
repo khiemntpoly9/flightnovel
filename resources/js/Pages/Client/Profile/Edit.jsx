@@ -21,6 +21,7 @@ export default function Edit({ auth }) {
 	return (
 		<AuthenticatedLayout
 			user={auth.user}
+			notify={auth.notify}
 			header={<h2 className='text-xl font-semibold leading-tight text-gray-800'>Profile</h2>}
 		>
 			<Head title='Profile' />

@@ -24,7 +24,8 @@ class HandleInertiaRequests extends Middleware
 		return [
 			...parent::share($request),
 			'auth' => [
-				'user' => $request->user()?->only('id', 'name', 'email', 'role', 'avatar', 'created_at', 'updated_at')
+				'user' => $request->user()?->only('id', 'name', 'email', 'role', 'avatar', 'created_at', 'updated_at'),
+				'notify' => $request->user()?->unreadNotifications()->limit(5)->get()->toArray(),
 			],
 			'ziggy' => fn() => [
 				...(new Ziggy)->toArray(),

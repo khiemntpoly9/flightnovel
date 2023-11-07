@@ -25,6 +25,12 @@ class NovelController extends Controller
 		$novel = Novel::where('slug', $slug)->first();
 		return $novel;
 	}
+	// Novel Get  Id
+	public function NovelGetId($id)
+	{
+		$novel = Novel::where('id', $id)->first();
+		return $novel;
+	}
 	public function NovelIndex()
 	{
 		// Lấy categories

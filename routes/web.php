@@ -10,6 +10,7 @@ use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,7 +24,7 @@ use Inertia\Inertia;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
- */
+*/
 
 // Home
 Route::get('/', [HomeController::class, 'HomeIndex'])->name('home');
@@ -42,8 +43,10 @@ Route::middleware('auth')->prefix('follow')->group(function () {
 	Route::get('/', [NovelController::class, 'FollowIndex'])->name('follow.index');
 	Route::post('/{id}', [NovelController::class, 'NovelFollow'])->name('novel.follow');
 	Route::delete('/{id}', [NovelController::class, 'NovelUnFollow'])->name('novel.unfollow');
-
 });
+
+// Notification
+// Route::get('/notify-novel/{id}/{slug_chap}', [NotificationController::class, 'index'])->name('notification.novel');
 
 // Comment
 Route::middleware('auth')->prefix('comment')->group(function () {
@@ -128,6 +131,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 	Route::patch('/categories', [CateController::class, 'CateUpdate'])->name('admin.categories.update');
 	Route::delete('/categories/{id}', [CateController::class, 'CateDelete'])->name('admin.categories.delete');
 	Route::get('/categories/detail/{id}', [CateController::class, 'CateDetail'])->name('admin.categories.detail');
+	Route::get('/user', [UserController::class, 'UserIndex'])->name('admin.user');
+	Route::delete('/user-delete/{id}', [UserController::class, 'UserDelete'])->name('admin.user.delete');
 	Route::get('/team', [TeamController::class, 'TeamAdmin'])->name('admin.team');
 	Route::get('/team/detail/{id}', [TeamController::class, 'TeamDetailAdmin'])->name('admin.teamdetail');
 	Route::get('/novel', [NovelController::class, 'NovelAdmin'])->name('admin.novel');

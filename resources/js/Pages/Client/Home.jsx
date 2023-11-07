@@ -4,7 +4,6 @@ import LichSuDoc from '@/Pages/Client/Components/LichSuDoc';
 import ChuongMoi from '@/Pages/Client/Components/ChuongMoi';
 import TheoDoiNhieu from '@/Pages/Client/Components/TheoDoiNhieu';
 import TruyenDaHoanThanh from '@/Pages/Client/Components/TruyenDaHoanThanh';
-import TruyenVuaDang from '@/Pages/Client/Components/TruyenVuaDang';
 import { Head } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 export default function Home({ auth, novels, historyReadList }) {
@@ -43,9 +42,6 @@ export default function Home({ auth, novels, historyReadList }) {
 							<div className='order-2 mx-auto w-10/12  lg:order-1 lg:m-0 lg:w-6/12'>
 								{/* component swiper truyện đã hoàn thành để ở đây */}
 								<TruyenDaHoanThanh />
-							</div>
-							<div className='order-1 mx-auto w-10/12 lg:order-2 lg:m-0 lg:w-4/12'>
-								<TruyenVuaDang />
 							</div>
 						</div>
 					</div>
