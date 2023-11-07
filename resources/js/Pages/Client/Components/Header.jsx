@@ -2,7 +2,6 @@ import { Link } from '@inertiajs/react';
 import Logo from '../../../../images/logo.svg';
 
 export default function Header({ auth, notify }) {
-	console.log(notify);
 	// Set user
 	const user = auth || null;
 	return (
