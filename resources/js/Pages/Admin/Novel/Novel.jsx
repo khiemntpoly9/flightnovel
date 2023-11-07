@@ -67,7 +67,7 @@ const Novel = ({ novels }) => {
 													<form method='dialog'>
 														<button
 															onClick={() => {
-																router.delete(`/admin/novel/${novel.slug}`);
+																router.delete(`/admin/novel/${novel.id}`);
 															}}
 															className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
 														>

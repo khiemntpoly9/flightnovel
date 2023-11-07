@@ -211,10 +211,10 @@ class NovelController extends Controller
 		return Inertia::render('Admin/Novel/Novel', ['novels' => $novels]);
 	}
 
-	public function DeleteNovel(Request $request)
+	public function DeleteNovel(Request $request, $id)
 	{
-
-		// dd($id_novel);
+		dd($id);
+		$novel = Novel::where('id', $id->id)->delete();
 	}
 
 	// Novel User Read
