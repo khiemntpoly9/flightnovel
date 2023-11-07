@@ -25,14 +25,14 @@ const Novel = ({ novels }) => {
 							{novels.map((novel) => (
 								<tr key={novel.id} className='mt-3'>
 									<td className='shadow-xl'>
-										<Link href={`/novel/${novel.slug}`} className='hover:text-red-500'>
+										<Link href={`/novel/${novel.slug}`}>
 											<figure className='h-40 md:h-44 lg:h-40 xl:h-64'>
 												<img className='h-full w-full object-cover' src={novel.thumbnail} alt='thumbnail' />
 											</figure>
 										</Link>
 									</td>
 									<td>
-										<Link href={`/novel/${novel.slug}`} className='hover:text-red-500'>
+										<Link href={`/novel/${novel.slug}`} className='hover:text-blue-400'>
 											<div className='p-2'>{novel.name_novel}</div>
 										</Link>
 									</td>
