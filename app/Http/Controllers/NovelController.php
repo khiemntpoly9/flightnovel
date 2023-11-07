@@ -24,10 +24,10 @@ class NovelController extends Controller
 		$novel = Novel::where('slug', $slug)->first();
 		return $novel;
 	}
-	// Novel lấy tất cả (public)
+	// Novel lấy tất cả (public) / Phân trang
 	public function NovelGetAllPublic()
 	{
-		$novels = Novel::where('is_publish', 1)->orderBy('created_at', 'desc')->get();
+		$novels = Novel::where('is_publish', 1)->orderBy('created_at', 'desc')->paginate($perPage = 10, $columns = ['*'], $pageName = 'page');
 		return $novels;
 	}
 	// Novel Get  Id
