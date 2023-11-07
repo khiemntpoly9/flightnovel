@@ -4,7 +4,6 @@ use App\Http\Controllers\CateController;
 use App\Http\Controllers\ChapController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NovelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProviderController;
@@ -25,7 +24,7 @@ use Inertia\Inertia;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
- */
+*/
 
 // Home
 Route::get('/', [HomeController::class, 'HomeIndex'])->name('home');
