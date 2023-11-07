@@ -56,7 +56,7 @@ class TeamController extends Controller
 		// Categireis
 		$categories = NovelCate::where('id_novel', $novel->id)->with('categories:id,name,slug')->get();
 		// Vol
-		$vol = Vol::where('id_novel', $id)->with('chap:id,id_vol,title,created_at')->get();
+		$vol = Vol::where('id_novel', $id)->with('chap:id,id_vol,title,slug,created_at')->get();
 		// Views
 		$views = ViewNovel::where('id_novel', $novel->id)->first();
 		// Status

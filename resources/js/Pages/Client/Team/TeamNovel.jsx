@@ -267,7 +267,10 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 														</div>
 													</div>
 												</dialog>
-												<Link className='text-lime-500 hover:text-orange-500' href='#'>
+												<Link
+													className='text-lime-500 hover:text-orange-500'
+													href={`/novel/${novel_main.novel.slug}/${vol.slug}/${chap.slug}`}
+												>
 													Xem
 												</Link>
 											</div>
