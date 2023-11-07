@@ -9,6 +9,7 @@ use App\Models\Follow;
 use App\Models\Novel;
 use App\Models\NovelCate;
 use App\Models\Rating;
+use App\Models\Team;
 use App\Models\TeamUser;
 use App\Models\Vol;
 use Illuminate\Http\Request;
@@ -206,8 +207,14 @@ class NovelController extends Controller
 	// Admin Novel
 	public function NovelAdmin()
 	{
-		$novels = Novel::all();
+		$novels = Novel::with('team')->get();
 		return Inertia::render('Admin/Novel/Novel', ['novels' => $novels]);
+	}
+
+	public function DeleteNovel(Request $request)
+	{
+
+		// dd($id_novel);
 	}
 
 	// Novel User Read
