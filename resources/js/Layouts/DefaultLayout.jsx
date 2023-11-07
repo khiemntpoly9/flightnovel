@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function DefaultLayout({ auth, children }) {
 	return (
 		<>
-			{auth ? <Header auth={auth.user} /> : <Header />}
+			{auth ? <Header auth={auth.user} notify={auth.notify} /> : <Header />}
 			<ToastContainer />
 			{children}
 			<Footer />

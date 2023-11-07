@@ -24,7 +24,7 @@ use Inertia\Inertia;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
- */
+*/
 
 // Home
 Route::get('/', [HomeController::class, 'HomeIndex'])->name('home');
@@ -43,8 +43,10 @@ Route::middleware('auth')->prefix('follow')->group(function () {
 	Route::get('/', [NovelController::class, 'FollowIndex'])->name('follow.index');
 	Route::post('/{id}', [NovelController::class, 'NovelFollow'])->name('novel.follow');
 	Route::delete('/{id}', [NovelController::class, 'NovelUnFollow'])->name('novel.unfollow');
-
 });
+
+// Notification
+// Route::get('/notify-novel/{id}/{slug_chap}', [NotificationController::class, 'index'])->name('notification.novel');
 
 // Comment
 Route::middleware('auth')->prefix('comment')->group(function () {

@@ -13,11 +13,13 @@ class ChapController extends Controller
 	// Khai báo biến
 	protected $NovelController;
 	protected $HistoryReadController;
+	protected $NotificationController;
 	// Khởi tạo
-	public function __construct(NovelController $NovelController, HistoryReadController $HistoryReadController)
+	public function __construct(NovelController $NovelController, HistoryReadController $HistoryReadController, NotificationController $NotificationController)
 	{
 		$this->NovelController = $NovelController;
 		$this->HistoryReadController = $HistoryReadController;
+		$this->NotificationController = $NotificationController;
 	}
 	// Tạo chap
 	public function ChapCreate(Request $request, $novel, $vol)
@@ -27,7 +29,12 @@ class ChapController extends Controller
 			'vol' => $vol,
 		]);
 	}
-
+	// Lấy thông tin chap bằng slug
+	public function ChapGetSlug($slug)
+	{
+		$chap = Chap::where('slug', $slug)->first();
+		return $chap;
+	}
 	// Tạo chap
 	public function ChapStore(Request $request, $novel, Vol $vol)
 	{
@@ -52,6 +59,9 @@ class ChapController extends Controller
 		$newSlug = $chapID . '-' . Str::of($request->title)->slug('-');
 		$chap->slug = $newSlug;
 		$chap->save();
+
+		// Gửi thông báo cho các user
+		$this->NotificationController->index($vol->id_novel, $chap);
 
 		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Tạo chương thành công');
 	}
