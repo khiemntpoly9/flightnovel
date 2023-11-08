@@ -8,6 +8,21 @@ import Rating from '@/Components/Rating';
 
 export default function NovelRead({ auth, novel_main, vol, follow, rating, comments, status }) {
 	const { errors } = usePage().props;
+	// lấy status
+	let getStatus = null;
+	switch (novel_main.novel.status) {
+		case 1:
+			getStatus = 'Đang tiến hành';
+			break;
+		case 2:
+			getStatus = 'Hoàn thành';
+			break;
+		case 3:
+			getStatus = 'Tạm ngưng';
+			break;
+		default:
+			getStatus = null;
+	}
 	// Toast
 	useEffect(() => {
 		// Success
@@ -74,7 +89,7 @@ export default function NovelRead({ auth, novel_main, vol, follow, rating, comme
 								<div className='mt-2'>
 									<p className='font-semibold'>
 										Tình trạng: {''}
-										<span className='font-medium'>Đang tiến hành</span>
+										<span className='font-medium'>{getStatus}</span>
 									</p>
 								</div>
 

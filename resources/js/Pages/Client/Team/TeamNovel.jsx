@@ -9,6 +9,7 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 	const { errors } = usePage().props;
 	const [values, setValues] = useState({
 		select: novel_main.novel.is_publish,
+		status: novel_main.novel.status,
 	});
 	// Handle change input
 	const handleChange = (e) => {
@@ -19,11 +20,31 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 			[key]: value,
 		}));
 		changePublic(value);
+		statusPunblic(value);
 	};
 	// Change status publish
 	const changePublic = (value) => {
 		router.post(`/team/novel/${novel_main.novel.slug}/public`, { value });
 	};
+	// Change status
+	const statusPunblic = (value) => {
+		router.post(`/team/novel/${novel_main.novel.slug}/status`, { value });
+	};
+	// lấy status
+	let getStatus = null;
+	switch (novel_main.novel.status) {
+		case 1:
+			getStatus = 'Đang tiến hành';
+			break;
+		case 2:
+			getStatus = 'Hoàn thành';
+			break;
+		case 3:
+			getStatus = 'Tạm ngưng';
+			break;
+		default:
+			getStatus = null;
+	}
 	// Toast
 	useEffect(() => {
 		// Success
@@ -91,7 +112,7 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 								<div className='mt-2'>
 									<p className='font-semibold'>
 										Tình trạng: {''}
-										<span className='font-medium'>Đang tiến hành</span>
+										<span className='font-medium'>{getStatus}</span>
 									</p>
 								</div>
 								{/* read */}
@@ -137,16 +158,30 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 									</dialog>
 								</div>
 								{/* public */}
-								<div className='mt-2'>
-									<select
-										id='select'
-										value={values.select}
-										onChange={handleChange}
-										className='select select-accent select-sm mt-1 w-32 max-w-xs md:select-md'
-									>
-										<option value={0}>Ẩn</option>
-										<option value={1}>Công khai</option>
-									</select>
+								<div className='mt-2 flex gap-2'>
+									<div className=''>
+										<select
+											id='select'
+											value={values.select}
+											onChange={handleChange}
+											className='select select-accent select-sm mt-1 w-32 max-w-xs md:select-md'
+										>
+											<option value={0}>Ẩn</option>
+											<option value={1}>Công khai</option>
+										</select>
+									</div>
+									<div className=''>
+										<select
+											id='status'
+											value={values.status}
+											onChange={handleChange}
+											className='w-34 select select-accent select-sm mt-1 max-w-xs md:select-md'
+										>
+											<option value={1}>Đang tiến hành</option>
+											<option value={2}>Hoàn thành</option>
+											<option value={3}>Tạm ngưng</option>
+										</select>
+									</div>
 								</div>
 							</div>
 						</div>
