@@ -219,7 +219,7 @@ class TeamController extends Controller
 
 		$teamID = Team::where('slug', $team->slug)->first()->id;
 		$team_user = TeamUser::where('id_team', $teamID)->where('id_user', $id)->first(); // Tìm team_user cụ thể cần xóa
-		// dd($team_user);
+
 
 		if ($team_user) {
 			if ($team_user->team_role === 0) {

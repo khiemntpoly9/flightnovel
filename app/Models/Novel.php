@@ -42,6 +42,11 @@ class Novel extends Model
 		return $this->belongsTo(NovelCate::class, 'id', 'id_novel');
 	}
 
+	public function team(): BelongsTo
+	{
+		return $this->belongsTo(Team::class, 'id_team', 'id');
+	}
+
 	public function getRouteKeyName(): string
 	{
 		return 'slug';

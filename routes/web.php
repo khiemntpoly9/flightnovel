@@ -137,6 +137,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 	Route::get('/team', [TeamController::class, 'TeamAdmin'])->name('admin.team');
 	Route::get('/team/detail/{id}', [TeamController::class, 'TeamDetailAdmin'])->name('admin.teamdetail');
 	Route::get('/novel', [NovelController::class, 'NovelAdmin'])->name('admin.novel');
+	Route::delete('/novel/{id}', [NovelController::class, 'DeleteNovel'])->name('admin.novel.delete');
 });
 
 // Login Provider
