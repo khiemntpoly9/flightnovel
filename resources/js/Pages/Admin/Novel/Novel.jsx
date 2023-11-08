@@ -61,13 +61,13 @@ const Novel = ({ novels }) => {
 												</form>
 												<h3 className='text-lg font-bold'>Xoá truyện!</h3>
 												<p className='py-4 text-base font-normal'>
-													Bạn có chắc muốn xoá truyện này? {novel.name_novel}
+													Bạn có chắc muốn xoá truyện "{novel.name_novel}"?
 												</p>
 												<div className='modal-action'>
 													<form method='dialog'>
 														<button
 															onClick={() => {
-																router.delete(`/admin/novel/${novel.id}`);
+																router.delete(`delete/admin/novel/${novel.id}`);
 															}}
 															className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
 														>
