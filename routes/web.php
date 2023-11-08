@@ -100,6 +100,7 @@ Route::middleware('auth')->prefix('team')->group(function () {
 				Route::get('/edit', [NovelController::class, 'NovelUpdatePage'])->name('novel.edit');
 				Route::post('/update', [NovelController::class, 'NovelUpdate'])->name('novel.update');
 				Route::post('/public', [NovelController::class, 'SelectPublic'])->name('novel.public');
+				Route::post('/status', [NovelController::class, 'StatusPublic'])->name('novel.status');
 				// Create Vol
 				Route::get('/create-vol', [VolController::class, 'VolIndex'])->name('vol.index');
 				Route::post('/create-vol', [VolController::class, 'VolStore'])->name('vol.create');

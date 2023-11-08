@@ -308,7 +308,7 @@ class NovelController extends Controller
 		Novel::Where('id', $novel->id)->update(['is_publish' => $request->value]);
 		return redirect()->back()->with('success', 'Cập nhật trạng thái truyện');
 	}
-
+	// Follow
 	public function FollowIndex()
 	{
 		$id_user = auth()->user()->id;
@@ -319,11 +319,17 @@ class NovelController extends Controller
 			'novel' => $novel,
 		]);
 	}
-
+	// Danh sách truyện 
 	public function NovelList()
 	{
 		return Inertia::render('Client/Novel/ListNovel', [
 			'novels' => $this->NovelGetAllPublic(),
 		]);
+	}
+	// tình trạng truyện
+	public function StatusPublic(Request $request, Novel $novel)
+	{
+		Novel::Where('id', $novel->id)->update(['status' => $request->value]);
+		return redirect()->back()->with('success', 'Cập nhật tình trạng truyện');
 	}
 }
