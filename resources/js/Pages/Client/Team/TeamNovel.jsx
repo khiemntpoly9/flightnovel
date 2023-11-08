@@ -1,6 +1,6 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import Comment from '@/Components/Comment';
-import { Link, router, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import moment from 'moment/moment';
@@ -74,6 +74,7 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 	}, [status]);
 	return (
 		<DefaultLayout auth={auth}>
+			<Head title={novel_main.novel.name_novel} />
 			<div className='container mx-auto w-10/12'>
 				<div className='container mb-3 flex flex-col gap-3 md:flex-row'>
 					{/* Info truyện */}
@@ -128,6 +129,33 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 									>
 										Chỉnh sửa chi tiết truyện
 									</Link>
+									<button className='btn' onClick={() => document.getElementById('delete_novel').showModal()}>
+										Xóa
+									</button>
+									<dialog id='delete_novel' className='modal'>
+										<div className='modal-box'>
+											<h3 className='text-lg font-bold'>Xóa truyện!</h3>
+											<p className='py-4'>
+												Bạn có chắc muốn xóa tất cả dữ liệu liên quan đến truyện "
+												{novel_main.novel.name_novel}" ?
+											</p>
+											<div className='modal-action'>
+												<button
+													onClick={() => {
+														router.delete(
+															`/team/novel/${novel_main.novel.slug}/delete/${novel_main.novel.id}`
+														);
+													}}
+													className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
+												>
+													Xoá
+												</button>
+											</div>
+										</div>
+										<form method='dialog' className='modal-backdrop'>
+											<button>close</button>
+										</form>
+									</dialog>
 								</div>
 								{/* public */}
 								<div className='mt-2 flex gap-2'>

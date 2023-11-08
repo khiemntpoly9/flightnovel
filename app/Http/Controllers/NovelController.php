@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
+use App\Models\Chap;
 use App\Models\Comment;
 use App\Models\Detail;
 use App\Models\Follow;
+use App\Models\HistoryRead;
 use App\Models\Novel;
 use App\Models\NovelCate;
 use App\Models\Rating;
@@ -216,10 +218,43 @@ class NovelController extends Controller
 		return Inertia::render('Admin/Novel/Novel', ['novels' => $novels]);
 	}
 
-	public function DeleteNovel(Request $request, $id)
+	// Delete Novel
+	public function DeleteNovel(Request $request, Novel $novel, $id)
 	{
-		dd($id);
-		$novel = Novel::where('id', $id->id)->delete();
+		// Xóa ảnh
+		$path_old = Novel::where('id', $id)->first()->thumbnail;
+		// Xóa ảnh cũ (Áp dụng link DigitalOcean, vì có trường hợp link avatar của Google)
+		if ($path_old) {
+			$pos = strpos($path_old, 'thumbnail');
+			$path_old_cut = substr($path_old, $pos);
+			// Tiến hành xóa
+			Storage::disk('digitalocean')->delete($path_old_cut);
+		}
+		// Xóa novel_cate
+		NovelCate::where('id_novel', $id)->delete();
+		// Xóa rating
+		Rating::where('id_novel', $id)->delete();
+		// Xóa view
+		ViewNovel::where('id_novel', $id)->delete();
+		// Xóa chap theo id_vol
+		$vol = Vol::where('id_novel', $id)->get();
+		foreach ($vol as $item) {
+			Chap::where('id_vol', $item->id)->delete();
+		}
+		// Xóa vol
+		Vol::where('id_novel', $id)->delete();
+		// Xóa lịch sử đọc
+		HistoryRead::where('id_novel', $id)->delete();
+		// Xóa follow
+		Follow::where('id_novel', $id)->delete();
+		// Xóa comment
+		Comment::where('id_novel', $id)->delete();
+		// Xóa novel
+		Novel::where('id', $id)->delete();
+		// Xóa detail
+		Detail::where('id', $novel->id_detail)->delete();
+
+		return redirect()->route('team.index')->with('success', 'Xóa truyện thành công');
 	}
 
 	// Novel User Read

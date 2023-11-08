@@ -38,7 +38,6 @@ Route::prefix('novel')->group(function () {
 	// Route::get('/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapRead'])->name('chap.read');
 });
 
-
 // Follow
 Route::middleware('auth')->prefix('follow')->group(function () {
 	Route::get('/', [NovelController::class, 'FollowIndex'])->name('follow.index');
@@ -101,6 +100,7 @@ Route::middleware('auth')->prefix('team')->group(function () {
 				Route::post('/update', [NovelController::class, 'NovelUpdate'])->name('novel.update');
 				Route::post('/public', [NovelController::class, 'SelectPublic'])->name('novel.public');
 				Route::post('/status', [NovelController::class, 'StatusPublic'])->name('novel.status');
+				Route::delete('/delete/{id}', [NovelController::class, 'DeleteNovel'])->name('novel.delete');
 				// Create Vol
 				Route::get('/create-vol', [VolController::class, 'VolIndex'])->name('vol.index');
 				Route::post('/create-vol', [VolController::class, 'VolStore'])->name('vol.create');
@@ -138,7 +138,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 	Route::get('/team', [TeamController::class, 'TeamAdmin'])->name('admin.team');
 	Route::get('/team/detail/{id}', [TeamController::class, 'TeamDetailAdmin'])->name('admin.teamdetail');
 	Route::get('/novel', [NovelController::class, 'NovelAdmin'])->name('admin.novel');
-	Route::delete('/novel/{id}', [NovelController::class, 'DeleteNovel'])->name('admin.novel.delete');
+	Route::delete('delete/novel/{id}', [NovelController::class, 'DeleteNovel'])->name('admin.novel.delete');
 });
 
 // Login Provider
