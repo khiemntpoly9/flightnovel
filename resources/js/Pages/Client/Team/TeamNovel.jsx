@@ -125,7 +125,7 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 						{/* Container 2 -  */}
 						<div className='grid grid-cols-4 border-b-2 py-3'>
 							<div className='text-center'>
-								Số lượt xem <br /> {novel_main.novel.views}
+								Số lượt xem <br /> {novel_main.views.views}
 							</div>
 							<div className='text-center'>
 								{rating.count ? (
@@ -267,7 +267,10 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 														</div>
 													</div>
 												</dialog>
-												<Link className='text-lime-500 hover:text-orange-500' href='#'>
+												<Link
+													className='text-lime-500 hover:text-orange-500'
+													href={`/novel/${novel_main.novel.slug}/${vol.slug}/${chap.slug}`}
+												>
 													Xem
 												</Link>
 											</div>

@@ -16,7 +16,6 @@ return new class extends Migration {
       $table->string('thumbnail');
       $table->string('author');
       $table->string('illustrator');
-      $table->bigInteger('views')->default(0);
       $table->integer('status')->default(0);
       $table->string('slug')->nullable()->unique();
       $table->integer('is_publish')->unsigned()->default(0);

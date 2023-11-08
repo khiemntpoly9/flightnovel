@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chap;
+use App\Models\ViewNovel;
 use App\Models\Vol;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -118,6 +119,17 @@ class ChapController extends Controller
 			$novel = $this->NovelController->NovelGetSlug($novel);
 			// Tạo lịch sử đọc
 			$this->HistoryReadController->HistoryReadCreate($id_user, $novel->id, $chap->id);
+		}
+		$status_limit_view = $request->input('status_limit_view');
+		if ($status_limit_view) {
+			// Lượt xem
+			$novel_view = ViewNovel::where('id_novel', $novel->id)->first();
+			ViewNovel::where('id_novel', $novel->id)->update([
+				'views' => $novel_view->views + 1,
+				'daily_views' => $novel_view->daily_views + 1,
+				'weekly_views' => $novel_view->weekly_views + 1,
+				'monthly_views' => $novel_view->monthly_views + 1,
+			]);
 		}
 		return Inertia::render('Client/Novel/Chapter', ['vol' => $vol, 'chap' => $chap]);
 	}
