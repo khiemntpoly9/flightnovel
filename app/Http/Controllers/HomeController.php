@@ -11,22 +11,22 @@ class HomeController extends Controller
 {
 	// Khai báo biến
 	protected $HistoryReadController;
+	protected $NovelController;
 	// Khởi tạo
-	public function __construct(HistoryReadController $HistoryReadController)
+	public function __construct(HistoryReadController $HistoryReadController, NovelController $NovelController)
 	{
 		$this->HistoryReadController = $HistoryReadController;
+		$this->NovelController = $NovelController;
 	}
 	public function HomeIndex()
 	{
-		// Lấy novel
-		$novels = Novel::where('is_publish', 1)->orderBy('created_at', 'desc')->get();
 		// Check Login
 		if (auth()->check()) {
 			// Lấy lịch sử đọc
 			$historyReadList = $this->HistoryReadController->HistoryReadList(auth()->user()->id);
 		}
 		return Inertia::render('Client/Home', [
-			'novels' => $novels,
+			'novels' => $this->NovelController->NovelGetAllPublic(),
 			'historyReadList' => $historyReadList ?? null,
 			'canLogin' => Route::has('login'),
 			'canRegister' => Route::has('register'),

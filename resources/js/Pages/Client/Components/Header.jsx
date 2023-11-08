@@ -16,9 +16,9 @@ export default function Header({ auth, notify }) {
 						<div className='hidden lg:block'>
 							<ul className='menu menu-horizontal'>
 								<li>
-									<a className='text-white' href='#'>
+									<Link href={route('novel.list')} className='text-white'>
 										Danh sách truyện
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</div>
@@ -64,7 +64,7 @@ export default function Header({ auth, notify }) {
 										/>
 									</svg>
 									<span className='badge indicator-item badge-secondary bg-red-600 text-white'>
-										{notify.length}
+										{notify ? notify.length : '0'}
 									</span>
 								</div>
 							</label>
@@ -75,7 +75,7 @@ export default function Header({ auth, notify }) {
 							>
 								<div className='card-body'>
 									<ul>
-										{notify.map((item, index) => (
+										{notify?.map((item, index) => (
 											<li key={index}>
 												<span>
 													Truyện {item.data.novel} vừa cập nhật chap mới! {item.data.chap}

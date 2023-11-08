@@ -11,6 +11,7 @@ use App\Models\NovelCate;
 use App\Models\Rating;
 use App\Models\Team;
 use App\Models\TeamUser;
+use App\Models\ViewNovel;
 use App\Models\Vol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -25,12 +26,19 @@ class NovelController extends Controller
 		$novel = Novel::where('slug', $slug)->first();
 		return $novel;
 	}
+	// Novel lấy tất cả (public) / Phân trang
+	public function NovelGetAllPublic()
+	{
+		$novels = Novel::where('is_publish', 1)->orderBy('created_at', 'desc')->paginate($perPage = 10, $columns = ['*'], $pageName = 'page');
+		return $novels;
+	}
 	// Novel Get  Id
 	public function NovelGetId($id)
 	{
 		$novel = Novel::where('id', $id)->first();
 		return $novel;
 	}
+	// Page Novel
 	public function NovelIndex()
 	{
 		// Lấy categories
@@ -102,14 +110,6 @@ class NovelController extends Controller
 		}
 
 		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
-	}
-	// Views Novel
-	public function NovelUpdateView($id)
-	{
-		$novel = Novel::where('id', $id)->first();
-		Novel::where('id', $id)->update([
-			'views' => $novel->views + 1,
-		]);
 	}
 	// Novel Update Pape
 	public function NovelUpdatePage(Request $request)
@@ -209,7 +209,6 @@ class NovelController extends Controller
 
 		return redirect()->route('team.index')->with('success', 'Sửa truyện thành công');
 	}
-
 	// Admin Novel
 	public function NovelAdmin()
 	{
@@ -233,6 +232,8 @@ class NovelController extends Controller
 		$categories = NovelCate::where('id_novel', $novel->id)->with('categories:id,name,slug')->get();
 		// Vol
 		$vol = Vol::where('id_novel', $novel->id)->with('chap:id,id_vol,title,slug,created_at')->get();
+		// Views
+		$views = ViewNovel::where('id_novel', $novel->id)->first();
 		// Check login
 		if (auth()->check()) {
 			// Lấy id user
@@ -260,6 +261,7 @@ class NovelController extends Controller
 		return Inertia::render('Client/Novel/NovelRead', [
 			'novel_main' => [
 				'novel' => $novel,
+				'views' => $views,
 				'detail' => $detail,
 				'categories' => $categories,
 			],
@@ -315,6 +317,13 @@ class NovelController extends Controller
 			->get();
 		return Inertia::render('Client/Novel/NovelFollow', [
 			'novel' => $novel,
+		]);
+	}
+
+	public function NovelList()
+	{
+		return Inertia::render('Client/Novel/ListNovel', [
+			'novels' => $this->NovelGetAllPublic(),
 		]);
 	}
 }

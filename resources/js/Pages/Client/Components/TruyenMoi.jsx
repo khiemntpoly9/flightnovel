@@ -8,7 +8,7 @@ export default function TruyenMoi({ novels }) {
 			</div>
 			<div className=''>
 				<div className='bottom grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5'>
-					{novels.map((novel) => (
+					{novels.data.map((novel) => (
 						<div key={novel.id} className='card bg-base-100 shadow-xl'>
 							<figure className='h-40 md:h-44 lg:h-40 xl:h-44'>
 								<img className='h-full w-full object-cover' src={novel.thumbnail} alt='thumbnail' />
