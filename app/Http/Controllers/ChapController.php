@@ -112,14 +112,23 @@ class ChapController extends Controller
 	// Chapter
 	public function Chapter(Request $request, $novel, $vol, Chap $chap)
 	{
-		$vol = Vol::where('slug', $vol)->first();
-		$id_user = auth()->user()->id;
-		if ($id_user) {
-			// Lấy thông tin novel
+		// dd($novel);
+		if (is_string($novel)) {
 			$novel = $this->NovelController->NovelGetSlug($novel);
-			// Tạo lịch sử đọc
-			$this->HistoryReadController->HistoryReadCreate($id_user, $novel->id, $chap->id);
 		}
+		$vol = Vol::where('slug', $vol)->first();
+
+		if (auth()->check()) {
+			$id_user = auth()->user()->id;
+
+			if ($id_user) {
+				// Lấy thông tin novel
+				$novel = $this->NovelController->NovelGetSlug($novel);
+				// Tạo lịch sử đọc
+				$this->HistoryReadController->HistoryReadCreate($id_user, $novel->id, $chap->id);
+			}
+		}
+
 		$status_limit_view = $request->input('status_limit_view');
 		if ($status_limit_view) {
 			// Lượt xem
