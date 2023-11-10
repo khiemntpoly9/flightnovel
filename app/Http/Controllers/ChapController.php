@@ -112,9 +112,10 @@ class ChapController extends Controller
 	// Chapter
 	public function Chapter(Request $request, $novel, $vol, Chap $chap)
 	{
-		// dd($novel);
+
 		if (is_string($novel)) {
 			$novel = $this->NovelController->NovelGetSlug($novel);
+			// dd($novel);
 		}
 		$vol = Vol::where('slug', $vol)->first();
 
@@ -123,8 +124,10 @@ class ChapController extends Controller
 
 			if ($id_user) {
 				// Lấy thông tin novel
-				$novel = $this->NovelController->NovelGetSlug($novel);
+				// $novel = $this->NovelController->NovelGetSlug($novel);
+				dd($novel->id);
 				// Tạo lịch sử đọc
+
 				$this->HistoryReadController->HistoryReadCreate($id_user, $novel->id, $chap->id);
 			}
 		}
