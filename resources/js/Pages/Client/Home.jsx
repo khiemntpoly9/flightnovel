@@ -6,6 +6,7 @@ import TheoDoiNhieu from '@/Pages/Client/Components/TheoDoiNhieu';
 import TruyenDaHoanThanh from '@/Pages/Client/Components/TruyenDaHoanThanh';
 import { Head } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
+import SlideNovel from './Components/SlideNovel';
 export default function Home({ auth, novels, historyReadList }) {
 	return (
 		<>
@@ -13,7 +14,10 @@ export default function Home({ auth, novels, historyReadList }) {
 				<Head title='Trang chủ' />
 				<main className='mx-auto bg-white'>
 					<div className='slide'>
-						<SlideNoiBat />
+						{/* <SlideNoiBat /> */}
+						<div className='mx-auto w-10/12'>
+							<SlideNovel novels={novels} />
+						</div>
 					</div>
 					<div className='mt-2 w-full'>
 						<div className='flex flex-col justify-center gap-4 lg:flex-row'>
