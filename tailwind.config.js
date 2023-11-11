@@ -14,7 +14,10 @@ export default {
 			},
 		},
 	},
-	plugins: [require('daisyui')],
+	corePlugins: {
+		aspectRatio: false,
+	},
+	plugins: [require('daisyui'), require('@tailwindcss/aspect-ratio')],
 	daisyui: {
 		themes: false, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
 		darkTheme: 'dark', // name of one of the included themes for dark mode
