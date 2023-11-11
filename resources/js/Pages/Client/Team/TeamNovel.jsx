@@ -11,6 +11,16 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 		select: novel_main.novel.is_publish,
 		status: novel_main.novel.status,
 	});
+	// Handle change public input
+	const handleChangePublic = (e) => {
+		const key = e.target.id;
+		const value = e.target.value;
+		setValues((values) => ({
+			...values,
+			[key]: value,
+		}));
+		changePublic(value);
+	};
 	// Handle change input
 	const handleChange = (e) => {
 		const key = e.target.id;
@@ -19,7 +29,6 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 			...values,
 			[key]: value,
 		}));
-		changePublic(value);
 		statusPunblic(value);
 	};
 	// Change status publish
@@ -163,7 +172,7 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 										<select
 											id='select'
 											value={values.select}
-											onChange={handleChange}
+											onChange={handleChangePublic}
 											className='select select-accent select-sm mt-1 w-32 max-w-xs md:select-md'
 										>
 											<option value={0}>Ẩn</option>
