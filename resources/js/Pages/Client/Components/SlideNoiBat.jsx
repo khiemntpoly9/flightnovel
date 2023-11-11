@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
 
-export default function SlideNoiBat() {
+export default function SlideNoiBat({ novels }) {
 	const [activeTab, setActiveTab] = useState('Nổi bật');
 	const handleTabClick = (tabName) => {
 		setActiveTab(tabName);
