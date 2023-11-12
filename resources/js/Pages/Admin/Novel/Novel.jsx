@@ -9,8 +9,8 @@ const Novel = ({ novels }) => {
 				<div className='h-7 w-full'>
 					<h1 className='text-center text-xl uppercase text-black md:text-5xl'>Truyện</h1>
 				</div>
-				<div className='p-2'>
-					<table className='table'>
+				<div className='overflow-x-auto p-2'>
+					<table className='table table-auto'>
 						<thead>
 							<tr>
 								<th>Ảnh bìa</th>
@@ -24,11 +24,13 @@ const Novel = ({ novels }) => {
 						<tbody>
 							{novels.map((novel) => (
 								<tr key={novel.id} className='mt-3'>
-									<td className='shadow-xl'>
+									<td>
 										<Link href={`/novel/${novel.slug}`}>
-											<figure className='h-40 md:h-44 lg:h-40 xl:h-64'>
-												<img className='h-full w-full object-cover' src={novel.thumbnail} alt='thumbnail' />
-											</figure>
+											<img
+												className='h-24 w-20 md:h-44 md:w-40 lg:h-72 lg:w-44'
+												src={novel.thumbnail}
+												alt='thumbnail'
+											/>
 										</Link>
 									</td>
 									<td>
