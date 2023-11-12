@@ -134,6 +134,9 @@ export default function Header({ auth, notify }) {
 										<Link href={route('profile.edit')}>Trang cá nhân</Link>
 									</li>
 									<li>
+										<div>Truyện đã đọc</div>
+									</li>
+									<li>
 										<Link href={route('follow.index')}>Truyện theo dõi</Link>
 									</li>
 									<li>
