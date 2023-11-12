@@ -8,7 +8,7 @@ export default function LichSuDoc({ historyReadList }) {
 			<div className='bottom relative h-96 overflow-x-auto'>
 				<table className='table table-pin-rows'>
 					<tbody>
-						{historyReadList.map((item, index) => (
+						{historyReadList.slice(0, 5).map((item, index) => (
 							<tr key={index} className='mb-2 flex flex-row gap-2'>
 								{/* Thumbnail */}
 								<div className='w-3/12'>

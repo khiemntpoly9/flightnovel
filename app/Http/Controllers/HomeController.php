@@ -28,6 +28,7 @@ class HomeController extends Controller
 		return Inertia::render('Client/Home', [
 			'novels' => $this->NovelController->NovelGetAllPublic(),
 			'historyReadList' => $historyReadList ?? null,
+			'followed' => $this->NovelController->TheoDoiNhieu(),
 			'canLogin' => Route::has('login'),
 			'canRegister' => Route::has('register'),
 		]);

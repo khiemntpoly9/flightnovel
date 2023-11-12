@@ -1,4 +1,5 @@
-export default function TheoDoiNhieu() {
+export default function TheoDoiNhieu(followed) {
+	console.log(followed);
 	return (
 		<div className='lg:w-356 lg:h-374 flex h-auto w-full flex-col items-center py-6 lg:items-start'>
 			<div className='lg:w-356 h-30 relative flex w-full flex-row items-start justify-start'>
@@ -11,54 +12,28 @@ export default function TheoDoiNhieu() {
 					Nhiều
 				</div>
 			</div>
-			<div className='lg:w-355 mt-2 flex h-auto w-full gap-3'>
-				<div className='w-282 h-20 flex-1 flex-col items-start justify-start gap-3'>
-					<div className='flex flex-row '>
-						<div className='w-31 h-31 flex items-center justify-center rounded-full bg-gray-300 px-3 py-0 md:h-8 md:w-10 lg:w-8'>
-							<div className='text-sm font-normal uppercase text-black  md:text-base'>1</div>
-						</div>
-						<div className='ml-2'>
-							<div className='text-xs font-bold uppercase text-black   md:text-base'>
-								Bạn Bị bỏ rơi hãy liên hệ với chúng tôi
+			{followed.followed.map((novel, index) => (
+				<div className='lg:w-355 mt-2 flex h-auto w-full gap-3'>
+					<div className='w-282 h-20 flex-1 flex-col items-start justify-start gap-3'>
+						<div className='flex flex-row '>
+							<div className='w-31 h-31 flex items-center justify-center rounded-full bg-gray-300 px-3 py-0 md:h-8 md:w-10 lg:w-8'>
+								<div className='text-sm font-normal uppercase text-black  md:text-base'>{index + 1}</div>
+							</div>
+							<div className='ml-2'>
+								<div className='text-xs font-bold uppercase text-black   md:text-base'>
+									{novel.name_novel}
+								</div>
 							</div>
 						</div>
-					</div>
-					<div className='ml-10  mt-2 text-xs font-normal lowercase text-black  md:text-base'>
-						11,530 theo dõi
-					</div>
-				</div>
-				<div className='h-full w-24 bg-gray-300  lg:w-28'>
-					<img
-						src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-						alt='thumb'
-						className='h-full w-full object-cover'
-					/>
-				</div>
-			</div>
-			<div className='lg:w-355 mt-2 flex h-auto w-full gap-3'>
-				<div className='w-282 h-20 flex-1 flex-col items-start justify-start gap-3'>
-					<div className='flex flex-row '>
-						<div className='w-31 h-31 flex items-center justify-center rounded-full bg-gray-300 px-3 py-0 md:h-8 md:w-10 lg:w-8'>
-							<div className='text-sm font-normal uppercase text-black  md:text-base'>1</div>
-						</div>
-						<div className='ml-2'>
-							<div className='text-xs font-bold uppercase text-black   md:text-base'>
-								Bạn Bị bỏ rơi hãy liên hệ với chúng tôi
-							</div>
+						<div className='ml-10  mt-2 text-xs font-normal lowercase text-black  md:text-base'>
+							{novel.follow_count} theo dõi
 						</div>
 					</div>
-					<div className='ml-10  mt-2 text-xs font-normal lowercase text-black  md:text-base'>
-						11,530 theo dõi
+					<div className=' rounded-[12px]lg:w-28 h-full w-24'>
+						<img src={novel.thumbnail} alt='thumb' className='h-full w-full rounded-[12px]   object-cover' />
 					</div>
 				</div>
-				<div className='h-full w-24 bg-gray-300  lg:w-28'>
-					<img
-						src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-						alt='thumb'
-						className='h-full w-full object-cover'
-					/>
-				</div>
-			</div>
+			))}
 		</div>
 	);
 }
