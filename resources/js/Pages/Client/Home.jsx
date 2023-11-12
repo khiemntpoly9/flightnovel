@@ -1,4 +1,3 @@
-import SlideNoiBat from '@/Pages/Client/Components/SlideNoiBat';
 import TruyenMoi from '@/Pages/Client/Components/TruyenMoi';
 import LichSuDoc from '@/Pages/Client/Components/LichSuDoc';
 import ChuongMoi from '@/Pages/Client/Components/ChuongMoi';
@@ -6,6 +5,7 @@ import TheoDoiNhieu from '@/Pages/Client/Components/TheoDoiNhieu';
 import TruyenDaHoanThanh from '@/Pages/Client/Components/TruyenDaHoanThanh';
 import { Head } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
+import SlideNovel from './Components/SlideNovel';
 export default function Home({ auth, novels, historyReadList }) {
 	return (
 		<>
@@ -13,7 +13,9 @@ export default function Home({ auth, novels, historyReadList }) {
 				<Head title='Trang chủ' />
 				<main className='mx-auto bg-white'>
 					<div className='slide'>
-						<SlideNoiBat novels={novels} />
+						<div className='mx-auto w-10/12'>
+							<SlideNovel novels={novels} />
+						</div>
 					</div>
 					<div className='mt-2 w-full'>
 						<div className='flex flex-col justify-center gap-4 lg:flex-row'>
