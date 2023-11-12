@@ -377,4 +377,11 @@ class NovelController extends Controller
 			->get();
 		return $novels;
 	}
+
+	//Truyện Đã Hoàn Thành 
+	public function CompleteNovels()
+	{
+		$novels = Novel::where('status', 2)->get();
+		return $novels;
+	}
 }
