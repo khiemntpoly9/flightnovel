@@ -34,7 +34,7 @@ class Novel extends Model
 
 	public function follow(): BelongsTo
 	{
-		return $this->belongsTo(Follow::class, 'id_novel', 'id');
+		return $this->belongsTo(Follow::class, 'id', 'id_novel');
 	}
 
 	public function novelcate(): BelongsTo

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Categories;
 use App\Models\Chap;
 use App\Models\Comment;
@@ -382,5 +383,21 @@ class NovelController extends Controller
 	{
 		Novel::Where('id', $novel->id)->update(['status' => $request->value]);
 		return redirect()->back()->with('success', 'Cập nhật tình trạng truyện');
+	}
+	// theo dõi nhiều
+	public function TheoDoiNhieu()
+	{
+		$novels = Novel::withCount('follow') // Đếm số lượng follows
+			->orderBy('follow_count', 'desc')
+			->limit(3)
+			->get();
+		return $novels;
+	}
+
+	//Truyện Đã Hoàn Thành 
+	public function CompleteNovels()
+	{
+		$novels = Novel::where('status', 2)->get();
+		return $novels;
 	}
 }

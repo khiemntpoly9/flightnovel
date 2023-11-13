@@ -5,7 +5,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
-export default function TruyenDaHoanThanh() {
+import { Link } from '@inertiajs/react';
+export default function TruyenDaHoanThanh(completenovels) {
 	return (
 		<div className='lg:w-356 lg:h-374 flex h-auto w-full flex-col items-center py-6 lg:items-start'>
 			<div className='lg:w-356 h-30 relative flex w-full flex-row items-start justify-start'>
@@ -19,7 +20,7 @@ export default function TruyenDaHoanThanh() {
 				</div>
 			</div>
 
-			<div className='lg:w-355 mt-2 h-auto w-full'>
+			<div className='mt-2 h-auto w-full lg:w-full'>
 				<Swiper
 					modules={[Navigation, Pagination, Scrollbar, A11y]}
 					spaceBetween={30}
@@ -28,6 +29,7 @@ export default function TruyenDaHoanThanh() {
 					pagination={{ clickable: true }}
 					onSlideChange={() => ''}
 					navigation
+					effect='cards'
 					breakpoints={{
 						780: {
 							slidesPerView: 3,
@@ -37,78 +39,25 @@ export default function TruyenDaHoanThanh() {
 						},
 					}}
 				>
-					<SwiperSlide>
-						<div className='w-171 h-185 relative flex flex-col items-center'>
-							<img
-								className='w-173 h-49'
-								src='https://cdn.popsww.com/blog/sites/2/2022/03/Anh-mat-si-tinh-cua-nam-chinh-trong-Lai-duoc-gap-em-715x1080.jpg'
-								alt=''
-							/>
-							<div className='h-49 absolute bottom-0 left-0  right-0 bg-gradient-to-b from-transparent via-gray-600 to-black'>
-								<div className='break-words text-center text-lg font-bold text-white'>Konosuba</div>
+					{completenovels.completenovels.map((novel, index) => (
+						<SwiperSlide key={index}>
+							<div className='w-171 h-185 relative flex flex-col items-center'>
+								<Link href={`/novel/${novel.slug}`}>
+									<img
+										className='rounded-lg, w-full, h-[180px] md:h-[250px] lg:h-[300px] '
+										// style={{ height: '180px' }}
+										src={novel.thumbnail}
+										alt=''
+									/>
+									<div className='h-49 absolute bottom-0 left-0 right-0 bg-gradient-to-b from-transparent via-gray-600 to-black'>
+										<div className='break-words text-center text-lg font-bold text-white'>
+											{novel.name_novel}
+										</div>
+									</div>
+								</Link>
 							</div>
-						</div>
-					</SwiperSlide>
-					<SwiperSlide>
-						<div className='w-171 h-185 relative flex flex-col items-center'>
-							<img
-								className='w-173 h-49'
-								src='https://cdn.popsww.com/blog/sites/2/2022/03/Anh-mat-si-tinh-cua-nam-chinh-trong-Lai-duoc-gap-em-715x1080.jpg'
-								alt=''
-							/>
-							<div className='h-49 absolute bottom-0 left-0  right-0 bg-gradient-to-b from-transparent via-gray-600 to-black'>
-								<div className='break-words text-center text-lg font-bold text-white'>Konosuba</div>
-							</div>
-						</div>
-					</SwiperSlide>
-					<SwiperSlide>
-						<div className='w-171 h-185 relative flex flex-col items-center'>
-							<img
-								className='w-173 h-49'
-								src='https://cdn.popsww.com/blog/sites/2/2022/03/Anh-mat-si-tinh-cua-nam-chinh-trong-Lai-duoc-gap-em-715x1080.jpg'
-								alt=''
-							/>
-							<div className='h-49 absolute bottom-0 left-0  right-0 bg-gradient-to-b from-transparent via-gray-600 to-black'>
-								<div className='break-words text-center text-lg font-bold text-white'>Konosuba</div>
-							</div>
-						</div>
-					</SwiperSlide>
-					<SwiperSlide>
-						<div className='w-171 h-185 relative flex flex-col items-center'>
-							<img
-								className='w-173 h-49'
-								src='https://cdn.popsww.com/blog/sites/2/2022/03/Anh-mat-si-tinh-cua-nam-chinh-trong-Lai-duoc-gap-em-715x1080.jpg'
-								alt=''
-							/>
-							<div className='h-49 absolute bottom-0 left-0  right-0 bg-gradient-to-b from-transparent via-gray-600 to-black'>
-								<div className='break-words text-center text-lg font-bold text-white'>Konosuba</div>
-							</div>
-						</div>
-					</SwiperSlide>
-					<SwiperSlide>
-						<div className='w-171 h-185 relative flex flex-col items-center'>
-							<img
-								className='w-173 h-49'
-								src='https://cdn.popsww.com/blog/sites/2/2022/03/Anh-mat-si-tinh-cua-nam-chinh-trong-Lai-duoc-gap-em-715x1080.jpg'
-								alt=''
-							/>
-							<div className='h-49 absolute bottom-0 left-0  right-0 bg-gradient-to-b from-transparent via-gray-600 to-black'>
-								<div className='break-words text-center text-lg font-bold text-white'>Konosuba</div>
-							</div>
-						</div>
-					</SwiperSlide>
-					<SwiperSlide>
-						<div className='w-171 h-185 relative flex flex-col items-center'>
-							<img
-								className='w-173 h-49'
-								src='https://cdn.popsww.com/blog/sites/2/2022/03/Anh-mat-si-tinh-cua-nam-chinh-trong-Lai-duoc-gap-em-715x1080.jpg'
-								alt=''
-							/>
-							<div className='h-49 absolute bottom-0 left-0  right-0 bg-gradient-to-b from-transparent via-gray-600 to-black'>
-								<div className='break-words text-center text-lg font-bold text-white'>Konosuba</div>
-							</div>
-						</div>
-					</SwiperSlide>
+						</SwiperSlide>
+					))}
 				</Swiper>
 			</div>
 		</div>
