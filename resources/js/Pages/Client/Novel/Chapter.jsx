@@ -1,7 +1,18 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import moment from 'moment/moment';
 import { Link } from '@inertiajs/react';
-export default function Chapter({ auth, novel, vol, chap }) {
+export default function Chapter({ auth, novel, vol, chap, nextChapter, nextVol, preChapter, preVol }) {
+	console.log(vol);
+	const nextLink = nextChapter
+		? `/novel/${novel.slug}/${vol.slug}/${nextChapter.slug}`
+		: nextVol
+		? `/novel/${novel.slug}/${nextVol.slug}`
+		: '#';
+	const previosLink = preChapter
+		? `/novel/${novel.slug}/${vol.slug}/${preChapter.slug}`
+		: preVol
+		? `/novel/${novel.slug}/${preVol.slug}`
+		: '#';
 	return (
 		<DefaultLayout auth={auth}>
 			<div className='bg-yellow-400'>
@@ -23,7 +34,7 @@ export default function Chapter({ auth, novel, vol, chap }) {
 						</div>
 					</div>
 					<div className='mt-4 flex h-full w-10/12 items-center justify-center  '>
-						<Link href={`novel/${novel.slug}/${vol.slug}/${chap.slug}/pre`}>
+						<Link href={previosLink}>
 							<div
 								dir='ltr'
 								className='flex h-12 w-28 items-center justify-center rounded-s-lg border-2  border-solid border-gray-600 bg-slate-300 md:w-40 lg:w-64'
@@ -66,7 +77,7 @@ export default function Chapter({ auth, novel, vol, chap }) {
 							dir='rtl'
 							className='flex h-12 w-28 items-center justify-center rounded-s-lg border-2 border-solid border-gray-600 bg-slate-300 md:w-40 lg:w-64 '
 						>
-							<Link href={`novel/${novel.slug}/${vol.slug}/${chap.slug}/next`}>
+							<Link href={nextLink}>
 								<svg
 									xmlns='http://www.w3.org/2000/svg'
 									fill='none'

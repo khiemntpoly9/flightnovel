@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Scout\Searchable;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Attributes\SearchUsingFullText;
@@ -45,6 +46,11 @@ class Novel extends Model
 	public function team(): BelongsTo
 	{
 		return $this->belongsTo(Team::class, 'id_team', 'id');
+	}
+
+	public function vol(): HasMany
+	{
+		return $this->hasMany(Vol::class, 'id_novel', 'id');
 	}
 
 	public function getRouteKeyName(): string
