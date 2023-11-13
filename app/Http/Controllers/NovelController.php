@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\Categories;
 use App\Models\Chap;
 use App\Models\Comment;
@@ -23,13 +24,6 @@ use Illuminate\Support\Str;
 
 class NovelController extends Controller
 {
-	// Khai báo biến
-	protected $ChapController;
-	// Khởi tạo
-	public function __construct(ChapController $ChapController)
-	{
-		$this->ChapController = $ChapController;
-	}
 	// Novel Get Slug
 	public function NovelGetSlug($slug)
 	{
@@ -60,11 +54,28 @@ class NovelController extends Controller
 	// Lấy truyện có chap mới nhất
 	public function NovelGetChapNew()
 	{
-		$chap = $this->ChapController->ChapListNew();
-		$novel = Novel::whereHas('vol.chap', function ($query) use ($chap) {
-			$query->where('id', $chap->id);
-		})->with('vol.chap')->get();
-		return $novel;
+		// Lấy id_vol trong chap mới nhất
+		$chap = Chap::orderBy('created_at', 'desc')->get();
+		// Lấy mảng id_vol trong $chap, bỏ trùng lặp
+		$id_vol = [];
+		foreach ($chap as $item) {
+			array_push($id_vol, $item->id_vol);
+		}
+		$id_vol = array_unique($id_vol);
+		// Lấy id_novel trong bảng vol theo $id_vol
+		$id_novel = [];
+		foreach ($id_vol as $item) {
+			$vol = Vol::where('id', $item)->first();
+			array_push($id_novel, $vol->id_novel);
+		}
+		$id_novel = array_unique($id_novel);
+		// Lấy truyện theo $id_novel
+		$novels = [];
+		foreach ($id_novel as $item) {
+			$novel = Novel::where('id', $item)->first();
+			array_push($novels, $novel);
+		}
+		return $novels;
 	}
 	// Thêm truyện
 	public function NovelCreate(Request $request)
@@ -384,7 +395,7 @@ class NovelController extends Controller
 		Novel::Where('id', $novel->id)->update(['status' => $request->value]);
 		return redirect()->back()->with('success', 'Cập nhật tình trạng truyện');
 	}
-	// theo dõi nhiều
+	// Theo dõi nhiều
 	public function TheoDoiNhieu()
 	{
 		$novels = Novel::withCount('follow') // Đếm số lượng follows
@@ -394,7 +405,7 @@ class NovelController extends Controller
 		return $novels;
 	}
 
-	//Truyện Đã Hoàn Thành 
+	// Truyện Đã Hoàn Thành 
 	public function CompleteNovels()
 	{
 		$novels = Novel::where('status', 2)->get();

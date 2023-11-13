@@ -13,9 +13,9 @@ export default function Home({ auth, novels, historyReadList, novelsNewChap, fol
 				<Head title='Trang chủ' />
 				<main className='mx-auto bg-white'>
 					<div className='slide'>
-						<div className='mx-auto w-10/12'>
-							<SlideNovel novels={novels} />
-						</div>
+						{/* <div className='mx-auto w-10/12'>
+							<SlideNovel novels_1={novels} />
+						</div> */}
 					</div>
 					<div className='mt-2 w-full'>
 						<div className='flex flex-col justify-center gap-4 lg:flex-row'>
