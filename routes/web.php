@@ -5,6 +5,7 @@ use App\Http\Controllers\ChapController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NovelController;
+use App\Http\Controllers\PreNextController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\RatingController;
@@ -36,6 +37,8 @@ Route::prefix('novel')->group(function () {
 	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}', [ChapController::class, 'Chapter'])->middleware(['view.rate.limit'])->name('novel.chapter');
 	// Route::get('/{novel:slug}/vol/{id_vol}', [VolController::class, 'VolRead'])->name('vol.read');
 	// Route::get('/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapRead'])->name('chap.read');
+	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}/next', [PreNextController::class, 'Next'])->name('chap.next');
+	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}/pre', [PreNextController::class, 'Pre'])->name('chap.pre');
 });
 
 // Follow

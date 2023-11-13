@@ -134,6 +134,6 @@ class ChapController extends Controller
 				'monthly_views' => $novel_view->monthly_views + 1,
 			]);
 		}
-		return Inertia::render('Client/Novel/Chapter', ['vol' => $vol, 'chap' => $chap]);
+		return Inertia::render('Client/Novel/Chapter', ['novel' => $novel, 'vol' => $vol, 'chap' => $chap]);
 	}
 }
