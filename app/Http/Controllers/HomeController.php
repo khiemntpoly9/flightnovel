@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Novel;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +26,7 @@ class HomeController extends Controller
 		}
 		return Inertia::render('Client/Home', [
 			'novels' => $this->NovelController->NovelGetAllPublic(),
+			'novelsNewChap' => $this->NovelController->NovelGetChapNew(),
 			'historyReadList' => $historyReadList ?? null,
 			'canLogin' => Route::has('login'),
 			'canRegister' => Route::has('register'),

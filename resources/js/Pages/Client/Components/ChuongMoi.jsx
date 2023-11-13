@@ -1,10 +1,10 @@
-export default function ChuongMoi() {
+export default function ChuongMoi({ novelsNewChap }) {
+	console.log(novelsNewChap);
 	return (
 		<div className='new_LN relative py-6 '>
 			<div className='top relative h-7 w-96'>
 				<h1 className='font-bold uppercase text-black underline'>Chương mới</h1>
 			</div>
-
 			<div className='bottom relative grid grid-cols-3 gap-2 py-2 sm:grid-cols-4 lg:grid-cols-6'>
 				<div className='card'>
 					<img
