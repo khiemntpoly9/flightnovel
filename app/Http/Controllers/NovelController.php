@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\Categories;
 use App\Models\Chap;
 use App\Models\Comment;
@@ -49,6 +50,32 @@ class NovelController extends Controller
 		return Inertia::render('Client/Novel/Novel', [
 			'categories' => $categories,
 		]);
+	}
+	// Lấy truyện có chap mới nhất
+	public function NovelGetChapNew()
+	{
+		// Lấy id_vol trong chap mới nhất
+		$chap = Chap::orderBy('created_at', 'desc')->get();
+		// Lấy mảng id_vol trong $chap, bỏ trùng lặp
+		$id_vol = [];
+		foreach ($chap as $item) {
+			array_push($id_vol, $item->id_vol);
+		}
+		$id_vol = array_unique($id_vol);
+		// Lấy id_novel trong bảng vol theo $id_vol
+		$id_novel = [];
+		foreach ($id_vol as $item) {
+			$vol = Vol::where('id', $item)->first();
+			array_push($id_novel, $vol->id_novel);
+		}
+		$id_novel = array_unique($id_novel);
+		// Lấy truyện theo $id_novel
+		$novels = [];
+		foreach ($id_novel as $item) {
+			$novel = Novel::where('id', $item)->first();
+			array_push($novels, $novel);
+		}
+		return $novels;
 	}
 	// Thêm truyện
 	public function NovelCreate(Request $request)
@@ -114,7 +141,7 @@ class NovelController extends Controller
 
 		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
 	}
-	// Novel Update Pape
+	// Novel Update (Page)
 	public function NovelUpdatePage(Request $request)
 	{
 		// Lấy id novel
@@ -212,14 +239,14 @@ class NovelController extends Controller
 
 		return redirect()->route('team.index')->with('success', 'Sửa truyện thành công');
 	}
-	// Admin Novel
+	// Admin Novel (Page)
 	public function NovelAdmin()
 	{
 		$novels = Novel::with('team')->get();
 		return Inertia::render('Admin/Novel/Novel', ['novels' => $novels]);
 	}
 
-	// Delete Novel
+	// Delete Novel (Status)
 	public function DeleteNovel(Request $request, Novel $novel, $id)
 	{
 		// Xóa ảnh
@@ -258,7 +285,7 @@ class NovelController extends Controller
 		return redirect()->route('team.index')->with('success', 'Xóa truyện thành công');
 	}
 
-	// Novel User Read
+	// Novel User Read (Page)
 	public function NovelRead(Request $request, Novel $novel)
 	{
 		$status = ['success' => session('success'), 'error' => session('error')];
@@ -316,7 +343,7 @@ class NovelController extends Controller
 		]);
 	}
 
-	// Novel Follow
+	// Novel Follow (Status)
 	public function NovelFollow($id)
 	{
 		// Lấy id user
@@ -329,7 +356,7 @@ class NovelController extends Controller
 		return redirect()->back()->with('success', 'Theo dõi truyện thành công');
 	}
 
-	// Novel UnFollow
+	// Novel UnFollow (Status)
 	public function NovelUnFollow($id)
 	{
 		// Lấy id user
@@ -344,7 +371,7 @@ class NovelController extends Controller
 		Novel::Where('id', $novel->id)->update(['is_publish' => $request->value]);
 		return redirect()->back()->with('success', 'Cập nhật trạng thái truyện');
 	}
-	// Follow
+	// Follow (Page)
 	public function FollowIndex()
 	{
 		$id_user = auth()->user()->id;
@@ -355,20 +382,20 @@ class NovelController extends Controller
 			'novel' => $novel,
 		]);
 	}
-	// Danh sách truyện 
+	// Danh sách truyện (Page)
 	public function NovelList()
 	{
 		return Inertia::render('Client/Novel/ListNovel', [
 			'novels' => $this->NovelGetAllPublic(),
 		]);
 	}
-	// tình trạng truyện
+	// Tình trạng truyện (Status)
 	public function StatusPublic(Request $request, Novel $novel)
 	{
 		Novel::Where('id', $novel->id)->update(['status' => $request->value]);
 		return redirect()->back()->with('success', 'Cập nhật tình trạng truyện');
 	}
-	// theo dõi nhiều
+	// Theo dõi nhiều
 	public function TheoDoiNhieu()
 	{
 		$novels = Novel::withCount('follow') // Đếm số lượng follows
@@ -378,7 +405,7 @@ class NovelController extends Controller
 		return $novels;
 	}
 
-	//Truyện Đã Hoàn Thành 
+	// Truyện Đã Hoàn Thành 
 	public function CompleteNovels()
 	{
 		$novels = Novel::where('status', 2)->get();

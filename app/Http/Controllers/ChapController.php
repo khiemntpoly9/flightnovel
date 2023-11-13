@@ -77,7 +77,6 @@ class ChapController extends Controller
 			'list' => $list
 		]);
 	}
-
 	// Lưu cập nhật chap
 	public function ChapUpdatePatch(Request $request, $novel, $vol, Chap $chap)
 	{
@@ -100,7 +99,6 @@ class ChapController extends Controller
 
 		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Cập nhật chap thành công');
 	}
-
 	// Xoá chap
 	public function ChapDelete(Request $request, $novel, $vol, Chap $chap)
 	{
@@ -108,7 +106,6 @@ class ChapController extends Controller
 		$chap->delete();
 		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Xoá chap thành công');
 	}
-
 	// Chapter
 	public function Chapter(Request $request, $novel, $vol, Chap $chap)
 	{
@@ -135,5 +132,11 @@ class ChapController extends Controller
 			]);
 		}
 		return Inertia::render('Client/Novel/Chapter', ['novel' => $novel, 'vol' => $vol, 'chap' => $chap]);
+	}
+	// Danh sách chap sắp xếp mới nhất
+	public function ChapListNew()
+	{
+		$chap = Chap::orderBy('created_at', 'desc')->get();
+		return $chap;
 	}
 }
