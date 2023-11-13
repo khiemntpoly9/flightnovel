@@ -26,7 +26,7 @@ class Vol extends Model
 	}
 	public function chap(): HasMany
 	{
-		return $this->hasMany(Chap::class, 'id_vol', 'id');
+		return $this->hasMany(Chap::class, 'id_vol');
 	}
 
 	public function getRouteKeyName(): string

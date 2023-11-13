@@ -1,98 +1,23 @@
-export default function ChuongMoi() {
+import { Link } from '@inertiajs/react';
+export default function ChuongMoi({ novelsNewChap }) {
 	return (
 		<div className='new_LN relative py-6 '>
 			<div className='top relative h-7 w-96'>
-				<h1 className='font-bold uppercase text-black underline'>Chương mới</h1>
+				<h1 className='font-bold uppercase text-black'>Chương mới</h1>
 			</div>
-
-			<div className='bottom relative grid grid-cols-3 gap-2 py-2 sm:grid-cols-4 lg:grid-cols-6'>
-				<div className='card'>
-					<img
-						src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-						alt=''
-						className=''
-					/>
-					<div className='name'>
-						<h2>konosuba</h2>
-					</div>
-				</div>
-				<div className='card'>
-					<img
-						src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-						alt=''
-					/>
-					<div className='name'>
-						<h2>konosuba</h2>
-					</div>
-				</div>
-				<div className='card'>
-					<img
-						src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-						alt=''
-					/>
-					<div className='name'>
-						<h2>konosuba</h2>
-					</div>
-				</div>
-				<div className='card'>
-					<img
-						src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-						alt=''
-					/>
-					<div className='name'>
-						<h2>konosuba</h2>
-					</div>
-				</div>
-				<div className='card'>
-					<img
-						src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-						alt=''
-					/>
-					<div className='name'>
-						<h2>konosuba</h2>
-					</div>
-				</div>
-				<div className='card'>
-					<img
-						src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-						alt=''
-					/>
-					<div className='name'>
-						<h2>konosuba</h2>
-					</div>
-				</div>
-				<div className='card'>
-					<img
-						src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-						alt=''
-					/>
-					<div className='name'>
-						<h2>konosuba</h2>
-					</div>
-				</div>
-				<div className='card sm:hidden'>
-					<img
-						src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-						alt=''
-					/>
-					<div className='name'>
-						<h2>konosuba</h2>
-					</div>
-				</div>
-				<div className='card relative'>
-					<div className='absolute left-0 right-0 top-0 h-full w-full border-4 border-indigo-500/100'>
-						<img
-							src='https://m.media-amazon.com/images/M/MV5BNDNiOWM5NGItNzY4NC00MDg1LTljZjctYzViNmRlOTNhOWM2XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_FMjpg_UX1000_.jpg'
-							alt=''
-							className='h-full opacity-30'
-						/>
-					</div>
-					<div className='absolute inset-0  '>
-						<div className='flex h-full items-center justify-center'>
-							<span className='text-black '>Xem thêm</span>
+			<div className='bottom relative grid grid-cols-3 gap-2 py-2 lg:grid-cols-4 xl:grid-cols-5'>
+				{novelsNewChap.map((novel) => (
+					<div key={novel.id} className='card bg-base-100 shadow-xl'>
+						<figure className='h-40 md:h-44 lg:h-40 xl:h-44'>
+							<img className='h-full w-full object-cover' src={novel.thumbnail} alt='thumbnail' />
+						</figure>
+						<div className='p-2 text-center'>
+							<Link href={`/novel/${novel.slug}`} className='hover:text-red-500'>
+								{novel.name_novel}
+							</Link>
 						</div>
 					</div>
-				</div>
+				))}
 			</div>
 		</div>
 	);
