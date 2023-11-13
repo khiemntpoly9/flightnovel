@@ -2,7 +2,6 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import moment from 'moment/moment';
 import { Link } from '@inertiajs/react';
 export default function Chapter({ auth, novel, vol, chap, nextChapter, nextVol, preChapter, preVol }) {
-	console.log(vol);
 	const nextLink = nextChapter
 		? `/novel/${novel.slug}/${vol.slug}/${nextChapter.slug}`
 		: nextVol
