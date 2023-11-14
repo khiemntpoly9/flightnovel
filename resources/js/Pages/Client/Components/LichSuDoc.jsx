@@ -13,37 +13,35 @@ export default function LichSuDoc({ historyReadList }) {
 				</div>
 			</div>
 			<div className='bottom relative h-96 overflow-x-auto'>
-				<table className='table table-pin-rows'>
-					<tbody>
-						{historyReadList.slice(0, 5).map((item, index) => (
-							<tr key={index} className='mb-2 flex flex-row gap-2'>
-								{/* Thumbnail */}
-								<div className='rounded-[12px]lg:w-28 h-[160px] w-4/12 '>
-									<img
-										className='h-full w-full rounded-[12px] object-cover'
-										src={item.novel.thumbnail}
-										alt='thumbnail'
-									/>
-								</div>
-								{/* Content */}
-								<div className='w-8/12'>
-									<Link href={`/novel/${item.novel.slug}`} className='text-xs sm:text-base lg:text-xl'>
-										{item.novel.name_novel}
+				<div className='overscroll-auto'>
+					{historyReadList.slice(0, 5).map((item, index) => (
+						<div className='mb-2 flex flex-row gap-2' key={index}>
+							{/* Thumbnail */}
+							<div className='rounded-[12px]lg:w-28 h-[160px] w-4/12'>
+								<img
+									className='h-full w-full rounded-[12px] object-cover'
+									src={item.novel.thumbnail}
+									alt='thumbnail'
+								/>
+							</div>
+							{/* Content */}
+							<div className='w-8/12'>
+								<Link href={`/novel/${item.novel.slug}`} className='text-xs sm:text-base lg:text-xl'>
+									{item.novel.name_novel}
+								</Link>
+								<div>{item.chap.vol.title}</div>
+								<div>
+									<Link
+										href={`/novel/${item.novel.slug}/${item.chap.vol.slug}/${item.chap.slug}`}
+										className='text-xs sm:text-base'
+									>
+										{item.chap.title}
 									</Link>
-									<div>{item.chap.vol.title}</div>
-									<div>
-										<Link
-											href={`/novel/${item.novel.slug}/${item.chap.vol.slug}/${item.chap.slug}`}
-											className='text-xs sm:text-base'
-										>
-											{item.chap.title}
-										</Link>
-									</div>
 								</div>
-							</tr>
-						))}
-					</tbody>
-				</table>
+							</div>
+						</div>
+					))}
+				</div>
 			</div>
 		</div>
 	);
