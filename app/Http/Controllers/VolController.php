@@ -10,6 +10,12 @@ use Illuminate\Support\Str;
 
 class VolController extends Controller
 {
+	// Lấy tất cả vol theo id_novel
+	public function VolGetAll($id_novel)
+	{
+		$vols = Vol::where('id_novel', $id_novel)->get();
+		return $vols;
+	}
 	public function VolIndex(Request $request)
 	{
 		$novel = $request->get('novel');
@@ -17,7 +23,6 @@ class VolController extends Controller
 			'novel_slug' => $novel->slug,
 		]);
 	}
-
 	// Tạo vol
 	public function VolStore(Request $request)
 	{
@@ -44,7 +49,6 @@ class VolController extends Controller
 
 		return redirect()->route('team.novel', ['novel' => $novel->slug])->with('success', 'Tạo chương thành công');
 	}
-
 	// Page Update Vol
 	public function VolUpdatePage(Request $request, $novel, $vol)
 	{
@@ -54,7 +58,6 @@ class VolController extends Controller
 			'vol' => $vol
 		]);
 	}
-
 	// Update Vol
 	public function VolUpdate(Request $request, $novel, Vol $vol)
 	{
@@ -75,7 +78,6 @@ class VolController extends Controller
 
 		return redirect()->route('team.novel', ['novel' => $novel])->with('success', 'Cập nhật chương thành công');
 	}
-
 	// Xoá Vol
 	public function VolDelete(Request $request, $novel, $vol)
 	{

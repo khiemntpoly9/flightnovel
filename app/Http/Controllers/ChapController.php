@@ -113,6 +113,7 @@ class ChapController extends Controller
 			$novel = $this->NovelController->NovelGetSlug($novel);
 		}
 		$vol = Vol::where('slug', $vol)->first();
+
 		if (auth()->check()) {
 			$id_user = auth()->user()->id;
 			if ($id_user) {
@@ -131,7 +132,11 @@ class ChapController extends Controller
 				'monthly_views' => $novel_view->monthly_views + 1,
 			]);
 		}
-		return Inertia::render('Client/Novel/Chapter', ['vol' => $vol, 'chap' => $chap]);
+		return Inertia::render('Client/Novel/Chapter', [
+			'novel' => $novel,
+			'vol' => $vol,
+			'chap' => $chap,
+		]);
 	}
 	// Danh sách chap sắp xếp mới nhất
 	public function ChapListNew()
