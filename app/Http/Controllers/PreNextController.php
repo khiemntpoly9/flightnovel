@@ -11,50 +11,84 @@ use Inertia\Inertia;
 
 class PreNextController extends Controller
 {
-    //
-    public function Next(Request $request, $novel, $vol, Chap $chap)
-    {
-
-        dd($request);
-        // Lấy chap hiện tại
-        $currentChapter = Chap::where('slug', $request)->firstOrFail();
-
-        // Lấy vol hiện tại
-        $currentVol = Vol::where('slug', $request)->firstOrFail();
-
-        // Lấy novel hiện tại
-        $currentNovel = Novel::where('slug', $request)->firstOrFail();
-
-        dd($currentChapter, $currentNovel, $currentVol);
-
-
-        $step = 3; // Số lượng trang bạn muốn hiển thị xung quanh trang hiện tại
-
-        // Tính toán trang bắt đầu và kết thúc
-        $startPage = max(1, $currentChapter->id - $step);
-        $endPage = min($currentVol->chapters->count(), $currentChapter->id + $step);
-
-        // Đảm bảo rằng luôn có 'step * 2 + 1' trang được hiển thị
-        while ($endPage - $startPage < $step * 2 && $endPage < $currentVol->chapters->count()) {
-            $endPage++;
-        }
-
-        while ($endPage - $startPage < $step * 2 && $startPage > 1) {
-            $startPage--;
-        }
-
-        // Truy vấn cơ sở dữ liệu để lấy danh sách các trang cần hiển thị
-        $pages = $currentVol->chapters()
-            ->whereBetween('id', [$startPage, $endPage])
-            ->orderBy('id')
-            ->get();
-
-
-        return Inertia::render('Client/Novel/Chapter', compact('pages'));
-        // dd($chap);
-    }
-    public function Pre(Request $request, $novel, $vol, Chap $chap)
-    {
-        dd($chap);
-    }
+	// Khai báo biến
+	protected $NovelController;
+	protected $VolController;
+	// Khởi tạo
+	public function __construct(NovelController $NovelController, VolController $VolController)
+	{
+		$this->NovelController = $NovelController;
+		$this->VolController = $VolController;
+	}
+	public function Next(Request $request, $novel, $vol, Chap $chap)
+	{
+		// Lấy danh sách vol theo id novel
+		$novel = $this->NovelController->NovelGetSlug($novel);
+		$vols = $this->VolController->VolGetAll($novel->id);
+		$chap_curr = $chap;
+		// Lấy vol, danh sách chap của vol hiện tại
+		$currentVol = Vol::where('slug', $vol)->with('chap')->firstOrFail();
+		// Tạo 1 mảng id chap theo $currentVol->chap
+		$arrChap = [];
+		foreach ($currentVol->chap as $chap) {
+			array_push($arrChap, $chap->id);
+		}
+		// Tìm vị trí của giá trị biết trước
+		$index = array_search($chap_curr->id, $arrChap);
+		if ($index !== false && isset($currentVol->chap[$index + 1])) {
+			// Lấy giá trị ngay sau giá trị biết trước
+			$nextValue = $currentVol->chap[$index + 1];
+		} else {
+			// dd('Không có chương tiếp theo');
+			$arrVol = [];
+			foreach ($vols as $vol_i) {
+				array_push($arrVol, $vol_i->id);
+			}
+			$indexVol = array_search($currentVol->id, $arrVol);
+			if ($indexVol !== false && isset($vols[$indexVol + 1])) {
+				$nextVol = $vols[$indexVol + 1];
+				$nextValue = $nextVol->chap[0];
+				return redirect()->route('novel.chapter', ['novel' => $novel->slug, 'vol' => $nextVol->slug, 'chap' => $nextValue->slug]);
+			} else {
+				return redirect()->route('novel.read', ['novel' => $novel->slug]);
+			}
+		}
+		return redirect()->route('novel.chapter', ['novel' => $novel->slug, 'vol' => $vol, 'chap' => $nextValue->slug]);
+	}
+	public function Prev(Request $request, $novel, $vol, Chap $chap)
+	{
+		// Lấy danh sách vol theo id novel
+		$novel = $this->NovelController->NovelGetSlug($novel);
+		$vols = $this->VolController->VolGetAll($novel->id);
+		$chap_curr = $chap;
+		// Lấy vol, danh sách chap của vol hiện tại
+		$currentVol = Vol::where('slug', $vol)->with('chap')->firstOrFail();
+		// Tạo 1 mảng id chap theo $currentVol->chap
+		$arrChap = [];
+		foreach ($currentVol->chap as $chap) {
+			array_push($arrChap, $chap->id);
+		}
+		// Tìm vị trí của giá trị biết trước
+		$index = array_search($chap_curr->id, $arrChap);
+		if ($index !== false && isset($currentVol->chap[$index - 1])) {
+			// Lấy giá trị ngay sau giá trị biết trước
+			$nextValue = $currentVol->chap[$index - 1];
+		} else {
+			// dd('Không có chương tiếp theo');
+			$arrVol = [];
+			foreach ($vols as $vol_i) {
+				array_push($arrVol, $vol_i->id);
+			}
+			$indexVol = array_search($currentVol->id, $arrVol);
+			if ($indexVol !== false && isset($vols[$indexVol - 1])) {
+				$nextVol = $vols[$indexVol - 1];
+				$a = $nextVol->chap->toArray();
+				$nextValue = end($a);
+				return redirect()->route('novel.chapter', ['novel' => $novel->slug, 'vol' => $nextVol->slug, 'chap' => $nextValue['slug']]);
+			} else {
+				return redirect()->route('novel.read', ['novel' => $novel->slug]);
+			}
+		}
+		return redirect()->route('novel.chapter', ['novel' => $novel->slug, 'vol' => $vol, 'chap' => $nextValue->slug]);
+	}
 }

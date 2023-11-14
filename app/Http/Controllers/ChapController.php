@@ -132,39 +132,10 @@ class ChapController extends Controller
 				'monthly_views' => $novel_view->monthly_views + 1,
 			]);
 		}
-		// Lấy chapter tiếp theo
-		$nextChapter = $chap->vol->chap()->where('id', '>', $chap->id)->orderBy('id')->first();
-
-		if (!$nextChapter) {
-			// Lấy chap đầu tiên của vol kế tiếp
-			// Lấy vol kế tiếp
-			$nextVol = $vol->novel->vol()->where('id', '>', $vol->id)->orderBy('id')->first();
-			$nextChapter = $nextVol ? $nextVol->chap()->orderBy('id')->first() : null;
-		} else {
-			$nextVol = null;
-		}
-
-		// Lấy chương trước đó trong cùng tập
-		$prevChapter = $chap->vol->chap()->where('id', '<', $chap->id)->orderByDesc('id')->first();
-
-		// Kiểm tra nếu không có chương trước đó trong tập hiện tại
-		if (!$prevChapter) {
-			// Lấy chương cuối cùng của tập trước
-			$prevVol = $chap->vol->novel->vol()->where('id', '<', $chap->vol->id)->orderByDesc('id')->first();
-			// dd($prevVol);
-			$prevChapter = $prevVol ? $prevVol->chap()->orderByDesc('id')->first() : null;
-		} else {
-			$prevVol = null;
-		}
-		// dd($prevChapter, $prevVol);
 		return Inertia::render('Client/Novel/Chapter', [
 			'novel' => $novel,
 			'vol' => $vol,
 			'chap' => $chap,
-			'preChapter' => $prevChapter,
-			'preVol' => $prevVol,
-			'nextChapter' => $nextChapter,
-			'nextVol' => $nextVol,
 		]);
 	}
 	// Danh sách chap sắp xếp mới nhất

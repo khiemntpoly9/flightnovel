@@ -35,6 +35,8 @@ Route::prefix('novel')->group(function () {
 	Route::get('/list', [NovelController::class, 'NovelList'])->name('novel.list');
 	Route::get('/{novel:slug}', [NovelController::class, 'NovelRead'])->name('novel.read');
 	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}', [ChapController::class, 'Chapter'])->middleware(['view.rate.limit'])->name('novel.chapter');
+	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}/next', [PreNextController::class, 'Next'])->name('novel.chapter.next');
+	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}/prev', [PreNextController::class, 'Prev'])->name('novel.chapter.prev');
 	// Route::get('/{novel:slug}/vol/{id_vol}', [VolController::class, 'VolRead'])->name('vol.read');
 	// Route::get('/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapRead'])->name('chap.read');
 });
