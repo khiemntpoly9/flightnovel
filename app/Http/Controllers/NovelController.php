@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
 use App\Models\Categories;
 use App\Models\Chap;
 use App\Models\Comment;
@@ -13,7 +11,6 @@ use App\Models\HistoryRead;
 use App\Models\Novel;
 use App\Models\NovelCate;
 use App\Models\Rating;
-use App\Models\Team;
 use App\Models\TeamUser;
 use App\Models\ViewNovel;
 use App\Models\Vol;
@@ -69,13 +66,8 @@ class NovelController extends Controller
 			array_push($id_novel, $vol->id_novel);
 		}
 		$id_novel = array_unique($id_novel);
-		// Lấy truyện theo $id_novel
-		$novels = [];
-		foreach ($id_novel as $item) {
-			$novel = Novel::where('id', $item)->first();
-			array_push($novels, $novel);
-		}
-		return $novels;
+		$novels = Novel::whereIn('id', $id_novel)->paginate($perPage = 10, $columns = ['*'], $pageName = 'page');
+		return [$novels, $id_novel];
 	}
 	// Thêm truyện
 	public function NovelCreate(Request $request)

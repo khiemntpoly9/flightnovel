@@ -1,5 +1,5 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import { Link, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 export default function Team({ auth, team_user, team_member, team, novel, status }) {
@@ -47,6 +47,7 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 	} else {
 		return (
 			<DefaultLayout auth={auth}>
+				<Head title={`Nhóm ${team.team.team_name}`} />
 				<div className='container mx-auto w-10/12'>
 					<h1 className='m-4 p-2 text-center text-3xl font-bold'>Thông tin nhóm</h1>
 					<div className='mb-5'>

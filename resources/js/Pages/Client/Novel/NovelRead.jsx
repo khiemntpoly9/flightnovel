@@ -1,7 +1,7 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import moment from 'moment/moment';
 import Comment from '@/Components/Comment';
-import { Link, router, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import Rating from '@/Components/Rating';
@@ -52,6 +52,7 @@ export default function NovelRead({ auth, novel_main, vol, follow, rating, comme
 	}, [status]);
 	return (
 		<DefaultLayout auth={auth}>
+			<Head title={novel_main.novel.name_novel} />
 			<div className='container mx-auto w-10/12'>
 				<div className='container mb-3 flex flex-col gap-3 md:flex-row'>
 					{/* Info truyện */}

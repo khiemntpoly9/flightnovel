@@ -1,9 +1,10 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import moment from 'moment/moment';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 export default function Chapter({ auth, novel, vol, chap }) {
 	return (
 		<DefaultLayout auth={auth}>
+			<Head title={vol.title} />
 			<div className='bg-yellow-400'>
 				<div className='flex flex-col items-center'>
 					<div className='w-10/12 '>
