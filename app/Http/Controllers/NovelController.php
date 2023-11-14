@@ -124,7 +124,14 @@ class NovelController extends Controller
 			'id_detail' => $detail->id,
 			'id_user' => auth()->user()->id,
 		]);
-
+		// Tạo bảng views
+		ViewNovel::create([
+			'id_novel' => $novel->id,
+			'views' => 0,
+			'daily_views' => 0,
+			'weekly_views' => 0,
+			'monthly_views' => 0,
+		]);
 		// Cập nhật slug
 		$newSlug = $novel->id . '-' . Str::of($request->name_novel)->slug('-');
 		$novel->slug = $newSlug;
