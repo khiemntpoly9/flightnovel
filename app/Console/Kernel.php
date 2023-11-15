@@ -14,8 +14,7 @@ class Kernel extends ConsoleKernel
 	protected function schedule(Schedule $schedule): void
 	{
 		// Reset view count for the day
-		// $schedule->command('app:reset-view-day')->dailyAt('00:00');
-		$schedule->command('app:reset-view-day')->dailyAt('18:30');
+		$schedule->command('app:reset-view-day')->dailyAt('00:00');
 		// Reset view count for the week
 		$schedule->command('app:reset-view-week')->weeklyOn(1, '00:00');
 		// Reset view count for the month
