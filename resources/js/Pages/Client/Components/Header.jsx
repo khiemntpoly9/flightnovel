@@ -20,6 +20,11 @@ export default function Header({ auth, notify }) {
 										Danh sách truyện
 									</Link>
 								</li>
+								<li>
+									<Link href={route('novel.chapter.new')} className='text-white'>
+										Chương mới
+									</Link>
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -134,7 +139,7 @@ export default function Header({ auth, notify }) {
 										<Link href={route('profile.edit')}>Trang cá nhân</Link>
 									</li>
 									<li>
-										<div>Truyện đã đọc</div>
+										<Link href={route('history.index')}>Lịch sử đọc</Link>
 									</li>
 									<li>
 										<Link href={route('follow.index')}>Truyện theo dõi</Link>

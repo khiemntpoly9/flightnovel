@@ -60,6 +60,12 @@ Route::middleware('auth')->prefix('comment')->group(function () {
 	Route::delete('/{id}/delete', [CommentController::class, 'NovelCommentDelete'])->middleware(['user.comment'])->name('novel.comment.delete');
 });
 
+// History read
+Route::middleware('auth')->prefix('history')->group(function () {
+	Route::get('/', [UserController::class, 'UserHistoryRead'])->name('history.index');
+	Route::delete('/{id}', [NovelController::class, 'HistoryDelete'])->name('history.delete');
+});
+
 // Rating
 Route::middleware('auth')->prefix('rating')->group(function () {
 	Route::post('/post', [RatingController::class, 'RatingCreate'])->name('novel.rating');

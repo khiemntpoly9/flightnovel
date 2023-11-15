@@ -14,7 +14,7 @@ export default function LichSuDoc({ historyReadList }) {
 			</div>
 			<div className='bottom relative h-96 overflow-x-auto'>
 				<div className='overscroll-auto'>
-					{historyReadList.slice(0, 5).map((item, index) => (
+					{historyReadList.data.slice(0, 5).map((item, index) => (
 						<div className='mb-2 flex flex-row gap-2' key={index}>
 							{/* Thumbnail */}
 							<div className='rounded-[12px]lg:w-28 h-[160px] w-4/12'>
