@@ -10,6 +10,13 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+	// Khai báo biến
+	protected $HistoryReadController;
+	// Khởi tạo
+	public function __construct(HistoryReadController $HistoryReadController)
+	{
+		$this->HistoryReadController = $HistoryReadController;
+	}
 	// Lấy tất cả user
 	public function getAllUser()
 	{
@@ -36,5 +43,17 @@ class UserController extends Controller
 		$user->delete();
 		$request->session()->flash('success', 'Xóa tài khoản thành công');
 		return redirect()->route('admin.user');
+	}
+	// 	Lịch sử đọc
+	public function UserHistoryRead()
+	{
+		// Check Login
+		if (auth()->check()) {
+			// Lấy lịch sử đọc
+			$historyReadList = $this->HistoryReadController->HistoryReadList(auth()->user()->id);
+		}
+		return Inertia::render('Client/Page/HistoryRead', [
+			'historyReadList' => $historyReadList ?? null,
+		]);
 	}
 }
