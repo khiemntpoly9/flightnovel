@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { router } from '@inertiajs/react';
-export default function Rating({ novel }) {
+export default function Rating({ novel, rating_user }) {
 	const [values, setValues] = useState({
 		id_novel: novel,
-		point: 0,
+		point: rating_user ? rating_user.rating : 0,
 	});
 	const buttons = [];
 	for (let i = 1; i <= 10; i++) {
@@ -32,30 +32,57 @@ export default function Rating({ novel }) {
 	};
 	// Rating
 	const stars = document.querySelectorAll('.star');
-	stars.forEach((star, index) => {
-		star.addEventListener('click', () => {
-			stars.forEach((s, i) => {
-				const svg = s.querySelector('svg');
-				if (i <= index) {
-					svg.setAttribute('fill', '#F59E0B');
-					svg.setAttribute('stroke', '#F59E0B');
-				} else {
-					svg.setAttribute('fill', 'none');
-					svg.setAttribute('stroke', 'currentColor');
-				}
-			});
-			for (let i = 0; i < index; i++) {
-				const previosStar = stars[i];
-				previosStar.querySelector('svg').setAttribute('fill', '#F59E0B');
-				previosStar.querySelector('svg').setAttribute('stroke', '#F59E0B');
+	if (values.point > 0) {
+		stars.forEach((star, index) => {
+			const svg = star.querySelector('svg');
+			if (index < values.point) {
+				svg.setAttribute('fill', '#F59E0B');
+				svg.setAttribute('stroke', '#F59E0B');
+			} else {
+				svg.setAttribute('fill', 'none');
+				svg.setAttribute('stroke', 'currentColor');
 			}
 		});
-	});
+	} else {
+		stars.forEach((star, index) => {
+			star.addEventListener('click', () => {
+				stars.forEach((s, i) => {
+					const svg = s.querySelector('svg');
+					if (i <= index) {
+						svg.setAttribute('fill', '#F59E0B');
+						svg.setAttribute('stroke', '#F59E0B');
+					} else {
+						svg.setAttribute('fill', 'none');
+						svg.setAttribute('stroke', 'currentColor');
+					}
+				});
+				for (let i = 0; i < index; i++) {
+					const previosStar = stars[i];
+					previosStar.querySelector('svg').setAttribute('fill', '#F59E0B');
+					previosStar.querySelector('svg').setAttribute('stroke', '#F59E0B');
+				}
+			});
+		});
+	}
 	return (
 		<div className='flex flex-col gap-1'>
 			{/* Star */}
 			<div className='text-center text-5xl'>{values.point}</div>
 			<div>{buttons}</div>
+			{/* <div className='test'>
+				<div className='rating rating-md'>
+					<input type='radio' name='rating-7' className='mask mask-star-2 bg-orange-400' />
+					<input type='radio' name='rating-7' className='mask mask-star-2 bg-orange-400' />
+					<input type='radio' name='rating-7' className='mask mask-star-2 bg-orange-400' />
+					<input type='radio' name='rating-7' className='mask mask-star-2 bg-orange-400' />
+					<input type='radio' name='rating-7' className='mask mask-star-2 bg-orange-400' />
+					<input type='radio' name='rating-7' className='mask mask-star-2 bg-orange-400' />
+					<input type='radio' name='rating-7' className='mask mask-star-2 bg-orange-400' checked />
+					<input type='radio' name='rating-7' className='mask mask-star-2 bg-orange-400' />
+					<input type='radio' name='rating-7' className='mask mask-star-2 bg-orange-400' />
+					<input type='radio' name='rating-7' className='mask mask-star-2 bg-orange-400' />
+				</div>
+			</div> */}
 			{/* Button rate submit */}
 			<div>
 				<div className='flex justify-center'>

@@ -101,7 +101,7 @@ export default function Header({ auth, notify }) {
 											</div>
 										</div>
 									) : (
-										<span>Không có thông báo mới!</span>
+										<div className='text-center'>Không có thông báo mới!</div>
 									)}
 								</div>
 							</div>

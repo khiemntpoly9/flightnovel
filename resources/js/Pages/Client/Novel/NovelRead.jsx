@@ -124,7 +124,7 @@ export default function NovelRead({ auth, novel_main, vol, follow, rating, comme
 												<h3 className='text-lg font-bold'>Đánh giá</h3>
 												{/* Stars */}
 												<div className='starbar-rating flex justify-center gap-1'>
-													<Rating novel={novel_main.novel.id} />
+													<Rating novel={novel_main.novel.id} rating_user={rating.rating_user} />
 												</div>
 											</div>
 											<form method='dialog' className='modal-backdrop'>

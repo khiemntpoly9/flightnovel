@@ -21,6 +21,13 @@ use Illuminate\Support\Str;
 
 class NovelController extends Controller
 {
+	// Khai báo 
+	protected $RatingController;
+	// Khởi tạo
+	public function __construct(RatingController $RatingController)
+	{
+		$this->RatingController = $RatingController;
+	}
 	// Novel Get Slug
 	public function NovelGetSlug($slug)
 	{
@@ -260,7 +267,7 @@ class NovelController extends Controller
 		// Xóa novel_cate
 		NovelCate::where('id_novel', $id)->delete();
 		// Xóa rating
-		Rating::where('id_novel', $id)->delete();
+		$this->RatingController->RatingDelete($id);
 		// Xóa view
 		ViewNovel::where('id_novel', $id)->delete();
 		// Xóa chap theo id_vol
@@ -305,7 +312,8 @@ class NovelController extends Controller
 			$follow = null;
 		}
 		// Rating
-		$rating = Rating::where('id_novel', $novel->id)->get();
+		$rating = $this->RatingController->RatingGet($novel->id);
+		$rating_user = $this->RatingController->RatingGetUser($novel->id);
 		$countRating = $rating->count();
 		$totalRating = 0;
 		foreach ($rating as $item) {
@@ -333,6 +341,7 @@ class NovelController extends Controller
 				'count' => $follow_count,
 			],
 			'rating' => [
+				'rating_user' => $rating_user,
 				'count' => $countRating,
 				'total' => $totalRating,
 				'average' => $averageRating,
