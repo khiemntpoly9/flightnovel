@@ -33,8 +33,6 @@ class CommentController extends Controller
 	{
 		// Xóa dữ liệu bảng comment
 		Comment::where('id', $id)->delete();
-		// Xóa dữ liệu bảng comment con
-		Comment::where('parent_id', $id)->delete();
 		// Trả về dữ liệu
 		return redirect()->back();
 	}

@@ -12,7 +12,12 @@ class Kernel extends ConsoleKernel
 	 */
 	protected function schedule(Schedule $schedule): void
 	{
-		// $schedule->command('inspire')->hourly();
+		// Reset view count for the day
+		$schedule->command('app:reset-view-day')->dailyAt('00:00');
+		// Reset view count for the week
+		$schedule->command('app:reset-view-week')->weeklyOn(1, '00:00');
+		// Reset view count for the month
+		$schedule->command('app:reset-view-month')->monthlyOn(1, '00:00');
 	}
 
 	/**

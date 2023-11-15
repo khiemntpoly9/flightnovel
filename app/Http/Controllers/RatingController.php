@@ -22,12 +22,37 @@ class RatingController extends Controller
 			'point.integer' => 'Đánh giá phải là số nguyên',
 		]);
 		// Thêm dữ liệu bảng rating
-		$rating = Rating::create([
-			'id_novel' => $request->id_novel,
-			'id_user' => auth()->user()->id,
-			'rating' => $request->point,
-		]);
+		// Kiểm tra rating
+		$rating = Rating::where('id_novel', $request->id_novel)->where('id_user', auth()->user()->id)->first();
+		if ($rating) {
+			// Cập nhật rating
+			$rating->rating = $request->point;
+			$rating->save();
+		} else {
+			$rating = Rating::create([
+				'id_novel' => $request->id_novel,
+				'id_user' => auth()->user()->id,
+				'rating' => $request->point,
+			]);
+		}
 		// Trả về dữ liệu
 		return redirect()->back();
+	}
+	// Xóa rating
+	public function RatingDelete($id)
+	{
+		Rating::where('id_novel', $id)->delete();
+	}
+	// Lấy dữ liệu rating
+	public function RatingGet($id)
+	{
+		$rating = Rating::where('id_novel', $id)->get();
+		return $rating;
+	}
+	// Lấy dữ liệu rating của user theo novel
+	public function RatingGetUser($id)
+	{
+		$rating = Rating::where('id_novel', $id)->where('id_user', auth()->user()->id)->first();
+		return $rating;
 	}
 }
