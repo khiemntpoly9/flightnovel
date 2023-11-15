@@ -32,6 +32,7 @@ class NotifyNovel extends Notification
 	{
 		return [
 			'novel' => $this->notify_novel['name_novel'],
+			'novel_slug' => $this->notify_novel['slug_novel'],
 			'chap' => $this->notify_novel['title'],
 		];
 	}

@@ -4,6 +4,7 @@ use App\Http\Controllers\CateController;
 use App\Http\Controllers\ChapController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NovelController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PreNextController;
@@ -51,7 +52,7 @@ Route::middleware('auth')->prefix('follow')->group(function () {
 });
 
 // Notification
-// Route::get('/notify-novel/{id}/{slug_chap}', [NotificationController::class, 'index'])->name('notification.novel');
+Route::get('/notify/delete-all', [NotificationController::class, 'notifyDeleteAll'])->middleware('auth')->name('notification.delete');
 
 // Comment
 Route::middleware('auth')->prefix('comment')->group(function () {

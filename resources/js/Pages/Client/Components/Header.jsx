@@ -68,9 +68,11 @@ export default function Header({ auth, notify }) {
 											clipRule='evenodd'
 										/>
 									</svg>
-									<span className='badge indicator-item badge-secondary bg-red-600 text-white'>
-										{notify ? notify.length : '0'}
-									</span>
+									{notify && notify.length > 0 && (
+										<span className='badge indicator-item badge-secondary bg-red-600 text-white'>
+											{notify.length}
+										</span>
+									)}
 								</div>
 							</label>
 							{/*  */}
@@ -79,15 +81,28 @@ export default function Header({ auth, notify }) {
 								className='card dropdown-content card-compact z-[99] mt-3 w-60 bg-base-100 shadow'
 							>
 								<div className='card-body'>
-									<ul>
-										{notify?.map((item, index) => (
-											<li key={index}>
-												<span>
-													Truyện {item.data.novel} vừa cập nhật chap mới! {item.data.chap}
-												</span>
-											</li>
-										))}
-									</ul>
+									{notify?.length > 0 ? (
+										<div>
+											{notify?.map((item, index) => (
+												<div key={index}>
+													<span>
+														Truyện{' '}
+														<Link className='hover:text-red-500' href={`/novel/${item.data.novel_slug}`}>
+															{item.data.novel}
+														</Link>{' '}
+														vừa cập nhật chap mới! {item.data.chap}
+													</span>
+												</div>
+											))}
+											<div className='mt-2 text-center'>
+												<Link href={route('notification.delete')} className='text-red-500'>
+													Xóa tất cả thông báo
+												</Link>
+											</div>
+										</div>
+									) : (
+										<span>Không có thông báo mới!</span>
+									)}
 								</div>
 							</div>
 						</div>

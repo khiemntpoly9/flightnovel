@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Notifications\NotifyNovel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
@@ -33,10 +34,21 @@ class NotificationController extends Controller
 		$novel = $this->NovelController->NovelGetId($id);
 		// Nội dung thông báo
 		$notify_novel['name_novel'] = $novel->name_novel;
+		$notify_novel['slug_novel'] = $novel->slug;
 		$notify_novel['title'] = $chap->title;
 		// Gửi thông báo cho các user
 		foreach ($users as $user) {
 			$user->notify(new NotifyNovel($notify_novel));
 		}
+	}
+
+	// Xóa tất cả thông báo
+	public function notifyDeleteAll(Request $request)
+	{
+		// ID user
+		$id = auth()->user()->id;
+		// Xóa tất cả thông báo
+		DB::table('notifications')->where('notifiable_id', $id)->delete();
+		return redirect()->back();
 	}
 }
