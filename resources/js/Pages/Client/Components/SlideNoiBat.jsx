@@ -6,9 +6,10 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
+import { Link } from '@inertiajs/react';
 
 export default function SlideNoiBat({ novels }) {
-	const [activeTab, setActiveTab] = useState('Nổi bật');
+	const [activeTab, setActiveTab] = useState('Top lượt xem ngày');
 	const handleTabClick = (tabName) => {
 		setActiveTab(tabName);
 	};
@@ -17,21 +18,23 @@ export default function SlideNoiBat({ novels }) {
 			{/*start silde */}
 			<div className='flex-row'>
 				<div className='nav mx-auto mt-3 flex w-10/12 space-x-4 md:w-10/12 md:items-center'>
-					<div
-						className={`n-i-b-t  cursor-pointer rounded px-2 py-2 text-sm text-black transition   md:text-base ${
-							activeTab === 'Nổi bật' ? 'bg-gray-400' : ''
-						}`}
-						onClick={() => handleTabClick('Nổi bật')}
-					>
-						Nổi bật
-					</div>
+					<Link href='/view/day'>
+						<div
+							className={`n-i-b-t  cursor-pointer rounded px-2 py-2 text-sm text-black transition   md:text-base ${
+								activeTab === 'Top lượt xem ngày' ? 'bg-gray-400' : ''
+							}`}
+							onClick={() => handleTabClick('Top lượt xem ngày')}
+						>
+							Top lượt xem ngày
+						</div>
+					</Link>
 					<div
 						className={`top-l-t-xem  cursor-pointer rounded px-2 py-2 text-sm text-black transition  md:text-base ${
-							activeTab === 'Top lượt xem' ? 'bg-gray-400' : ''
+							activeTab === 'Top lượt xem tuần' ? 'bg-gray-400' : ''
 						}`}
-						onClick={() => handleTabClick('Top lượt xem')}
+						onClick={() => handleTabClick('Top lượt xem tuần')}
 					>
-						Top lượt xem
+						Top lượt xem tuần
 					</div>
 					<div
 						className={`top-l-t-xem-th-ng  cursor-pointer rounded px-2 py-2 text-sm text-black transition  md:text-base ${

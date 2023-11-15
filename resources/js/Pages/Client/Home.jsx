@@ -6,7 +6,19 @@ import TruyenDaHoanThanh from '@/Pages/Client/Components/TruyenDaHoanThanh';
 import { Head } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import SlideNovel from './Components/SlideNovel';
-export default function Home({ auth, novels, historyReadList, novelsNewChap, followed, completenovels }) {
+import SlideNoiBat from './Components/SlideNoiBat';
+import ViewDay from './Components/ViewDay';
+import ViewMonth from './Components/ViewMonth';
+import ViewWeek from './Components/ViewWeek';
+export default function Home({
+	auth,
+	novels,
+	historyReadList,
+	novelsNewChap,
+	followed,
+	completenovels,
+	view,
+}) {
 	return (
 		<>
 			<DefaultLayout auth={auth}>
@@ -16,6 +28,20 @@ export default function Home({ auth, novels, historyReadList, novelsNewChap, fol
 						{/* <div className='mx-auto w-10/12'>
 							<SlideNovel novels_1={novels} />
 						</div> */}
+						{/* <SlideNoiBat /> */}
+					</div>
+					<div className='mx-auto  w-10/12'>
+						<div className='grid  gap-3 md:grid-cols-3'>
+							<div>
+								<ViewDay viewday={view} />
+							</div>
+							<div>
+								<ViewWeek viewweek={view} />
+							</div>
+							<div>
+								<ViewMonth viewmonth={view} />
+							</div>
+						</div>
 					</div>
 					<div className='mt-2 w-full'>
 						<div className='flex flex-col justify-center gap-4 lg:flex-row'>

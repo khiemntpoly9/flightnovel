@@ -11,11 +11,13 @@ class HomeController extends Controller
 	// Khai báo biến
 	protected $HistoryReadController;
 	protected $NovelController;
+	protected $ViewsController;
 	// Khởi tạo
-	public function __construct(HistoryReadController $HistoryReadController, NovelController $NovelController)
+	public function __construct(HistoryReadController $HistoryReadController, NovelController $NovelController, ViewsController $ViewsController)
 	{
 		$this->HistoryReadController = $HistoryReadController;
 		$this->NovelController = $NovelController;
+		$this->ViewsController = $ViewsController;
 	}
 	public function HomeIndex()
 	{
@@ -30,6 +32,7 @@ class HomeController extends Controller
 			'historyReadList' => $historyReadList ?? null,
 			'followed' => $this->NovelController->TheoDoiNhieu(),
 			'completenovels' => $this->NovelController->CompleteNovels(),
+			'view' => [$this->ViewsController->DayView(), $this->ViewsController->DayWeek(), $this->ViewsController->DayMonth()],
 			'canLogin' => Route::has('login'),
 			'canRegister' => Route::has('register'),
 		]);
