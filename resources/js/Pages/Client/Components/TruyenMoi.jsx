@@ -2,8 +2,9 @@ import { Link } from '@inertiajs/react';
 export default function TruyenMoi({ novels }) {
 	return (
 		<div className='new_LN relative w-full'>
-			<div className='top relative h-7 w-96'>
+			<div className='top relative flex h-7 w-full justify-between'>
 				<h1 className='font-bold uppercase text-black'>Truyện mới</h1>
+				<Link href='/novel/list'>xem thêm ...</Link>
 			</div>
 			<div className=''>
 				<div className='bottom grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5'>
