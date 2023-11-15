@@ -10,6 +10,7 @@ import SlideNoiBat from './Components/SlideNoiBat';
 import ViewDay from './Components/ViewDay';
 import ViewMonth from './Components/ViewMonth';
 import ViewWeek from './Components/ViewWeek';
+import { useState } from 'react';
 export default function Home({
 	auth,
 	novels,
@@ -19,6 +20,11 @@ export default function Home({
 	completenovels,
 	view,
 }) {
+	const [activeTab, setActiveTab] = useState(1);
+
+	const handleTabChange = (tabIndex) => {
+		setActiveTab(tabIndex);
+	};
 	return (
 		<>
 			<DefaultLayout auth={auth}>
@@ -31,18 +37,56 @@ export default function Home({
 						{/* <SlideNoiBat /> */}
 					</div>
 					<div className='mx-auto  w-10/12'>
-						<div className='grid  gap-3 md:grid-cols-3'>
-							<div>
-								<ViewDay viewday={view} />
+						<div className='tabs-lifted tabs '>
+							<div className='flex flex-row'>
+								<label htmlFor='tab1' className='tab inline-block cursor-pointer bg-base-200 p-4 align-top'>
+									Top lượt xem ngày
+								</label>
+								<label htmlFor='tab2' className='tab inline-block cursor-pointer bg-base-200 p-4 align-top'>
+									Top lượt xem tuần
+								</label>
+								<label htmlFor='tab3' className='tab inline-block cursor-pointer bg-base-200 p-4 align-top'>
+									Top lượt xem tháng
+								</label>
 							</div>
-							<div>
-								<ViewWeek viewweek={view} />
+							<input
+								type='radio'
+								name='my_tabs_2'
+								className='hidden'
+								id='tab1'
+								checked={activeTab === 1}
+								onChange={() => handleTabChange(1)}
+							/>
+							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+								{activeTab === 1 && <ViewDay viewday={view} />}
 							</div>
-							<div>
-								<ViewMonth viewmonth={view} />
+
+							<input
+								type='radio'
+								name='my_tabs_2'
+								className='hidden'
+								id='tab2'
+								checked={activeTab === 2}
+								onChange={() => handleTabChange(2)}
+							/>
+							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+								{activeTab === 2 && <ViewWeek viewweek={view} />}
+							</div>
+
+							<input
+								type='radio'
+								name='my_tabs_2'
+								className='hidden'
+								id='tab3'
+								checked={activeTab === 3}
+								onChange={() => handleTabChange(3)}
+							/>
+							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+								{activeTab === 3 && <ViewMonth viewmonth={view} />}
 							</div>
 						</div>
 					</div>
+
 					<div className='mt-2 w-full'>
 						<div className='flex flex-col justify-center gap-4 lg:flex-row'>
 							<div className={`order-2 ${auth.user ? 'lg:w-6/12' : ''} mx-auto w-10/12 lg:order-1 lg:m-0`}>

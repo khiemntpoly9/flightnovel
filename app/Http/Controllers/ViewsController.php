@@ -14,19 +14,19 @@ class ViewsController extends Controller
     public function DayView()
     {
         $views = ViewNovel::with('novel')
-            ->orderByDesc('daily_views')->get();
+            ->orderByDesc('daily_views')->limit(5)->get();
         return $views;
     }
     public function DayWeek()
     {
         $views = ViewNovel::with('novel')
-            ->orderByDesc('weekly_views')->get();
+            ->orderByDesc('weekly_views')->limit(5)->get();
         return $views;
     }
     public function DayMonth()
     {
         $views = ViewNovel::with('novel')
-            ->orderByDesc('monthly_views')->get();
+            ->orderByDesc('monthly_views')->limit(5)->get();
         return $views;
     }
 }

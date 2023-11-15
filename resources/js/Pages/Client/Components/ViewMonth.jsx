@@ -2,47 +2,16 @@ import React from 'react';
 import { Link } from '@inertiajs/react';
 const ViewMonth = ({ viewmonth }) => {
 	return (
-		<div className='lg:w-356 lg:h-374 flex h-auto w-full flex-col items-center py-6 lg:items-start'>
-			<div className='lg:w-356 h-30 relative flex w-full flex-row items-start justify-start'>
-				<div className='h-30 w-20 bg-gray-300'>
-					<div className='break-words py-2 text-center text-sm font-normal text-black  md:text-base'>
-						Top lượt xem
-					</div>
-				</div>
-				<div className='break-words px-2 py-2 text-sm font-bold uppercase text-black underline  md:text-base'>
-					trong tháng
-				</div>
-			</div>
-
+		<div className='relative grid grid-cols-3 gap-2 py-2 lg:grid-cols-4 xl:grid-cols-5'>
 			{viewmonth[2].map((viewmonth, index) => (
-				<div key={index} className='lg:w-355 mt-2 flex h-auto w-full gap-3'>
-					<div className='w-282 h-20 flex-1 flex-col items-start justify-start gap-3'>
-						<div className='flex flex-row '>
-							<div className='w-31 h-31 flex items-center justify-center rounded-full bg-gray-300 px-3 py-0 md:h-8 md:w-10 lg:w-8'>
-								<div className='text-sm font-normal uppercase text-black  md:text-base'>{index + 1}</div>
-							</div>
-
-							<div className='ml-2'>
-								<Link href={`/novel/${viewmonth.novel.slug}`}>
-									<div className='text-xs font-bold uppercase text-black   md:text-base'>
-										{viewmonth.novel.name_novel}
-									</div>
-								</Link>
-							</div>
-						</div>
-						<div className='ml-10  mt-2 text-xs font-normal lowercase text-black  md:text-base'>
-							{viewmonth.daily_views} lượt xem
-						</div>
+				<div key={index} className='card bg-base-100 shadow-xl'>
+					<figure className='h-40 md:h-44 lg:h-40 xl:h-44'>
+						<img className='h-full w-full object-cover' src={viewmonth.novel.thumbnail} alt='thumbnail' />
+					</figure>
+					<div className='p-2 text-center'>
+						<Link href={`/novel/${viewmonth.novel.slug}`}>{viewmonth.novel.name_novel}</Link>
 					</div>
-					<div className=' rounded-[12px]lg:w-28 h-[160px] w-24'>
-						<Link href={`/novel/${viewmonth.novel.slug}`}>
-							<img
-								src={viewmonth.novel.thumbnail}
-								alt='thumb'
-								className='h-full w-full rounded-[12px] object-cover'
-							/>
-						</Link>
-					</div>
+					<div className='p-2 text-left'> Số lượt xem: {viewmonth.daily_views}</div>
 				</div>
 			))}
 		</div>
