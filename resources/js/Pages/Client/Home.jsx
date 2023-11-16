@@ -5,8 +5,6 @@ import TheoDoiNhieu from '@/Pages/Client/Components/TheoDoiNhieu';
 import TruyenDaHoanThanh from '@/Pages/Client/Components/TruyenDaHoanThanh';
 import { Head } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import SlideNovel from './Components/SlideNovel';
-import SlideNoiBat from './Components/SlideNoiBat';
 import View from './Components/View';
 import { useState } from 'react';
 export default function Home({
@@ -26,13 +24,7 @@ export default function Home({
 		<>
 			<DefaultLayout auth={auth}>
 				<Head title='Trang chủ' />
-				<main className='mx-auto bg-white'>
-					<div className='slide'>
-						{/* <div className='mx-auto w-10/12'>
-							<SlideNovel novels_1={novels} />
-						</div> */}
-						{/* <SlideNoiBat /> */}
-					</div>
+				<main className='bg-white'>
 					<div className='mx-auto  w-10/12'>
 						<div className='tabs tabs-lifted'>
 							<input
@@ -95,7 +87,6 @@ export default function Home({
 							<div className=' mx-auto w-10/12'>
 								{/* component swiper truyện đã hoàn thành để ở đây */}
 								{completenovels.length > 0 && <TruyenDaHoanThanh completenovels={completenovels} />}
-								{/* <TruyenDaHoanThanh completenovels={completenovels} /> */}
 							</div>
 						</div>
 					</div>
