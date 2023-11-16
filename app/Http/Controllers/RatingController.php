@@ -52,7 +52,10 @@ class RatingController extends Controller
 	// Lấy dữ liệu rating của user theo novel
 	public function RatingGetUser($id)
 	{
-		$rating = Rating::where('id_novel', $id)->where('id_user', auth()->user()->id)->first();
-		return $rating;
+		if (auth()->check()) {
+			$rating = Rating::where('id_novel', $id)->where('id_user', auth()->user()->id)->first();
+			return $rating;
+		}
+		return null;
 	}
 }

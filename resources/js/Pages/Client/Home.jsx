@@ -8,6 +8,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import SlideNovel from './Components/SlideNovel';
 import SlideNoiBat from './Components/SlideNoiBat';
 import View from './Components/View';
+import { useState } from 'react';
 export default function Home({
 	auth,
 	novels,
@@ -17,6 +18,10 @@ export default function Home({
 	completenovels,
 	view,
 }) {
+	const [activeTab, setActiveTab] = useState(1);
+	const handleTabChange = (tabIndex) => {
+		setActiveTab(tabIndex);
+	};
 	return (
 		<>
 			<DefaultLayout auth={auth}>
@@ -29,26 +34,39 @@ export default function Home({
 						{/* <SlideNoiBat /> */}
 					</div>
 					<div className='mx-auto  w-10/12'>
-						<div className='tabs-lifted tabs'>
+						<div className='tabs tabs-lifted'>
 							<input
 								type='radio'
 								name='my_tabs_2'
 								className='tab w-40'
 								aria-label='Top lượt xem ngày'
-								checked
+								checked={activeTab === 1}
+								onChange={() => handleTabChange(1)}
 							/>
 							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
-								<View viewday={view[0]} />
+								{activeTab === 1 && <View viewday={view[0]} />}
 							</div>
-
-							<input type='radio' name='my_tabs_2' className='tab w-40' aria-label='Top lượt xem tuần' />
+							<input
+								type='radio'
+								name='my_tabs_2'
+								className='tab w-40'
+								aria-label='Top lượt xem tuần'
+								checked={activeTab === 2}
+								onChange={() => handleTabChange(2)}
+							/>
 							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
-								<View viewweek={view[1]} />
+								{activeTab === 2 && <View viewweek={view[1]} />}
 							</div>
-
-							<input type='radio' name='my_tabs_2' className='tab w-40' aria-label='Top lượt xem tháng' />
+							<input
+								type='radio'
+								name='my_tabs_2'
+								className='tab w-40'
+								aria-label='Top lượt xem tháng'
+								checked={activeTab === 3}
+								onChange={() => handleTabChange(3)}
+							/>
 							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
-								<View viewmonth={view[2]} />
+								{activeTab === 3 && <View viewmonth={view[2]} />}
 							</div>
 						</div>
 					</div>

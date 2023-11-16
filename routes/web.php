@@ -71,10 +71,7 @@ Route::middleware('auth')->prefix('history')->group(function () {
 Route::middleware('auth')->prefix('rating')->group(function () {
 	Route::post('/post', [RatingController::class, 'RatingCreate'])->name('novel.rating');
 });
-// View
-Route::prefix('view')->group(function () {
-	Route::get('/day', [ViewsController::class, 'DayView'])->name('view.day');
-});
+
 // Search
 Route::prefix('search')->group(function () {
 	Route::get('/', [SearchController::class, 'Search'])->name('search.index');
