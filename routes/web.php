@@ -14,6 +14,7 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ViewsController;
 use App\Http\Controllers\VolController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -70,7 +71,10 @@ Route::middleware('auth')->prefix('history')->group(function () {
 Route::middleware('auth')->prefix('rating')->group(function () {
 	Route::post('/post', [RatingController::class, 'RatingCreate'])->name('novel.rating');
 });
-
+// View
+Route::prefix('view')->group(function () {
+	Route::get('/day', [ViewsController::class, 'DayView'])->name('view.day');
+});
 // Search
 Route::prefix('search')->group(function () {
 	Route::get('/', [SearchController::class, 'Search'])->name('search.index');

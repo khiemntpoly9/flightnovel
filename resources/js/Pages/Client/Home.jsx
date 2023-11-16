@@ -6,7 +6,17 @@ import TruyenDaHoanThanh from '@/Pages/Client/Components/TruyenDaHoanThanh';
 import { Head } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import SlideNovel from './Components/SlideNovel';
-export default function Home({ auth, novels, historyReadList, novelsNewChap, followed, completenovels }) {
+import SlideNoiBat from './Components/SlideNoiBat';
+import View from './Components/View';
+export default function Home({
+	auth,
+	novels,
+	historyReadList,
+	novelsNewChap,
+	followed,
+	completenovels,
+	view,
+}) {
 	return (
 		<>
 			<DefaultLayout auth={auth}>
@@ -16,7 +26,33 @@ export default function Home({ auth, novels, historyReadList, novelsNewChap, fol
 						{/* <div className='mx-auto w-10/12'>
 							<SlideNovel novels_1={novels} />
 						</div> */}
+						{/* <SlideNoiBat /> */}
 					</div>
+					<div className='mx-auto  w-10/12'>
+						<div className='tabs-lifted tabs'>
+							<input
+								type='radio'
+								name='my_tabs_2'
+								className='tab w-40'
+								aria-label='Top lượt xem ngày'
+								checked
+							/>
+							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+								<View viewday={view[0]} />
+							</div>
+
+							<input type='radio' name='my_tabs_2' className='tab w-40' aria-label='Top lượt xem tuần' />
+							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+								<View viewweek={view[1]} />
+							</div>
+
+							<input type='radio' name='my_tabs_2' className='tab w-40' aria-label='Top lượt xem tháng' />
+							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+								<View viewmonth={view[2]} />
+							</div>
+						</div>
+					</div>
+
 					<div className='mt-2 w-full'>
 						<div className='flex flex-col justify-center gap-4 lg:flex-row'>
 							<div className={`order-2 ${auth.user ? 'lg:w-6/12' : ''} mx-auto w-10/12 lg:order-1 lg:m-0`}>
@@ -27,9 +63,6 @@ export default function Home({ auth, novels, historyReadList, novelsNewChap, fol
 									<LichSuDoc historyReadList={historyReadList} />
 								</div>
 							)}
-							{/* <div className='order-1 mx-auto w-10/12	lg:order-2 lg:m-0 lg:w-4/12'>
-								<LichSuDoc />
-							</div> */}
 						</div>
 						<div className='flex flex-col justify-center gap-2 md:flex-row lg:flex-row'>
 							<div className='order-1 mx-auto w-10/12 md:w-6/12 md:pl-10 lg:order-1 lg:m-0 lg:w-6/12 lg:pl-0'>

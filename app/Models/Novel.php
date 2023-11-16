@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Attributes\SearchUsingFullText;
@@ -51,6 +52,10 @@ class Novel extends Model
 	public function vol(): HasMany
 	{
 		return $this->hasMany(Vol::class, 'id_novel', 'id');
+	}
+	public function view(): HasOne
+	{
+		return $this->HasOne(ViewNovel::class, 'id_novel');
 	}
 
 	public function getRouteKeyName(): string
