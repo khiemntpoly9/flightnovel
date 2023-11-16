@@ -7,10 +7,7 @@ import { Head } from '@inertiajs/react';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import SlideNovel from './Components/SlideNovel';
 import SlideNoiBat from './Components/SlideNoiBat';
-import ViewDay from './Components/ViewDay';
-import ViewMonth from './Components/ViewMonth';
-import ViewWeek from './Components/ViewWeek';
-import { useState } from 'react';
+import View from './Components/View';
 export default function Home({
 	auth,
 	novels,
@@ -20,11 +17,6 @@ export default function Home({
 	completenovels,
 	view,
 }) {
-	const [activeTab, setActiveTab] = useState(1);
-
-	const handleTabChange = (tabIndex) => {
-		setActiveTab(tabIndex);
-	};
 	return (
 		<>
 			<DefaultLayout auth={auth}>
@@ -37,52 +29,26 @@ export default function Home({
 						{/* <SlideNoiBat /> */}
 					</div>
 					<div className='mx-auto  w-10/12'>
-						<div className='tabs-lifted tabs '>
-							<div className='flex flex-row'>
-								<label htmlFor='tab1' className='tab inline-block cursor-pointer bg-base-200 p-4 align-top'>
-									Top lượt xem ngày
-								</label>
-								<label htmlFor='tab2' className='tab inline-block cursor-pointer bg-base-200 p-4 align-top'>
-									Top lượt xem tuần
-								</label>
-								<label htmlFor='tab3' className='tab inline-block cursor-pointer bg-base-200 p-4 align-top'>
-									Top lượt xem tháng
-								</label>
-							</div>
+						<div className='tabs-lifted tabs'>
 							<input
 								type='radio'
 								name='my_tabs_2'
-								className='hidden'
-								id='tab1'
-								checked={activeTab === 1}
-								onChange={() => handleTabChange(1)}
+								className='tab w-40'
+								aria-label='Top lượt xem ngày'
+								checked
 							/>
 							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
-								{activeTab === 1 && <ViewDay viewday={view} />}
+								<View viewday={view[0]} />
 							</div>
 
-							<input
-								type='radio'
-								name='my_tabs_2'
-								className='hidden'
-								id='tab2'
-								checked={activeTab === 2}
-								onChange={() => handleTabChange(2)}
-							/>
+							<input type='radio' name='my_tabs_2' className='tab w-40' aria-label='Top lượt xem tuần' />
 							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
-								{activeTab === 2 && <ViewWeek viewweek={view} />}
+								<View viewweek={view[1]} />
 							</div>
 
-							<input
-								type='radio'
-								name='my_tabs_2'
-								className='hidden'
-								id='tab3'
-								checked={activeTab === 3}
-								onChange={() => handleTabChange(3)}
-							/>
+							<input type='radio' name='my_tabs_2' className='tab w-40' aria-label='Top lượt xem tháng' />
 							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
-								{activeTab === 3 && <ViewMonth viewmonth={view} />}
+								<View viewmonth={view[2]} />
 							</div>
 						</div>
 					</div>
@@ -97,9 +63,6 @@ export default function Home({
 									<LichSuDoc historyReadList={historyReadList} />
 								</div>
 							)}
-							{/* <div className='order-1 mx-auto w-10/12	lg:order-2 lg:m-0 lg:w-4/12'>
-								<LichSuDoc />
-							</div> */}
 						</div>
 						<div className='flex flex-col justify-center gap-2 md:flex-row lg:flex-row'>
 							<div className='order-1 mx-auto w-10/12 md:w-6/12 md:pl-10 lg:order-1 lg:m-0 lg:w-6/12 lg:pl-0'>
