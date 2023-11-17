@@ -20,9 +20,9 @@ const View = ({ viewday, viewweek, viewmonth }) => {
 
 	return (
 		<div className='relative grid grid-cols-3 gap-2 py-2 lg:grid-cols-4 xl:grid-cols-5'>
-			{viewdays?.map((novel, index) => content(novel, 1, index))}
-			{viewweeks?.map((novel, index) => content(novel, 2, index))}
-			{viewmonths?.map((novel, index) => content(novel, 3, index))}
+			{viewdays?.slice(0, 5).map((novel, index) => content(novel, 1, index))}
+			{viewweeks?.slice(0, 5).map((novel, index) => content(novel, 2, index))}
+			{viewmonths?.slice(0, 5).map((novel, index) => content(novel, 3, index))}
 		</div>
 	);
 };
