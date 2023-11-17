@@ -25,7 +25,7 @@ export default function Home({
 			<DefaultLayout auth={auth}>
 				<Head title='Trang chủ' />
 				<main className='bg-white'>
-					<div className='mx-auto  w-10/12'>
+					<div className='mx-auto w-10/12'>
 						<div className='tabs tabs-lifted'>
 							<input
 								type='radio'

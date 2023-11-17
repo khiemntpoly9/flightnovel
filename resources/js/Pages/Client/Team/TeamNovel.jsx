@@ -192,6 +192,24 @@ const TeamNovel = ({ auth, novel_main, vol, follow, rating, comments, status }) 
 										</select>
 									</div>
 								</div>
+								{/* Thống kê */}
+								<div className='mt-2'>
+									<span className='text-md'>Thống kê</span>
+									<div className='flex justify-between'>
+										<div className='flex flex-col text-center'>
+											<div>Hôm nay</div>
+											<div>{novel_main.views.daily_views} lượt xem</div>
+										</div>
+										<div className='flex flex-col text-center'>
+											<div>Tuần</div>
+											<div>{novel_main.views.weekly_views} lượt xem</div>
+										</div>
+										<div className='flex flex-col text-center'>
+											<div>Tháng</div>
+											<div>{novel_main.views.monthly_views} lượt xem</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						{/* Container 2 -  */}

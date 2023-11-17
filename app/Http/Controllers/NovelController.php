@@ -10,7 +10,6 @@ use App\Models\Follow;
 use App\Models\HistoryRead;
 use App\Models\Novel;
 use App\Models\NovelCate;
-use App\Models\Rating;
 use App\Models\TeamUser;
 use App\Models\ViewNovel;
 use App\Models\Vol;
@@ -44,6 +43,12 @@ class NovelController extends Controller
 	public function NovelGetId($id)
 	{
 		$novel = Novel::where('id', $id)->first();
+		return $novel;
+	}
+	// Novel Get Id Team
+	public function NovelGetIdTeam($id_team)
+	{
+		$novel = Novel::where('id_team', $id_team)->get();
 		return $novel;
 	}
 	// Page Novel

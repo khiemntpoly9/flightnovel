@@ -19,7 +19,16 @@ use Illuminate\Support\Str;
 
 class TeamController extends Controller
 {
-	//
+	// Khai báo biến
+	protected $ViewController;
+	protected $NovelController;
+	// Khởi tạo
+	public function __construct(NovelController $NovelController, ViewsController $ViewController)
+	{
+		$this->NovelController = $NovelController;
+		$this->ViewController = $ViewController;
+	}
+	// Team Page
 	public function TeamIndex()
 	{
 		// Lấy dữ liệu từ session
@@ -34,15 +43,19 @@ class TeamController extends Controller
 		} else {
 			// Lấy novel có id_team = id của team
 			$team = TeamUser::with('team')->where('id_user', auth()->user()->id)->first();
-			$novel = Novel::where('id_team', $team->id_team)->get();
+			$novel = $this->NovelController->NovelGetIdTeam($team_user->id_team);
 			$team_member = TeamUser::with('user')->where('id_team', $team->id_team)->get();
-
 			return Inertia::render('Client/Team/Team', [
 				'team_user' => $team_user,
 				'team_member' => $team_member,
 				'team' => $team,
 				'novel' => $novel,
 				'status' => $status,
+				'views' => [
+					$this->ViewController->TeamDayView($team->id_team, $novel),
+					$this->ViewController->TeamWeekView($team->id_team, $novel),
+					$this->ViewController->TeamMonthView($team->id_team, $novel)
+				],
 			]);
 		}
 	}
@@ -104,8 +117,6 @@ class TeamController extends Controller
 			],
 			'comments' => $comments,
 			'status' => $status,
-
-
 		]);
 	}
 
@@ -219,8 +230,6 @@ class TeamController extends Controller
 
 		$teamID = Team::where('slug', $team->slug)->first()->id;
 		$team_user = TeamUser::where('id_team', $teamID)->where('id_user', $id)->first(); // Tìm team_user cụ thể cần xóa
-
-
 		if ($team_user) {
 			if ($team_user->team_role === 0) {
 				// Nếu tìm thấy, thì mới xóa nó
@@ -234,5 +243,4 @@ class TeamController extends Controller
 			return redirect()->route('team.index')->with('error', 'Không tìm thấy thành viên để xóa');
 		}
 	}
-
 }
