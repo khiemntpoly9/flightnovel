@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CateController;
 use App\Http\Controllers\ChapController;
 use App\Http\Controllers\CommentController;
@@ -138,9 +139,7 @@ Route::middleware('auth')->prefix('team')->group(function () {
 
 // Admin Role
 Route::middleware('admin')->prefix('admin')->group(function () {
-	Route::get('/', function () {
-		return Inertia::render('Admin/AdminMain');
-	})->name('admin.home');
+	Route::get('/', [AdminController::class, 'Dashboard'])->name('admin.home');
 	Route::get('/categories', [CateController::class, 'CateIndex'])->name('admin.categories');
 	Route::post('/categories', [CateController::class, 'CateStore'])->name('admin.categories.store');
 	Route::patch('/categories', [CateController::class, 'CateUpdate'])->name('admin.categories.update');

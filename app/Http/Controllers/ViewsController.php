@@ -21,19 +21,19 @@ class ViewsController extends Controller
 	public function DayView()
 	{
 		$views = ViewNovel::with('novel')
-			->orderByDesc('daily_views')->limit(5)->get();
+			->orderByDesc('daily_views')->get();
 		return $views;
 	}
 	public function DayWeek()
 	{
 		$views = ViewNovel::with('novel')
-			->orderByDesc('weekly_views')->limit(5)->get();
+			->orderByDesc('weekly_views')->get();
 		return $views;
 	}
 	public function DayMonth()
 	{
 		$views = ViewNovel::with('novel')
-			->orderByDesc('monthly_views')->limit(5)->get();
+			->orderByDesc('monthly_views')->get();
 		return $views;
 	}
 	// Lấy dữ liệu từ bảng view_novel theo novel cột id_team
