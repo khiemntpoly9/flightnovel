@@ -1,7 +1,12 @@
 import AdminLayout from '@/Layouts/AdminLayout';
-
-export default function AdminMain({ data }, { views }) {
+import { useState } from 'react';
+import View from '../Client/Components/View';
+export default function AdminMain({ data, views }) {
 	console.log(views);
+	const [activeTab, setActiveTab] = useState(1);
+	const handleTabChange = (tabIndex) => {
+		setActiveTab(tabIndex);
+	};
 	return (
 		<AdminLayout>
 			<div>
@@ -17,6 +22,45 @@ export default function AdminMain({ data }, { views }) {
 					</div>
 				</div>
 				{/* end dashboard */}
+				{/* truyen */}
+				<div className='m-5'>
+					<div className='tabs tabs-lifted'>
+						<input
+							type='radio'
+							name='my_tabs_2'
+							className='tab w-40'
+							aria-label='Top lượt xem ngày'
+							checked={activeTab === 1}
+							onChange={() => handleTabChange(1)}
+						/>
+						<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+							{activeTab === 1 && <View viewday={views[0]} />}
+						</div>
+						<input
+							type='radio'
+							name='my_tabs_2'
+							className='tab w-40'
+							aria-label='Top lượt xem tuần'
+							checked={activeTab === 2}
+							onChange={() => handleTabChange(2)}
+						/>
+						<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+							{activeTab === 2 && <View viewweek={views[1]} />}
+						</div>
+						<input
+							type='radio'
+							name='my_tabs_2'
+							className='tab w-40'
+							aria-label='Top lượt xem tháng'
+							checked={activeTab === 3}
+							onChange={() => handleTabChange(3)}
+						/>
+						<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+							{activeTab === 3 && <View viewmonth={views[2]} />}
+						</div>
+					</div>
+				</div>
+				{/*  */}
 			</div>
 		</AdminLayout>
 	);

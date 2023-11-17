@@ -24,8 +24,6 @@ class AdminController extends Controller
 
         $user = User::all()->count();
 
-
-
         return Inertia::render('Admin/AdminMain', [
 
             'data' => [$novel, $user],
