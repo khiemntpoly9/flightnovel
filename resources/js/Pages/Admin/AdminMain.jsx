@@ -2,7 +2,6 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { useState } from 'react';
 import View from '../Client/Components/View';
 export default function AdminMain({ data, views }) {
-	console.log(views);
 	const [activeTab, setActiveTab] = useState(1);
 	const handleTabChange = (tabIndex) => {
 		setActiveTab(tabIndex);

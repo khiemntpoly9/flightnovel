@@ -1,10 +1,11 @@
 import AdminLayout from '@/Layouts/AdminLayout';
-import { router, usePage, Link } from '@inertiajs/react';
+import { router, usePage, Link, Head } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 export default function Team({ team }) {
 	return (
 		<AdminLayout>
+			<Head title='Quản lý nhóm' />
 			<div>
 				<div className='p-2'>
 					<h2 className='m-10 text-center text-xl md:text-5xl'>Quản lý nhóm</h2>
@@ -35,7 +36,7 @@ export default function Team({ team }) {
 									</th>
 									<td>
 										<div className='flex items-center space-x-3'>
-											<Link className='font-md' href={`/admin/team/detail/${item.id}`}>
+											<Link className='font-md' href={`/admin/team/${item.slug}`}>
 												{item.team_name}
 											</Link>
 										</div>
@@ -67,9 +68,7 @@ export default function Team({ team }) {
 													</button>
 												</form>
 												<h3 className='text-lg font-bold'>Xoá danh mục!</h3>
-												<p className='py-4 text-base font-normal'>
-													Bạn có chắc muốn xoá danh mục {item.name}
-												</p>
+												<p className='py-4 text-base font-normal'>Bạn có chắc muốn xoá nhóm {item.name}</p>
 												<div className='modal-action'>
 													<form method='dialog'>
 														<button
