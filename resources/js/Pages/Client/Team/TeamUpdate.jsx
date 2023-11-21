@@ -23,7 +23,7 @@ export default function TeamUpdate({ auth, team }) {
 	// Handle submit form
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		router.patch(`/team/${team.slug}`, values);
+		router.patch(`/team/${team.slug}/update`, values);
 	};
 	return (
 		<DefaultLayout auth={auth}>
