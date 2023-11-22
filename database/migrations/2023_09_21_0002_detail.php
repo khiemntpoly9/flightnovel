@@ -15,7 +15,6 @@ return new class extends Migration {
 			$table->text('summary');
 			$table->text('note')->nullable();
 			$table->string('another_name')->nullable();
-			$table->integer('adult')->nullable();
 		});
 	}
 
