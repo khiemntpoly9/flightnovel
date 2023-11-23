@@ -31,11 +31,11 @@ class RegisteredUserController extends Controller
 		$request->validate([
 			'name' => 'required|string|max:255|min:5',
 			'email' => 'required|string|email|max:255|unique:' . User::class,
-			'password' => ['required', 'confirmed', 'min:8', Rules\Password::defaults()],
+			'password' => ['required', 'confirmed', 'min:5'],
 		], [
 			'name.required' => 'Tên không được bỏ trống',
 			'name.max' => 'Tên không được quá 255 ký tự',
-			'name.min' => 'Tên không được dưới 8 ký tự',
+			'name.min' => 'Tên không được dưới 5 ký tự',
 			'email.required' => 'Email không được bỏ trống',
 			'email.email' => 'Email không đúng định dạng',
 			'email.unique' => 'Email đã tồn tại',
