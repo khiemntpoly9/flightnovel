@@ -135,7 +135,7 @@ export default function Header({ auth, notify }) {
 							{user ? (
 								<ul
 									tabIndex={0}
-									className='menu dropdown-content rounded-box menu-sm z-[99] mt-3 w-60 bg-base-100 p-2 shadow'
+									className='menu dropdown-content menu-sm z-[99] mt-3 w-60 rounded-box bg-base-100 p-2 shadow'
 								>
 									{/* <li>
 										<a className='justify-between'>
@@ -160,7 +160,7 @@ export default function Header({ auth, notify }) {
 										<Link href={route('follow.index')}>Truyện theo dõi</Link>
 									</li>
 									<li>
-										<Link href={route('team.index')}>Nhóm dịch</Link>
+										<Link href={route('team.index')}>Nhóm</Link>
 									</li>
 									<li>
 										<Link method='post' as='button' href={route('logout')}>
@@ -171,7 +171,7 @@ export default function Header({ auth, notify }) {
 							) : (
 								<ul
 									tabIndex={0}
-									className='menu dropdown-content rounded-box menu-sm z-[99] mt-3 w-52 bg-base-100 p-2 shadow'
+									className='menu dropdown-content menu-sm z-[99] mt-3 w-52 rounded-box bg-base-100 p-2 shadow'
 								>
 									<li>
 										<Link href='/login'>Đăng nhập</Link>
