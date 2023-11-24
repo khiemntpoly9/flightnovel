@@ -86,7 +86,7 @@ class NovelController extends Controller
 	{
 		// Validate
 		$request->validate([
-			'name_novel' => ['required', 'string', 'max:255'],
+			'name_novel' => ['required', 'string', 'max:255', 'min:2'],
 			'thumbnail' => ['image', 'mimes:png,jpg', 'max:3000'],
 			'author' => ['required', 'string', 'max:255'],
 			'illustrator' => ['required', 'string', 'max:255'],
@@ -96,6 +96,7 @@ class NovelController extends Controller
 			'name_novel.required' => 'Tên truyện không được để trống',
 			'name_novel.string' => 'Tên truyện phải là chuỗi',
 			'name_novel.max' => 'Tên truyện không được quá 255 ký tự',
+			'name_novel.min' => 'Tên truyện không được dưới 2 kí tự',
 			'thumbnail.image' => 'Ảnh không đúng định dạng',
 			'thumbnail.mimes' => 'Ảnh phải là định dạng png, jpg',
 			'thumbnail.max' => 'Ảnh không được quá 3MB',
@@ -187,7 +188,7 @@ class NovelController extends Controller
 			]);
 		}
 		$request->validate([
-			'name_novel' => ['required', 'string', 'max:255', 'min:5'],
+			'name_novel' => ['required', 'string', 'max:255', 'min:2'],
 			'author' => ['required', 'string', 'max:255'],
 			'illustrator' => ['required', 'string', 'max:255'],
 			'categories' => ['required'],
@@ -196,7 +197,7 @@ class NovelController extends Controller
 			'name_novel.required' => 'Tên truyện không được để trống',
 			'name_novel.string' => 'Tên truyện phải là chuỗi',
 			'name_novel.max' => 'Tên truyện không được quá 255 ký tự',
-			'name_novel.min' => 'Tên truyện không được dưới 5 ký tự',
+			'name_novel.min' => 'Tên truyện không được dưới 2 ký tự',
 			'author.required' => 'Tác giả không được để trống',
 			'author.string' => 'Tác giả phải là chuỗi',
 			'author.max' => 'Tác giả không được quá 255 ký tự',
