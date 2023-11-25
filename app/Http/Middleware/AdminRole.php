@@ -20,7 +20,8 @@ class AdminRole
         // dd($user->role->short_role);
         if ($user && $user->role->short_role === "admin") {
             return $next($request);
+        } else {
+            return redirect("/admin/login");
         }
-        return redirect("/");
     }
 }
