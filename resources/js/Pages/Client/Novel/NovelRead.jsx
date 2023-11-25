@@ -161,7 +161,7 @@ export default function NovelRead({ auth, novel_main, vol, follow, rating, comme
 						{/* Container 3 */}
 						<div className='grid grid-cols-1 border-b-2 py-3'>
 							<span>
-								Tên khác: {novel_main.detail.another_name ? novel_main.detail.another_name : <>Không có</>}
+								Tên khác: {novel_main.novel.another_name ? novel_main.novel.another_name : <>Không có</>}
 							</span>
 						</div>
 						<div className='grid grid-cols-1 py-3'>
@@ -169,7 +169,7 @@ export default function NovelRead({ auth, novel_main, vol, follow, rating, comme
 								Tóm tắt:{' '}
 								<span
 									dangerouslySetInnerHTML={{
-										__html: `${novel_main.detail.summary ? novel_main.detail.summary : <>Không có</>}`,
+										__html: `${novel_main.novel.summary ? novel_main.novel.summary : <>Không có</>}`,
 									}}
 								></span>
 							</span>

@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
-use Laravel\Scout\Attributes\SearchUsingFullText;
+
+// use Laravel\Scout\Attributes\SearchUsingFullText;
 
 class Novel extends Model
 {
@@ -26,8 +27,10 @@ class Novel extends Model
 		'slug',
 		'is_publish',
 		'id_team',
-		'id_detail',
 		'id_user',
+		'summary',
+		'note',
+		'another_name',
 		'created_at',
 		'updated_at',
 	];

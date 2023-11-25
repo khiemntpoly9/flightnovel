@@ -16,15 +16,19 @@ class CateSeeder extends Seeder
 		DB::table('categories')->insert([
 			[
 				'name' => 'Thể loại 1',
+				'slug' => 'the-loai-1',
 			],
 			[
 				'name' => 'Thể loại 2',
+				'slug' => 'the-loai-2',
 			],
 			[
 				'name' => 'Thể loại 3',
+				'slug' => 'the-loai-3',
 			],
 			[
 				'name' => 'Thể loại 4',
+				'slug' => 'the-loai-4',
 			],
 		]);
 	}

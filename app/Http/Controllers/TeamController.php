@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Novel;
 use App\Models\Team;
 use App\Models\TeamUser;
-use App\Models\Detail;
 use App\Models\NovelCate;
 use App\Models\Comment;
 use App\Models\ViewNovel;
@@ -64,8 +63,6 @@ class TeamController extends Controller
 	{
 		// Novel
 		$novel = Novel::where('id', $id)->first();
-		// Detail
-		$detail = Detail::where('id', $novel->id_detail)->first();
 		// Categireis
 		$categories = NovelCate::where('id_novel', $novel->id)->with('categories:id,name,slug')->get();
 		// Vol
@@ -102,7 +99,6 @@ class TeamController extends Controller
 			'novel_main' => [
 				'novel' => $novel,
 				'views' => $views,
-				'detail' => $detail,
 				'categories' => $categories,
 			],
 			'vol' => $vol,
