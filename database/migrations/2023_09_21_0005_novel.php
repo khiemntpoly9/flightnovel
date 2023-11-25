@@ -20,13 +20,14 @@ return new class extends Migration {
       $table->string('slug')->nullable()->unique();
       $table->integer('is_publish')->unsigned()->default(0);
       $table->bigInteger('id_team')->unsigned();
-      $table->bigInteger('id_detail')->unsigned();
       $table->bigInteger('id_user')->unsigned();
+      $table->text('summary');
+      $table->text('note')->nullable();
+      $table->string('another_name')->nullable();
       $table->timestamps();
       // Foreign Keys
       $table->foreign('id_team')->references('id')->on('team');
-      $table->foreign('id_detail')->references('id')->on('detail');
-      $table->foreign('id_user')->references('id')->on('users');
+      $table->foreign('id_user')->references('id')->on('user');
     });
   }
 

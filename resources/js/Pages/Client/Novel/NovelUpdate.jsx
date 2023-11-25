@@ -5,16 +5,16 @@ import { router, usePage } from '@inertiajs/react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-export default function NovelUpdate({ auth, novel, detail, categories, novel_cate }) {
+export default function NovelUpdate({ auth, novel, categories, novel_cate }) {
 	const { errors } = usePage().props;
 	const [values, setValues] = useState({
 		name_novel: novel.name_novel,
-		another_name: detail.another_name,
+		another_name: novel.another_name,
 		author: novel.author,
 		illustrator: novel.illustrator,
 		categories: [],
-		summary: detail.summary,
-		note: detail.note,
+		summary: novel.summary,
+		note: novel.note,
 	});
 	const [selectedFile, setSelectedFile] = useState(null);
 	// Set trạng thái checkbox

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Categories;
 use App\Models\Chap;
 use App\Models\Comment;
-use App\Models\Detail;
 use App\Models\Follow;
 use App\Models\HistoryRead;
 use App\Models\Novel;
@@ -111,12 +110,6 @@ class NovelController extends Controller
 		]);
 		// ID team
 		$id_team = TeamUser::where('id_user', auth()->user()->id)->first()->id_team;
-		// Thêm dữ liệu bảng detail
-		$detail = Detail::create([
-			'summary' => $request->summary,
-			'note' => $request->note,
-			'another_name' => $request->another_name
-		]);
 		// Upload ảnh
 		$path = Storage::disk('digitalocean')->put('thumbnail', $request->file('thumbnail'), 'public');
 		// Thêm truyện
@@ -126,8 +119,10 @@ class NovelController extends Controller
 			'author' => $request->author,
 			'illustrator' => $request->illustrator,
 			'id_team' => $id_team,
-			'id_detail' => $detail->id,
 			'id_user' => auth()->user()->id,
+			'summary' => $request->summary,
+			'note' => $request->note,
+			'another_name' => $request->another_name
 		]);
 		// Tạo bảng views
 		ViewNovel::create([
@@ -150,7 +145,6 @@ class NovelController extends Controller
 				'id_categories' => $cateId,
 			]);
 		}
-
 		return redirect()->route('team.index')->with('success', 'Thêm truyện thành công');
 	}
 	// Novel Update (Page)
@@ -162,11 +156,9 @@ class NovelController extends Controller
 		$categories = Categories::all();
 		// Lấy list categories
 		$novel_cate = NovelCate::where('id_novel', $novel->id)->get();
-		$detail = Detail::find($novel->id_detail);
 
 		return Inertia::render('Client/Novel/NovelUpdate', [
 			'novel' => $novel,
-			'detail' => $detail,
 			'categories' => $categories,
 			'novel_cate' => $novel_cate,
 		]);
@@ -240,10 +232,7 @@ class NovelController extends Controller
 			'author' => $request->author,
 			'illustrator' => $request->illustrator,
 			'id_user' => auth()->user()->id,
-			'slug' => $novel->id . '-' . Str::of($request->name_novel)->slug('-')
-		]);
-		// Sửa dữ liệu bảng detail
-		Detail::where('id', $novel->id_detail)->update([
+			'slug' => $novel->id . '-' . Str::of($request->name_novel)->slug('-'),
 			'summary' => $request->summary,
 			'note' => $request->note,
 			'another_name' => $request->another_name
@@ -291,8 +280,6 @@ class NovelController extends Controller
 		Comment::where('id_novel', $id)->delete();
 		// Xóa novel
 		Novel::where('id', $id)->delete();
-		// Xóa detail
-		Detail::where('id', $novel->id_detail)->delete();
 
 		return redirect()->route('team.index')->with('success', 'Xóa truyện thành công');
 	}
@@ -301,8 +288,6 @@ class NovelController extends Controller
 	public function NovelRead(Request $request, Novel $novel)
 	{
 		$status = ['success' => session('success'), 'error' => session('error')];
-		// Detail Novel
-		$detail = Detail::where('id', $novel->id_detail)->first();
 		// Categories
 		$categories = NovelCate::where('id_novel', $novel->id)->with('categories:id,name,slug')->get();
 		// Vol
@@ -338,7 +323,6 @@ class NovelController extends Controller
 			'novel_main' => [
 				'novel' => $novel,
 				'views' => $views,
-				'detail' => $detail,
 				'categories' => $categories,
 			],
 			'vol' => $vol,

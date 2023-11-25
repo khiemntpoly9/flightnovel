@@ -17,7 +17,7 @@ return new class extends Migration {
 			$table->integer('team_role')->unsigned();
 			$table->timestamps();
 			// Foreign Keys
-			$table->foreign('id_user')->references('id')->on('users');
+			$table->foreign('id_user')->references('id')->on('user');
 			$table->foreign('id_team')->references('id')->on('team');
 		});
 	}
