@@ -15,7 +15,7 @@ export default function Pagination({ links }) {
 								className={`rounded border px-4 py-3 text-sm leading-4 ${
 									link.active ? 'bg-red-500 text-white' : 'text-gray-400 hover:bg-white'
 								}`}
-								href={link.url}
+								href={`https://${link.url}`}
 								dangerouslySetInnerHTML={{ __html: link.label }}
 							/>
 						)}
