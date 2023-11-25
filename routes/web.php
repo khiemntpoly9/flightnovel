@@ -36,9 +36,9 @@ Route::get('/', [HomeController::class, 'HomeIndex'])->name('home');
 
 // Novel Read User
 Route::prefix('novel')->group(function () {
-	Route::get('/list', [NovelController::class, 'NovelList'])->name('novel.list');
-	Route::get('/chapter-new', [PageController::class, 'PageChapNew'])->name('novel.chapter.new');
-	Route::get('/{novel:slug}', [NovelController::class, 'NovelRead'])->name('novel.read');
+	Route::get('/list', [NovelController::class, 'NovelList'])->name('novel.list')->secure();
+	Route::get('/chapter-new', [PageController::class, 'PageChapNew'])->name('novel.chapter.new')->secure();
+	Route::get('/{novel:slug}', [NovelController::class, 'NovelRead'])->name('novel.read')->secure();
 	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}', [ChapController::class, 'Chapter'])->middleware(['view.rate.limit'])->name('novel.chapter');
 	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}/next', [PreNextController::class, 'Next'])->name('novel.chapter.next');
 	Route::get('/{novel:slug}/{vol:slug}/{chap:slug}/prev', [PreNextController::class, 'Prev'])->name('novel.chapter.prev');
