@@ -20,22 +20,22 @@ export default function LichSuDoc({ historyReadList }) {
 							<div className='rounded-[12px]lg:w-28 h-[160px] w-4/12'>
 								<img
 									className='h-full w-full rounded-[12px] object-cover'
-									src={item.novel.thumbnail}
+									src={item.novel?.thumbnail}
 									alt='thumbnail'
 								/>
 							</div>
 							{/* Content */}
 							<div className='w-8/12'>
-								<Link href={`/novel/${item.novel.slug}`} className='text-xs sm:text-base lg:text-xl'>
-									{item.novel.name_novel}
+								<Link href={`/novel/${item.nove?.slug}`} className='text-xs sm:text-base lg:text-xl'>
+									{item.novel?.name_novel}
 								</Link>
-								<div>{item.chap.vol.title}</div>
+								<div>{item.chap?.vol.title}</div>
 								<div>
 									<Link
 										href={`/novel/${item.novel.slug}/${item.chap.vol.slug}/${item.chap.slug}`}
 										className='text-xs sm:text-base'
 									>
-										{item.chap.title}
+										{item.chap?.title}
 									</Link>
 								</div>
 							</div>

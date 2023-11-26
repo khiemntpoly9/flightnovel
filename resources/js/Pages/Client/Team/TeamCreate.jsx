@@ -70,6 +70,9 @@ export default function TeamCreate({ auth }) {
 									}}
 								/>
 							</div>
+							{errors && errors.team_detail && (
+								<p className='text-sm italic text-red-500'>{errors.team_detail}</p>
+							)}
 						</div>
 						<div>
 							<button

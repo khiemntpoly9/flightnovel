@@ -17,13 +17,15 @@ use Inertia\Response;
 class ProfileController extends Controller
 {
 	/**
-	 * Display the user's profile form.
+	 * Trang Profile User
 	 */
 	public function edit(Request $request): Response
 	{
+		// Lấy dữ liệu từ session
+		$status = ['success' => session('success'), 'error' => session('error')];
 		return Inertia::render('Client/Profile/Edit', [
 			'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-			'status' => session('status'),
+			'status' => $status,
 		]);
 	}
 	public function updateAccount()

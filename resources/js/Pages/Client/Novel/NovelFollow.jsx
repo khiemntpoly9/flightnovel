@@ -2,7 +2,6 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Link, router, usePage } from '@inertiajs/react';
 import moment from 'moment/moment';
 export default function NovelFollow({ auth, novel }) {
-	console.log(novel);
 	return (
 		<DefaultLayout auth={auth}>
 			<div className='mx-auto w-10/12'>

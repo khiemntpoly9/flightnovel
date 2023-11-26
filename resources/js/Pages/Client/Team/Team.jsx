@@ -2,7 +2,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
-import View from '../Components/View';
+import ViewTeam from '../Components/ViewTeam';
 export default function Team({ auth, team_user, team_member, team, novel, status, views }) {
 	// Toast
 	useEffect(() => {
@@ -92,7 +92,7 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 								onChange={() => handleTabChange(1)}
 							/>
 							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
-								{activeTab === 1 && <View viewday={views[0]} />}
+								{activeTab === 1 && <ViewTeam viewday={views[0]} />}
 							</div>
 							<input
 								type='radio'
@@ -103,7 +103,7 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 								onChange={() => handleTabChange(2)}
 							/>
 							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
-								{activeTab === 2 && <View viewweek={views[1]} />}
+								{activeTab === 2 && <ViewTeam viewweek={views[1]} />}
 							</div>
 							<input
 								type='radio'
@@ -114,7 +114,7 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 								onChange={() => handleTabChange(3)}
 							/>
 							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
-								{activeTab === 3 && <View viewmonth={views[2]} />}
+								{activeTab === 3 && <ViewTeam viewmonth={views[2]} />}
 							</div>
 						</div>
 					</div>

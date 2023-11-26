@@ -31,11 +31,15 @@ class HistoryReadController extends Controller
 	// Lấy danh sách lịch sử đọc
 	public function HistoryReadList($id_user)
 	{
-		$historyReadList = HistoryRead::where('id_user', $id_user)->with('novel')->with([
-			'chap' => function ($query) {
-				$query->with('vol');
-			}
-		])->orderBy('updated_at', 'desc')->paginate($perPage = 10, $columns = ['*'], $pageName = 'page');
+		$historyReadList = HistoryRead::where('id_user', $id_user)->with('novel')->whereHas('novel', function ($query) {
+			$query->where('is_publish', 1);
+		})
+			->with([
+				'chap' => function ($query) {
+					$query->with('vol');
+				}
+			])
+			->orderBy('updated_at', 'desc')->paginate($perPage = 10, $columns = ['*'], $pageName = 'page');
 		return $historyReadList;
 	}
 }

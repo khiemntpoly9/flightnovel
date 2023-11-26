@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { useState } from 'react';
-export default function View({ viewday, viewweek, viewmonth }) {
+export default function ViewTeam({ viewday, viewweek, viewmonth }) {
 	const [viewdays, setViewday] = useState(viewday ? viewday : null);
 	const [viewweeks, setViewweek] = useState(viewweek ? viewweek : null);
 	const [viewmonths, setViewmonth] = useState(viewmonth ? viewmonth : null);
@@ -10,7 +10,7 @@ export default function View({ viewday, viewweek, viewmonth }) {
 				<img className='h-full w-full object-cover' src={novel.novel.thumbnail} alt='thumbnail' />
 			</figure>
 			<div className='p-2 text-center'>
-				<Link href={`/novel/${novel.novel.slug}`}>{novel.novel.name_novel}</Link>
+				<Link href={`/team/novel/${novel.novel.slug}`}>{novel.novel.name_novel}</Link>
 			</div>
 			{status == 1 && <div className='p-2 text-center'> {novel.daily_views} lượt xem</div>}
 			{status == 2 && <div className='p-2 text-center'> {novel.weekly_views} lượt xem</div>}

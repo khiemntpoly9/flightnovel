@@ -77,7 +77,9 @@ class NovelController extends Controller
 			array_push($id_novel, $vol->id_novel);
 		}
 		$id_novel = array_unique($id_novel);
-		$novels = Novel::whereIn('id', $id_novel)->paginate($perPage = 10, $columns = ['*'], $pageName = 'page');
+		$novels = Novel::whereIn('id', $id_novel)
+			->where('is_publish', 1)
+			->paginate($perPage = 10, $columns = ['*'], $pageName = 'page');
 		return [$novels, $id_novel];
 	}
 	// Thêm truyện
@@ -375,6 +377,7 @@ class NovelController extends Controller
 		$id_user = auth()->user()->id;
 		$novel = Novel::join('follow', 'novel.id', '=', 'follow.id_novel')
 			->where('follow.id_user', $id_user)
+			->where('novel.is_publish', 1)
 			->get();
 		return Inertia::render('Client/Novel/NovelFollow', [
 			'novel' => $novel,
@@ -397,6 +400,7 @@ class NovelController extends Controller
 	public function TheoDoiNhieu()
 	{
 		$novels = Novel::withCount('follow') // Đếm số lượng follows
+			->where('is_publish', 1) // Truyện đã xuất bản
 			->orderBy('follow_count', 'desc')
 			->limit(3)
 			->get();

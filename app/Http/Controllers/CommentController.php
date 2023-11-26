@@ -25,7 +25,7 @@ class CommentController extends Controller
 			'content' => $request->content,
 		]);
 		// Trả về dữ liệu
-		return redirect()->back();
+		return redirect()->back()->with('success', 'Thêm bình luận thành công');
 	}
 
 	// Xóa comment
@@ -34,6 +34,6 @@ class CommentController extends Controller
 		// Xóa dữ liệu bảng comment
 		Comment::where('id', $id)->delete();
 		// Trả về dữ liệu
-		return redirect()->back();
+		return redirect()->back()->with('success', 'Xóa bình luận thành công');
 	}
 }

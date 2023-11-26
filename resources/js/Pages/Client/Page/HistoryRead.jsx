@@ -3,7 +3,6 @@ import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head, Link } from '@inertiajs/react';
 
 export default function HistoryRead({ auth, historyReadList }) {
-	console.log(historyReadList.data);
 	return (
 		<DefaultLayout auth={auth}>
 			<Head title='Lịch sử đọc' />

@@ -5,6 +5,7 @@ import { router, usePage } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 
 export default function TeamMember({ auth, team, status }) {
+	const { errors } = usePage().props;
 	const [values, setValues] = useState({
 		email: '',
 	});
@@ -66,7 +67,7 @@ export default function TeamMember({ auth, team, status }) {
 								<label htmlFor='email' className='mb-2 block text-sm font-medium leading-6 text-gray-900'>
 									Nhập email thành viên
 								</label>
-								<div>
+								<div className='mb-2'>
 									<input
 										id='email'
 										type='email'
@@ -74,6 +75,7 @@ export default function TeamMember({ auth, team, status }) {
 										className=' w-full appearance-none rounded border p-2 shadow focus:outline-none'
 									/>
 								</div>
+								{errors && errors.email && <p className='text-sm italic text-red-500'>{errors.email}</p>}
 							</div>
 							<div className='mt-4'>
 								<button

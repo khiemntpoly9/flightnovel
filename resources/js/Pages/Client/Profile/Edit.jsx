@@ -1,11 +1,40 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import moment from 'moment/moment';
+import { toast } from 'react-toastify';
 import { Link, Head, router, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function Edit({ auth }) {
+export default function Edit({ auth, status }) {
 	const [selectedFile, setSelectedFile] = useState(null);
 	const { errors } = usePage().props;
+	// Toast
+	useEffect(() => {
+		// Success
+		if (status.success) {
+			toast.success(status.success, {
+				position: 'top-right',
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+		// Error
+		if (status.error) {
+			toast.error(status.error, {
+				position: 'top-right',
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	}, [status]);
+	//
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const formData = new FormData();

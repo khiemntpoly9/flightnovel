@@ -145,8 +145,8 @@ class TeamController extends Controller
 			'team_name.string' => 'Tên nhóm phải là chuỗi',
 			'team_name.max' => 'Tên nhóm không được quá 255 ký tự',
 			'team_name.min' => 'Tên nhóm không được dưới 5 ký tự',
-			'team_detail.required' => 'Chi tiết không được để trống',
-			'team_detail.string' => 'Chi tiết phải là chuỗi',
+			'team_detail.required' => 'Mô tả không được để trống',
+			'team_detail.string' => 'Mô tả phải là chuỗi',
 		]);
 		Team::where('id', $team->id)->update([
 			'team_name' => $request->team_name,
@@ -162,10 +162,14 @@ class TeamController extends Controller
 		// dd($request->all());
 		$request->validate([
 			'team_name' => ['required', 'string', 'max:255', 'min:5'],
+			'team_detail' => ['required', 'string'],
 		], [
 			'team_name.required' => 'Tên nhóm không được để trống',
+			'team_name.string' => 'Tên nhóm phải là chuỗi',
 			'team_name.max' => 'Tên nhóm không được quá 255 ký tự',
 			'team_name.min' => 'Tên nhóm không được dưới 5 ký tự',
+			'team_detail.required' => 'Mô tả không được để trống',
+			'team_detail.string' => 'Mô tả phải là chuỗi',
 		]);
 
 		// Tạo mới team

@@ -3,9 +3,9 @@ import { useState } from 'react';
 export default function ChuongMoi({ novelsNewChap }) {
 	const [arrIdNovel, setArrIdNovel] = useState(Object.values(novelsNewChap[1]));
 	const [listNovels, setListNovels] = useState(novelsNewChap[0].data);
-	const [listNovelsAffter, setListNovelsAffter] = useState(
-		arrIdNovel.map((id) => listNovels.find((novel) => novel.id === id))
-	);
+	const listNovelsAffter = arrIdNovel
+		.map((id) => listNovels.find((novel) => novel.id === id))
+		.filter((novel) => novel !== undefined);
 	return (
 		<div className='new_LN relative py-6 '>
 			<div className='top relative flex h-7 w-full justify-between'>
