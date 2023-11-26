@@ -46,6 +46,9 @@ Route::prefix('novel')->group(function () {
 	// Route::get('/{id}/vol/{id_vol}/chap/{id_chap}', [ChapController::class, 'ChapRead'])->name('chap.read');
 });
 
+// Novel for Category
+Route::get('/category/{cate:slug}', [PageController::class, 'PageNovelForCate'])->name('novel.category');
+
 // Follow
 Route::middleware('auth')->prefix('follow')->group(function () {
 	Route::get('/', [NovelController::class, 'FollowIndex'])->name('follow.index');

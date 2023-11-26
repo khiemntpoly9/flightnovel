@@ -17,7 +17,6 @@ class CateController extends Controller
 			'categories' => $categories,
 		]);
 	}
-
 	public function CateStore(Request $request)
 	{
 		// Kiểm tra dữ liệu đầu vào
@@ -41,7 +40,6 @@ class CateController extends Controller
 		$request->session()->flash('success', 'Tạo thể loại thành công');
 		return redirect()->route('admin.categories');
 	}
-
 	public function CateDetail(Request $request, $id)
 	{
 		// Lấy dữ liệu từ bảng categories theo id
@@ -51,7 +49,6 @@ class CateController extends Controller
 			'category' => $category,
 		]);
 	}
-
 	public function CateUpdate(Request $request)
 	{
 		// Để show dữ liệu từ form
@@ -73,7 +70,6 @@ class CateController extends Controller
 		$request->session()->flash('success', 'Cập nhật thể loại thành công');
 		return redirect()->route('admin.categories');
 	}
-
 	public function CateDelete(Request $request, $id)
 	{
 		// Lấy dữ liệu từ bảng categories theo id
@@ -82,5 +78,11 @@ class CateController extends Controller
 		$category->delete();
 		$request->session()->flash('success', 'Xóa thể loại thành công');
 		return redirect()->route('admin.categories');
+	}
+	// Lấy id category theo slug
+	public function getCateId($slug)
+	{
+		$id_cate = Categories::where('slug', $slug)->first()->id;
+		return $id_cate;
 	}
 }

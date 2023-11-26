@@ -71,7 +71,7 @@ export default function NovelRead({ auth, novel_main, vol, follow, rating, comme
 										<Link
 											key={category.categories.id}
 											className='rounded-full bg-slate-500 px-3 py-2 text-white hover:bg-slate-400'
-											href='#'
+											href={`/category/${category.categories.slug}`}
 										>
 											{category.categories.name}
 										</Link>

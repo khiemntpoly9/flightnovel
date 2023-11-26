@@ -21,10 +21,12 @@ class NovelController extends Controller
 {
 	// Khai báo 
 	protected $RatingController;
+	protected $CateController;
 	// Khởi tạo
-	public function __construct(RatingController $RatingController)
+	public function __construct(RatingController $RatingController, CateController $CateController)
 	{
 		$this->RatingController = $RatingController;
+		$this->CateController = $CateController;
 	}
 	// Novel Get Slug
 	public function NovelGetSlug($slug)
@@ -58,6 +60,24 @@ class NovelController extends Controller
 		return Inertia::render('Client/Novel/Novel', [
 			'categories' => $categories,
 		]);
+	}
+	// Lấy truyện theo category
+	public function NovelGetCate($cate)
+	{
+		// Lấy id trong bảng categories
+		$id_cate = $this->CateController->getCateId($cate);
+		// Lấy id_novel trong bảng novel_cate theo id_cate
+		$id_novel = [];
+		$novel_cate = NovelCate::where('id_categories', $id_cate)->get();
+		foreach ($novel_cate as $item) {
+			array_push($id_novel, $item->id_novel);
+		}
+		// Lấy truyện theo id_novel
+		$novels = Novel::whereIn('id', $id_novel)
+			->where('is_publish', 1)
+			->orderBy('created_at', 'desc')
+			->paginate($perPage = 10, $columns = ['*'], $pageName = 'page');
+		return $novels;
 	}
 	// Lấy truyện có chap mới nhất
 	public function NovelGetChapNew()
