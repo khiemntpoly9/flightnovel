@@ -1,14 +1,30 @@
 import Logo from '../../../../images/logo.svg';
+import { Link } from '@inertiajs/react';
 export default function Footer() {
 	return (
-		<footer className='footer mt-4 bg-header-a p-10 text-white'>
-			<div className='container mx-auto grid w-10/12 lg:grid-cols-2'>
-				<div className='grid gap-2'>
+		<>
+			<footer className='footer bg-header-a p-10 text-base-content'>
+				<nav>
+					<header className='footer-title text-white'>Danh mục</header>
+					<Link href={route('novel.list')} className='link-hover link'>
+						Danh sách truyện
+					</Link>
+					<Link href={route('novel.chapter.new')} className='link-hover link'>
+						Chương mới
+					</Link>
+					<a className='link-hover link'>Top theo dõi</a>
+					<a className='link-hover link'>Top lượt xem</a>
+				</nav>
+			</footer>
+			<footer className='footer border-t border-base-300 bg-base-200 px-10 py-4 text-base-content'>
+				<aside className='grid-flow-col items-center'>
 					<img src={Logo} alt='Logo' width={40} />
-					<p>Wibu - Tận cùng đáy xã hội</p>
-				</div>
-				<div className='grid gap-2'>
-					<span className='footer-title'>Social</span>
+					<p>
+						FLightNovel. <br />
+						Khám phá văn hóa light novel - Nơi những câu chuyện chờ đợi bạn khám phá
+					</p>
+				</aside>
+				<nav className='md:place-self-center md:justify-self-end'>
 					<div className='grid grid-flow-col gap-4'>
 						<a>
 							<svg
@@ -44,8 +60,8 @@ export default function Footer() {
 							</svg>
 						</a>
 					</div>
-				</div>
-			</div>
-		</footer>
+				</nav>
+			</footer>
+		</>
 	);
 }

@@ -11,6 +11,7 @@ export default {
 			colors: {
 				'header-a': '#FFA95A',
 				'li-a': 'A9A9A9',
+				'cl-main-a': '#FFA95A',
 			},
 		},
 	},

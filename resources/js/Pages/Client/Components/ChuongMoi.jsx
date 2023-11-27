@@ -9,7 +9,7 @@ export default function ChuongMoi({ novelsNewChap }) {
 	return (
 		<div className='new_LN relative py-6 '>
 			<div className='top relative flex h-7 w-full justify-between'>
-				<h1 className='font-bold uppercase text-black'>Chương mới</h1>
+				<h1 className='title-main'>Chương mới</h1>
 				<Link href='/novel/chapter-new'>xem thêm ...</Link>
 			</div>
 			<div className='bottom relative grid grid-cols-3 gap-2 py-2 lg:grid-cols-4 xl:grid-cols-5'>

@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.title-main {
+		@apply font-bold uppercase text-black;
+	}
+}

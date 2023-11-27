@@ -25,13 +25,15 @@ export default function Home({
 			<DefaultLayout auth={auth}>
 				<Head title='Trang chủ' />
 				<main className='bg-white'>
+					{/* Top lượt xem */}
 					<div className='mx-auto w-10/12'>
+						<h1 className='title-main mb-1'>Top lượt xem</h1>
 						<div className='tabs tabs-lifted'>
 							<input
 								type='radio'
 								name='my_tabs_2'
-								className='tab w-40'
-								aria-label='Top lượt xem ngày'
+								className='tab'
+								aria-label='Ngày'
 								checked={activeTab === 1}
 								onChange={() => handleTabChange(1)}
 							/>
@@ -41,8 +43,8 @@ export default function Home({
 							<input
 								type='radio'
 								name='my_tabs_2'
-								className='tab w-40'
-								aria-label='Top lượt xem tuần'
+								className='tab'
+								aria-label='Tuần'
 								checked={activeTab === 2}
 								onChange={() => handleTabChange(2)}
 							/>
@@ -52,8 +54,8 @@ export default function Home({
 							<input
 								type='radio'
 								name='my_tabs_2'
-								className='tab w-40'
-								aria-label='Top lượt xem tháng'
+								className='tab'
+								aria-label='Tháng'
 								checked={activeTab === 3}
 								onChange={() => handleTabChange(3)}
 							/>
