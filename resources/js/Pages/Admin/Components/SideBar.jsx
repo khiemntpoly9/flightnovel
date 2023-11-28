@@ -40,17 +40,7 @@ export default function SideBar() {
 						<div className='absolute left-0 z-50 w-full'>
 							<ul className='menu w-full rounded-md bg-base-100 shadow'>
 								<li>
-									<details open>
-										<summary>Thống kê</summary>
-										<ul>
-											<li>
-												<a>Action</a>
-											</li>
-											<li>
-												<a>Action</a>
-											</li>
-										</ul>
-									</details>
+									<Link href={route('admin.home')}>Thống kê</Link>
 								</li>
 								<li>
 									<Link href={route('admin.user')}>Tài khoản</Link>
@@ -62,10 +52,12 @@ export default function SideBar() {
 									<Link href={route('admin.novel')}>Truyện</Link>
 								</li>
 								<li>
-									<a href='#'>Thiết lập</a>
+									<Link href='/'>Trang chủ</Link>
 								</li>
 								<li>
-									<Link href='/'>Trang chủ</Link>
+									<Link method='post' href={route('logout')}>
+										Đăng xuất
+									</Link>
 								</li>
 							</ul>
 						</div>
@@ -122,7 +114,7 @@ export default function SideBar() {
 							<div
 								className={`collapse collapse-arrow mb-1 rounded-md bg-blue-800 text-white hover:bg-blue-700`}
 							>
-								<input type='checkbox' className={`${!open && 'hidden'}`} />
+								{/* <input type='checkbox' className={`${!open && 'hidden'}`} /> */}
 								<div className='collapse-title flex items-center gap-4'>
 									<svg
 										xmlns='http://www.w3.org/2000/svg'
@@ -142,23 +134,10 @@ export default function SideBar() {
 										className={`block rounded transition duration-200 group-hover:text-white ${
 											!open && 'hidden'
 										}`}
-										href='#'
+										href={route('admin.home')}
 									>
 										Thống kê
 									</a>
-								</div>
-								<div className='collapse-content'>
-									<div className='grid grid-cols-1 text-center '>
-										<a href='#' className='py-2 hover:bg-blue-600'>
-											Action
-										</a>
-										<a href='#' className='py-2 hover:bg-blue-600'>
-											Action
-										</a>
-										<a href='#' className='py-2 hover:bg-blue-600'>
-											Action
-										</a>
-									</div>
 								</div>
 							</div>
 						</li>

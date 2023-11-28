@@ -17,6 +17,12 @@ class CateController extends Controller
 			'categories' => $categories,
 		]);
 	}
+	public function CateAll()
+	{
+		// Lấy tất cả dữ liệu từ bảng categories
+		$categories = Categories::all();
+		return $categories;
+	}
 	public function CateStore(Request $request)
 	{
 		// Kiểm tra dữ liệu đầu vào
