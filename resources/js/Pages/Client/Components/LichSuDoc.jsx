@@ -2,14 +2,25 @@ import { Link } from '@inertiajs/react';
 export default function LichSuDoc({ historyReadList }) {
 	return (
 		<div className='history-read relative w-full'>
-			<div className='lg:w-356 h-30 relative flex w-full flex-row items-start justify-start'>
-				<div className='h-30 w-20 bg-gray-300'>
-					<div className='break-words py-2 text-center text-sm font-normal text-black  md:text-base'>
-						Lịch Sử
-					</div>
-				</div>
-				<div className='break-words px-2 py-2 text-sm font-bold uppercase text-black underline  md:text-base'>
-					Đọc
+			<div className='h-30 relative mb-2 flex w-full flex-row items-start justify-start'>
+				<div className='text-md rounded-md bg-orange-400 text-center font-normal text-white md:text-base'>
+					<span className='m-2 flex'>
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							fill='none'
+							viewBox='0 0 24 24'
+							strokeWidth={1}
+							stroke='currentColor'
+							className='h-6 w-6'
+						>
+							<path
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								d='M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z'
+							/>
+						</svg>
+						Lịch Sử Đọc
+					</span>
 				</div>
 			</div>
 			<div className='bottom relative h-96 overflow-x-auto'>
