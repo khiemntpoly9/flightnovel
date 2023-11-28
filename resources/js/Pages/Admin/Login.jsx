@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { FaGoogle } from 'react-icons/fa';
 
+import Logo from '../../../images/logo.svg';
 export default function LoginAdmin() {
 	const { data, setData, post, processing, errors, reset } = useForm({
 		email: '',
@@ -23,14 +23,20 @@ export default function LoginAdmin() {
 	};
 
 	return (
-		<div className='container mx-auto w-10/12 bg-white'>
+		<div className='container mx-auto mt-16 w-10/12 bg-white  '>
 			<Head title='Đăng nhập Admin' />
-			<h1 className='text-center'>Login Admin</h1>
+			<div className='flex  justify-center'>
+				<img src={Logo} alt='Logo' width={60} />
+			</div>
 			<div className='flex min-h-full flex-1 flex-col justify-center lg:px-8'>
 				<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
 					<h2 className='text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>Đăng nhập</h2>
+					<h2 className='text-center text-2xl font-bold uppercase leading-9 tracking-tight text-gray-900'>
+						{' '}
+						admin
+					</h2>
 				</div>
-				<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+				<div className='mt-2 p-8 shadow-2xl sm:mx-auto sm:w-full sm:max-w-sm'>
 					<form onSubmit={submit}>
 						<div className='mb-2'>
 							<label htmlFor='email' className='mb-2 block text-sm font-medium leading-6 text-gray-900'>
@@ -56,14 +62,6 @@ export default function LoginAdmin() {
 								<label htmlFor='password' className='block text-sm font-medium leading-6 text-gray-900'>
 									Mật khẩu
 								</label>
-								<div className='text-sm'>
-									<Link
-										href={route('password.request')}
-										className='font-semibold text-orange-600 hover:text-orange-300'
-									>
-										Quên mật khẩu?
-									</Link>
-								</div>
 							</div>
 							<div className='mt-2'>
 								<div
@@ -145,25 +143,6 @@ export default function LoginAdmin() {
 							</button>
 						</div>
 					</form>
-
-					<p className='mt-10 text-center text-sm text-gray-500'>
-						Bạn chưa đăng ký?{' '}
-						<Link href='/register' className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'>
-							Đăng ký ngay tại đây
-						</Link>
-					</p>
-					<hr />
-					<p className='mt-3 text-center text-sm text-gray-500'>Hoặc đăng nhập bằng</p>
-					<div className='flex justify-center'>
-						{/* Nút đăng nhập bằng Google */}
-						<a
-							href='auth/google'
-							className='mx-2 mt-4 flex w-1/2 items-center justify-center rounded-md bg-red-500 px-1 py-2 text-white shadow-md hover:bg-red-600'
-						>
-							<FaGoogle className='mr-2' />
-							Google
-						</a>
-					</div>
 				</div>
 			</div>
 		</div>
