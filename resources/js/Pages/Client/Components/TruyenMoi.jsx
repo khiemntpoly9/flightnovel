@@ -4,12 +4,9 @@ export default function TruyenMoi({ novels }) {
 		<div className='new_LN relative w-full'>
 			<div className='top relative flex h-7 w-full justify-between'>
 				<h1 className='title-main'>Truyện mới</h1>
-				{/* <Link className='' href='/novel/list'>
-					Xem thêm
-				</Link> */}
 				<Link
 					href={route('novel.list')}
-					className='cl-main-a hover:bg-main-a mb-2 inline-flex items-center justify-center rounded-md px-6 py-3 text-sm text-white sm:mb-0 sm:w-auto'
+					className='mb-2 inline-flex items-center justify-center rounded-md bg-orange-400 px-6 py-3 text-sm text-white hover:bg-orange-300 sm:mb-0 sm:w-auto'
 					data-primary='green-400'
 					data-rounded='rounded-2xl'
 					data-primary-reset='{}'

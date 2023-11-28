@@ -76,7 +76,7 @@ export default function Home({
 								</div>
 							)}
 						</div>
-						<div className='flex flex-col justify-center gap-2 md:flex-row lg:flex-row'>
+						<div className='mt-3 flex flex-col justify-center gap-2 md:flex-row lg:flex-row'>
 							<div className='order-1 mx-auto w-10/12 md:w-6/12 md:pl-10 lg:order-1 lg:m-0 lg:w-6/12 lg:pl-0'>
 								<ChuongMoi novelsNewChap={novelsNewChap} />
 							</div>
