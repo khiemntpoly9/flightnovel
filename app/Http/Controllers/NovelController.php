@@ -262,11 +262,12 @@ class NovelController extends Controller
 
 		return redirect()->route('team.index')->with('success', 'Sửa truyện thành công');
 	}
-	// Admin Novel (Page)
-	public function NovelAdmin()
+
+	// Lấy truyện theo team
+	public function GetNovelWithTeam()
 	{
 		$novels = Novel::with('team')->get();
-		return Inertia::render('Admin/Novel/Novel', ['novels' => $novels]);
+		return $novels;
 	}
 
 	// Delete Novel (Status)

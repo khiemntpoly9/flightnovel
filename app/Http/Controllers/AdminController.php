@@ -15,11 +15,13 @@ class AdminController extends Controller
 	// Khai báo biến
 	protected $NovelController;
 	protected $ViewsController;
+	protected $CateController;
 	// Khởi tạo
-	public function __construct(NovelController $NovelController, ViewsController $ViewsController)
+	public function __construct(NovelController $NovelController, ViewsController $ViewsController, CateController $CateController)
 	{
 		$this->NovelController = $NovelController;
 		$this->ViewsController = $ViewsController;
+		$this->CateController = $CateController;
 	}
 	public function Dashboard()
 	{
@@ -48,5 +50,11 @@ class AdminController extends Controller
 				$this->ViewsController->TeamMonthView($team->id, $novel)
 			]
 		]);
+	}
+
+	public function NovelAdmin()
+	{
+		$novels = $this->NovelController->GetNovelWithTeam();
+		return Inertia::render('Admin/Novel/Novel', ['novels' => $novels, 'categories' => $this->CateController->CateAll()]);
 	}
 }
