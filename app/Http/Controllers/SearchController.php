@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Novel;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\User;
 
 class SearchController extends Controller
 {
@@ -119,5 +120,32 @@ class SearchController extends Controller
 			'categories' => $this->CateController->CateAll(),
 			'novels' => $novel,
 		]);
+	}
+	// Search user
+	public function SearchUserAll(Request $request)
+	{
+		// Validate
+		$request->validate([
+			'search' => ['nullable', 'string', 'max:255'],
+
+		], [
+
+			'search.string' => 'Tên truyện phải là chuỗi',
+			'search.max' => 'Tên truyện không được quá 255 ký tự',
+		]);
+		$search = $request->search;
+		$query = User::query();
+
+		$query->where(function ($query) use ($search) {
+			$query->where('name', 'like', "%{$search}%")
+				->orWhere('email', 'like', "%{$search}%");
+		});
+		$users = $query->with('role')->get();
+		return Inertia::render(
+			'Admin/User/ManagerUser',
+			[
+				'users' => $users
+			]
+		);
 	}
 }
