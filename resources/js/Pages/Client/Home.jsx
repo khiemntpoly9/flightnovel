@@ -37,7 +37,7 @@ export default function Home({
 								checked={activeTab === 1}
 								onChange={() => handleTabChange(1)}
 							/>
-							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+							<div className='tab-content rounded-box border-base-300 bg-base-100 p-2 md:p-10'>
 								{activeTab === 1 && <View viewday={view[0]} />}
 							</div>
 							<input
@@ -48,7 +48,7 @@ export default function Home({
 								checked={activeTab === 2}
 								onChange={() => handleTabChange(2)}
 							/>
-							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+							<div className='tab-content rounded-box border-base-300 bg-base-100 p-2 md:p-10'>
 								{activeTab === 2 && <View viewweek={view[1]} />}
 							</div>
 							<input
@@ -59,7 +59,7 @@ export default function Home({
 								checked={activeTab === 3}
 								onChange={() => handleTabChange(3)}
 							/>
-							<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+							<div className='tab-content rounded-box border-base-300 bg-base-100 p-2 md:p-10'>
 								{activeTab === 3 && <View viewmonth={view[2]} />}
 							</div>
 						</div>

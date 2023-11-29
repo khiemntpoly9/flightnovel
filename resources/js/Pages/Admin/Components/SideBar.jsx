@@ -115,7 +115,7 @@ export default function SideBar() {
 								className={`collapse collapse-arrow mb-1 rounded-md bg-blue-800 text-white hover:bg-blue-700`}
 							>
 								{/* <input type='checkbox' className={`${!open && 'hidden'}`} /> */}
-								<div className='collapse-title flex items-center gap-4'>
+								<div className=' flex items-center gap-4  px-3 py-4'>
 									<svg
 										xmlns='http://www.w3.org/2000/svg'
 										fill='none'

@@ -22,39 +22,40 @@ export default function AdminMain({ data, views }) {
 				</div>
 				{/* end dashboard */}
 				{/* truyen */}
-				<div className='m-5'>
-					<div className='tabs tabs-lifted'>
+				<div className='mx-auto w-10/12'>
+					<h1 className='title-main mb-1'>Top lượt xem</h1>
+					<div className='tabs tabs-lifted '>
 						<input
 							type='radio'
 							name='my_tabs_2'
-							className='tab w-40'
-							aria-label='Top lượt xem ngày'
+							className='tab'
+							aria-label=' ngày'
 							checked={activeTab === 1}
 							onChange={() => handleTabChange(1)}
 						/>
-						<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+						<div className='tab-content  rounded-box border-base-300 bg-base-100 p-2 md:p-10'>
 							{activeTab === 1 && <View viewday={views[0]} />}
 						</div>
 						<input
 							type='radio'
 							name='my_tabs_2'
-							className='tab w-40'
-							aria-label='Top lượt xem tuần'
+							className='tab'
+							aria-label=' tuần'
 							checked={activeTab === 2}
 							onChange={() => handleTabChange(2)}
 						/>
-						<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+						<div className='tab-content rounded-box border-base-300 bg-base-100 p-2 md:p-10'>
 							{activeTab === 2 && <View viewweek={views[1]} />}
 						</div>
 						<input
 							type='radio'
 							name='my_tabs_2'
-							className='tab w-40'
-							aria-label='Top lượt xem tháng'
+							className='tab'
+							aria-label='tháng'
 							checked={activeTab === 3}
 							onChange={() => handleTabChange(3)}
 						/>
-						<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+						<div className='tab-content rounded-box border-base-300 bg-base-100 p-2 md:p-10'>
 							{activeTab === 3 && <View viewmonth={views[2]} />}
 						</div>
 					</div>
