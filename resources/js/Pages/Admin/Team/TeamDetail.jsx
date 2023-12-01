@@ -1,13 +1,14 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import View from '@/Pages/Client/Components/View';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function TeamDetail({ team, team_member, views }) {
+export default function TeamDetail({ team, team_member, novel, views }) {
 	const [activeTab, setActiveTab] = useState(1);
 	const handleTabChange = (tabIndex) => {
 		setActiveTab(tabIndex);
 	};
+	console.log(novel);
 	return (
 		<AdminLayout>
 			<Head title={`Nhóm ${team.team_name}`} />
@@ -21,7 +22,7 @@ export default function TeamDetail({ team, team_member, views }) {
 				{/* Xếp hạng lượt xem truyện */}
 				<div className='mt-3'>
 					<h1 className='title-main mb-1'>Top lượt xem</h1>
-					<div className='tabs-lifted tabs'>
+					<div className='tabs tabs-lifted'>
 						<input
 							type='radio'
 							name='my_tabs_2'
@@ -30,7 +31,7 @@ export default function TeamDetail({ team, team_member, views }) {
 							checked={activeTab === 1}
 							onChange={() => handleTabChange(1)}
 						/>
-						<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+						<div className='tab-content rounded-box border-base-300 bg-base-100 p-2 md:p-10'>
 							{activeTab === 1 && <View viewday={views[0]} />}
 						</div>
 						<input
@@ -41,7 +42,7 @@ export default function TeamDetail({ team, team_member, views }) {
 							checked={activeTab === 2}
 							onChange={() => handleTabChange(2)}
 						/>
-						<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+						<div className='tab-content rounded-box border-base-300 bg-base-100 p-2 md:p-10'>
 							{activeTab === 2 && <View viewweek={views[1]} />}
 						</div>
 						<input
@@ -52,7 +53,7 @@ export default function TeamDetail({ team, team_member, views }) {
 							checked={activeTab === 3}
 							onChange={() => handleTabChange(3)}
 						/>
-						<div className='tab-content rounded-box border-base-300 bg-base-100 p-10'>
+						<div className='tab-content rounded-box border-base-300 bg-base-100 p-2 md:p-10'>
 							{activeTab === 3 && <View viewmonth={views[2]} />}
 						</div>
 					</div>
@@ -64,7 +65,7 @@ export default function TeamDetail({ team, team_member, views }) {
 								<div
 									key={index}
 									tabIndex={0}
-									className='collapse-arrow collapse mt-2 border border-base-300 bg-base-200'
+									className='collapse collapse-arrow mt-2 border border-base-300 bg-base-200'
 								>
 									<div className='collapse-title text-xl font-medium'>
 										<div className='flex'>
@@ -88,6 +89,29 @@ export default function TeamDetail({ team, team_member, views }) {
 									</div>
 								</div>
 							))}
+						</div>
+					</div>
+
+					{/* Truyện nhóm */}
+					<div className='w-full '>
+						<div className='relative w-full'>
+							{/* Show truyện */}
+							<div>
+								<span className='text-xl font-bold'>Danh sách truyện</span>
+								<div className='bottom mb-5 mt-5 grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6'>
+									{novel.map((novel) => (
+										<div key={novel.id} className='card rounded-t-lg bg-base-100 shadow-xl'>
+											<img src={novel.thumbnail} alt='' className='h-full w-full rounded-t-lg object-cover' />
+											<div className='my-3 p-2 text-center'>
+												<Link href={`/novel/${novel.slug}`} className='mt-2 text-lg'>
+													{novel.name_novel}
+												</Link>
+												<p className='mt-1'> Tác giả: {novel.author}</p>
+											</div>
+										</div>
+									))}
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
