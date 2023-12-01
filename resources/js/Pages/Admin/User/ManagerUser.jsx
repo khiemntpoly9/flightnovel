@@ -77,8 +77,8 @@ export default function ManagerUser({ users }) {
 								<th>Avatar</th>
 								<th>Tên user</th>
 								<th>Email</th>
-								<th>role</th>
-								<th>ngày tạo</th>
+								<th>Vai trò</th>
+								<th>Ngày tạo</th>
 								<th>Xóa</th>
 							</tr>
 						</thead>
@@ -123,7 +123,7 @@ export default function ManagerUser({ users }) {
 									</td>
 									<th>
 										<button
-											className='btn bg-red-400 md:btn-xs'
+											className='btn-xs rounded-sm bg-orange-400 text-white hover:bg-orange-300'
 											onClick={() => document.getElementById(`modal_delete_${item.id}`).showModal()}
 										>
 											Xóa
@@ -145,7 +145,7 @@ export default function ManagerUser({ users }) {
 															onClick={() => {
 																router.delete(`/admin/user-delete/${item.id}`);
 															}}
-															className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
+															className='btn mr-2 bg-orange-400 text-white hover:bg-orange-300'
 														>
 															Xoá
 														</button>

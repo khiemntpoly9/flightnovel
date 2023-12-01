@@ -227,7 +227,6 @@ class TeamController extends Controller
 
 	public function DeleteMember(Request $request, Team $team, $id)
 	{
-
 		$teamID = Team::where('slug', $team->slug)->first()->id;
 		$team_user = TeamUser::where('id_team', $teamID)->where('id_user', $id)->first(); // Tìm team_user cụ thể cần xóa
 		if ($team_user) {
@@ -241,6 +240,15 @@ class TeamController extends Controller
 		} else {
 			// Nếu không tìm thấy, bạn có thể xử lý lỗi hoặc trả về thông báo không tìm thấy
 			return redirect()->route('team.index')->with('error', 'Không tìm thấy thành viên để xóa');
+		}
+	}
+
+	// Xóa thành viên (admin)
+	public function DeleteMemberAdmin($id)
+	{
+		$team_user = TeamUser::where('id_user', $id)->first();
+		if ($team_user) {
+			$team_user->delete();
 		}
 	}
 }

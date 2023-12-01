@@ -12,10 +12,12 @@ class UserController extends Controller
 {
 	// Khai báo biến
 	protected $HistoryReadController;
+	protected $TeamController;
 	// Khởi tạo
-	public function __construct(HistoryReadController $HistoryReadController)
+	public function __construct(HistoryReadController $HistoryReadController, TeamController $TeamController)
 	{
 		$this->HistoryReadController = $HistoryReadController;
+		$this->TeamController = $TeamController;
 	}
 	// Lấy tất cả user
 	public function getAllUser()
@@ -40,6 +42,9 @@ class UserController extends Controller
 	public function UserDelete(Request $request, $id)
 	{
 		$user = User::find($id);
+		// Xóa user trong team
+		$this->TeamController->DeleteMemberAdmin($id);
+		// Xóa user trong follow
 		$user->delete();
 		$request->session()->flash('success', 'Xóa tài khoản thành công');
 		return redirect()->route('admin.user');
