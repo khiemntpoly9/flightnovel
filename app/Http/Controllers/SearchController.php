@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Novel;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
@@ -130,8 +131,8 @@ class SearchController extends Controller
 
 		], [
 
-			'search.string' => 'Tên truyện phải là chuỗi',
-			'search.max' => 'Tên truyện không được quá 255 ký tự',
+			'search.string' => 'Tên tài khoản, hoặc email phải là chuỗi',
+			'search.max' => 'Tên tài khoản, hoặc email không được quá 255 ký tự',
 		]);
 		$search = $request->search;
 		$query = User::query();
@@ -145,6 +146,33 @@ class SearchController extends Controller
 			'Admin/User/ManagerUser',
 			[
 				'users' => $users
+			]
+		);
+	}
+
+	// Search team
+	public function SearchTeamAll(Request $request)
+	{
+		// Validate
+		$request->validate([
+			'search' => ['nullable', 'string', 'max:255'],
+
+		], [
+
+			'search.string' => 'Tên nhóm phải là chuỗi',
+			'search.max' => 'Tên nhóm không được quá 255 ký tự',
+		]);
+		$search = $request->search;
+		$query = Team::query();
+
+		$query->where(function ($query) use ($search) {
+			$query->where('team_name', 'like', "%{$search}%");
+		});
+		$teams = $query->get();
+		return Inertia::render(
+			'Admin/Team/Team',
+			[
+				'team' => $teams
 			]
 		);
 	}

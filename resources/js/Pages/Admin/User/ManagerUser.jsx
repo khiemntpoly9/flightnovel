@@ -8,7 +8,7 @@ export default function ManagerUser({ users }) {
 	const [values, setValues] = useState({
 		search: '',
 	});
-	console.log(users);
+
 	// Handle change input
 	const handleChange = (e) => {
 		const key = e.target.id;
