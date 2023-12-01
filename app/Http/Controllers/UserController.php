@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Follow;
+use App\Models\HistoryRead;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -44,7 +48,29 @@ class UserController extends Controller
 		$user = User::find($id);
 		// Xóa user trong team
 		$this->TeamController->DeleteMemberAdmin($id);
-		// Xóa user trong follow
+		// Xóa tất cả dữ liệu user trong bảng follow
+		$follow = Follow::where('id_user', $id)->get();
+		foreach ($follow as $key => $value) {
+			$value->delete();
+		}
+		// Xóa tất cả dữ liệu user trong bảng comment
+		$comment = Comment::where('id_user', $id)->get();
+		foreach ($comment as $key => $value) {
+			$value->delete();
+		}
+		// Xóa user trong bảng rating
+		$rating = Rating::where('id_user', $id)->get();
+		foreach ($rating as $key => $value) {
+			$value->delete();
+		}
+		// Xóa user trong bảng history_read
+		$history_read = HistoryRead::where('id_user', $id)->get();
+		foreach ($history_read as $key => $value) {
+			$value->delete();
+		}
+		// Xóa dữ liệu thông báo trong bảng notification
+		DB::table('notifications')->where('notifiable_id', $id)->delete();
+		// Xóa user
 		$user->delete();
 		$request->session()->flash('success', 'Xóa tài khoản thành công');
 		return redirect()->route('admin.user');
