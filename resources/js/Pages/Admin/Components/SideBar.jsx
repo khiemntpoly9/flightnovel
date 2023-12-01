@@ -46,7 +46,7 @@ export default function SideBar() {
 									<Link href={route('admin.user')}>Tài khoản</Link>
 								</li>
 								<li>
-									<Link href={route('admin.team')}>Nhóm dịch</Link>
+									<Link href={route('admin.team')}>Nhóm</Link>
 								</li>
 								<li>
 									<Link href={route('admin.novel')}>Truyện</Link>
@@ -55,7 +55,7 @@ export default function SideBar() {
 									<Link href='/'>Trang chủ</Link>
 								</li>
 								<li>
-									<Link method='post' href={route('logout')}>
+									<Link method='post' as='button' href={route('logout')}>
 										Đăng xuất
 									</Link>
 								</li>
@@ -210,7 +210,7 @@ export default function SideBar() {
 								href={route('admin.team')}
 								className={`block transition duration-200 group-hover:text-white ${!open && 'hidden'}`}
 							>
-								Nhóm dịch
+								Nhóm
 							</Link>
 						</li>
 						<li className='group flex items-center gap-4 rounded px-3 py-4 hover:bg-blue-700 '>

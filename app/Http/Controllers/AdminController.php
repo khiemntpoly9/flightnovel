@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Novel;
 use App\Models\Team;
+use App\Models\TeamUser;
 use App\Models\User;
-use App\Models\ViewNovel;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -42,8 +41,11 @@ class AdminController extends Controller
 	public function TeamDetailAdmin(Team $team)
 	{
 		$novel = $this->NovelController->NovelGetIdTeam($team->id);
+		// Lấy danh sách thành viên trong team
+		$team_member = TeamUser::with('user')->where('id_team', $team->id)->get();
 		return Inertia::render('Admin/Team/TeamDetail', [
 			'team' => $team,
+			'team_member' => $team_member,
 			'views' => [
 				$this->ViewsController->TeamDayView($team->id, $novel),
 				$this->ViewsController->TeamWeekView($team->id, $novel),

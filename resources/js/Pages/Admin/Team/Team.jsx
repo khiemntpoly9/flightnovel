@@ -53,7 +53,7 @@ export default function Team({ team }) {
 									</td>
 									<th>
 										<button
-											className='btn bg-red-400 md:btn-xs'
+											className='btn-xs rounded-sm bg-orange-400 text-white hover:bg-orange-300'
 											onClick={() =>
 												document.getElementById(`modal_delete_${item.id_categories}`).showModal()
 											}
@@ -75,7 +75,7 @@ export default function Team({ team }) {
 															onClick={() => {
 																router.delete(`/admin/categories/${item.id_categories}`);
 															}}
-															className='btn mr-2 bg-red-600 text-white hover:bg-red-500'
+															className='btn mr-2 bg-orange-400 text-white hover:bg-orange-300'
 														>
 															Xoá
 														</button>
