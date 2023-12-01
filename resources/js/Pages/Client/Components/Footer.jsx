@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 export default function Footer() {
 	return (
 		<>
-			<footer className='footer bg-header-a p-10 text-base-content'>
+			<footer className='footer mt-3 bg-header-a p-10 text-base-content'>
 				<nav>
 					<header className='footer-title text-white'>Danh mục</header>
 					<Link href={route('novel.list')} className='link-hover link'>

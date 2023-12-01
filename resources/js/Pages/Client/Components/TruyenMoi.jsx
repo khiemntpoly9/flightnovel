@@ -26,7 +26,7 @@ export default function TruyenMoi({ novels }) {
 					</svg>
 				</Link>
 			</div>
-			<div className=''>
+			<div className='mt-2'>
 				<div className='bottom grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5'>
 					{novels.data.map((novel) => (
 						<div key={novel.id} className='card bg-base-100 shadow-xl'>

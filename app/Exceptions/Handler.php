@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class Handler extends ExceptionHandler
 {
@@ -25,6 +27,12 @@ class Handler extends ExceptionHandler
 	{
 		$this->reportable(function (Throwable $e) {
 			//
+		});
+		// Custom page 404
+		$this->renderable(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, Request $request) {
+			return Inertia::render('Client/Error/404', ['status' => $e->getStatusCode(), 'message' => $e->getMessage()])
+				->toResponse($request)
+				->setStatusCode($e->getStatusCode());
 		});
 	}
 }
