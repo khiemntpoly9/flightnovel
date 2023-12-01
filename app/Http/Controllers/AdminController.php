@@ -46,6 +46,7 @@ class AdminController extends Controller
 		return Inertia::render('Admin/Team/TeamDetail', [
 			'team' => $team,
 			'team_member' => $team_member,
+			'novel' => $novel,
 			'views' => [
 				$this->ViewsController->TeamDayView($team->id, $novel),
 				$this->ViewsController->TeamWeekView($team->id, $novel),
