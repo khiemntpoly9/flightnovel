@@ -61,6 +61,12 @@ class NovelController extends Controller
 			'categories' => $categories,
 		]);
 	}
+	// Update id user trong novel
+	public function NovelUpdateIdUser($id_user)
+	{
+		$novel = Novel::where('id_user', $id_user)->update(['id_user' => null]);
+		return true;
+	}
 	// Lấy truyện theo category
 	public function NovelGetCate($cate)
 	{

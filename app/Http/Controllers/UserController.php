@@ -17,11 +17,13 @@ class UserController extends Controller
 	// Khai báo biến
 	protected $HistoryReadController;
 	protected $TeamController;
+	protected $NovelController;
 	// Khởi tạo
-	public function __construct(HistoryReadController $HistoryReadController, TeamController $TeamController)
+	public function __construct(HistoryReadController $HistoryReadController, TeamController $TeamController, NovelController $NovelController)
 	{
 		$this->HistoryReadController = $HistoryReadController;
 		$this->TeamController = $TeamController;
+		$this->NovelController = $NovelController;
 	}
 	// Lấy tất cả user
 	public function getAllUser()
@@ -70,6 +72,8 @@ class UserController extends Controller
 		}
 		// Xóa dữ liệu thông báo trong bảng notification
 		DB::table('notifications')->where('notifiable_id', $id)->delete();
+		// Chuyển null trong novel
+		$novel = $this->NovelController->NovelUpdateIdUser($id);
 		// Xóa user
 		$user->delete();
 		$request->session()->flash('success', 'Xóa tài khoản thành công');
