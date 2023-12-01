@@ -1,8 +1,25 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { router, usePage, Link, Head } from '@inertiajs/react';
 import { toast } from 'react-toastify';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 export default function Team({ team }) {
+	const [values, setValues] = useState({
+		search: '',
+	});
+
+	// Handle change input
+	const handleChange = (e) => {
+		const key = e.target.id;
+		const value = e.target.value;
+		setValues((values) => ({
+			...values,
+			[key]: value,
+		}));
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		router.post('/admin/team', values);
+	};
 	return (
 		<AdminLayout>
 			<Head title='Quản lý nhóm' />
@@ -10,6 +27,27 @@ export default function Team({ team }) {
 				<div className='p-2'>
 					<h2 className='m-10 text-center text-xl md:text-5xl'>Quản lý nhóm</h2>
 				</div>
+				<form onSubmit={handleSubmit} className='px-2'>
+					{/* {seacrh} */}
+					<div className='relative mt-2 flex flex-col'>
+						<div className='flex w-full'>
+							<input
+								id='search'
+								type='text'
+								onChange={handleChange}
+								placeholder='Tên nhóm'
+								className=' w-full flex-1 rounded-l-md border px-4  py-2 text-sm outline-none md:py-3  md:text-base'
+							/>
+							<button
+								type='submit'
+								className='flex-grow-0 rounded-r-md bg-green-500 px-4 py-2 text-sm font-bold text-white  hover:bg-green-600  md:text-base'
+							>
+								Tìm kiếm
+							</button>
+						</div>
+					</div>
+					{/* {end search} */}
+				</form>
 				{/* Table */}
 				<div className='overflow-x-auto '>
 					<table className='table table-fixed '>

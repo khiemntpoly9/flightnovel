@@ -152,6 +152,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 	Route::post('/user', [SearchController::class, 'SearchUserAll']);
 	Route::delete('/user-delete/{id}', [UserController::class, 'UserDelete'])->name('admin.user.delete');
 	Route::get('/team', [TeamController::class, 'TeamAdmin'])->name('admin.team');
+	Route::post('/team', [SearchController::class, 'SearchTeamAll']);
 	Route::get('/team/{team:slug}', [AdminController::class, 'TeamDetailAdmin'])->name('admin.team.detail');
 	Route::get('/novel', [AdminController::class, 'NovelAdmin'])->name('admin.novel');
 	Route::post('/novel', [SearchController::class, 'SearchAdminAll']);
