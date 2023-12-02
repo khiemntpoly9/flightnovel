@@ -8,7 +8,6 @@ export default function TeamDetail({ team, team_member, novel, views }) {
 	const handleTabChange = (tabIndex) => {
 		setActiveTab(tabIndex);
 	};
-	console.log(novel);
 	return (
 		<AdminLayout>
 			<Head title={`Nhóm ${team.team_name}`} />
@@ -91,9 +90,8 @@ export default function TeamDetail({ team, team_member, novel, views }) {
 							))}
 						</div>
 					</div>
-
 					{/* Truyện nhóm */}
-					<div className='w-full '>
+					<div className='mt-2 w-full'>
 						<div className='relative w-full'>
 							{/* Show truyện */}
 							<div>

@@ -79,6 +79,41 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 								Thêm thành viên
 							</Link>
 						) : null}
+						{team_user.team_role === 1 ? (
+							<div>
+								<button
+									className='ml-1 rounded-full	bg-header-a p-2 text-white hover:bg-orange-400'
+									onClick={() => document.getElementById(`modal_delete_group`).showModal()}
+								>
+									Giải tán nhóm
+								</button>
+								<dialog id={`modal_delete_group`} className='modal'>
+									<div className='modal-box'>
+										<form method='dialog'>
+											<button className='btn btn-circle btn-ghost btn-sm absolute right-2 top-2'>✕</button>
+										</form>
+										<h3 className='text-lg font-bold'>Giải tán nhóm!</h3>
+										<p className='py-4 text-base font-normal'>
+											Bạn có chắc muốn giải tán nhóm "{team.team.team_name}"? <br /> Điều này đồng nghĩa với
+											việc bạn sẽ xóa mọi dữ liệu liên quan đến nhóm.
+										</p>
+										<div className='modal-action'>
+											<form method='dialog'>
+												<button
+													onClick={() => {
+														router.delete(`/team/${team.team.slug}/delete`);
+													}}
+													className='btn mr-2 bg-red-500 text-white hover:bg-red-400'
+												>
+													Giải tán
+												</button>
+												<button className='btn'>Đóng</button>
+											</form>
+										</div>
+									</div>
+								</dialog>
+							</div>
+						) : null}
 					</div>
 					{/*  */}
 					<div className='mt-3'>
@@ -86,8 +121,8 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 							<input
 								type='radio'
 								name='my_tabs_2'
-								className='tab w-40'
-								aria-label='Top lượt xem ngày'
+								className='tab'
+								aria-label='Ngày'
 								checked={activeTab === 1}
 								onChange={() => handleTabChange(1)}
 							/>
@@ -97,8 +132,8 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 							<input
 								type='radio'
 								name='my_tabs_2'
-								className='tab w-40'
-								aria-label='Top lượt xem tuần'
+								className='tab'
+								aria-label='Tuần'
 								checked={activeTab === 2}
 								onChange={() => handleTabChange(2)}
 							/>
@@ -108,8 +143,8 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 							<input
 								type='radio'
 								name='my_tabs_2'
-								className='tab w-40'
-								aria-label='Top lượt xem tháng'
+								className='tab'
+								aria-label='Tháng'
 								checked={activeTab === 3}
 								onChange={() => handleTabChange(3)}
 							/>
@@ -170,13 +205,15 @@ export default function Team({ auth, team_user, team_member, team, novel, status
 																		<button
 																			onClick={() => {
 																				if (
-																					window.confirm('Bạn có chắc chắn muốn xóa người dùng này không?')
+																					window.confirm(
+																						`Bạn có chắc chắn muốn xóa thành viên ${user.name} không?`
+																					)
 																				) {
 																					// Nếu người dùng xác nhận xóa, thực hiện lệnh xóa ở đây
 																					router.delete(`/team/${team.team.slug}/delete/${user.id}`);
 																				}
 																			}}
-																			className='btn btn-error btn-sm'
+																			className='btn btn-error btn-sm text-white'
 																		>
 																			Xóa
 																		</button>

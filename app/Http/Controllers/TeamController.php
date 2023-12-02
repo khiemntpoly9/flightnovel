@@ -119,8 +119,11 @@ class TeamController extends Controller
 	public function TeamAdmin()
 	{
 		$team = Team::all();
+		// Status
+		$status = ['success' => session('success'), 'error' => session('error')];
 		return Inertia::render('Admin/Team/Team', [
 			'team' => $team,
+			'status' => $status
 		]);
 	}
 
@@ -249,6 +252,25 @@ class TeamController extends Controller
 		$team_user = TeamUser::where('id_user', $id)->first();
 		if ($team_user) {
 			$team_user->delete();
+		}
+	}
+
+	// Giải tán nhóm
+	public function TeamDelete(Request $request, Team $team)
+	{
+		$teamID = Team::where('slug', $team->slug)->first()->id;
+		// Xóa tất cả truyện theo id team
+		$dltNovel = $this->NovelController->DeleteAllNovel($teamID);
+		// Xóa tất cả thành viên theo id team
+		$team_user = TeamUser::where('id_team', $teamID)->get();
+		foreach ($team_user as $item) {
+			$item->delete();
+		}
+		// Xóa team
+		if ($team->delete()) {
+			return redirect()->back()->with('success', 'Giải tán nhóm thành công');
+		} else {
+			return redirect()->back()->with('error', 'Giải tán nhóm thất bại');
 		}
 	}
 }
