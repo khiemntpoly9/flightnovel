@@ -440,4 +440,43 @@ class NovelController extends Controller
 		$novels = Novel::where('status', 2)->get();
 		return $novels;
 	}
+
+	// Xóa tất cả truyện theo id_team
+	public function DeleteAllNovel($id_team)
+	{
+		$novel = Novel::where('id_team', $id_team)->get();
+		foreach ($novel as $item) {
+			// Xóa ảnh
+			$path_old = Novel::where('id', $item->id)->first()->thumbnail;
+			// Xóa ảnh cũ (Áp dụng link DigitalOcean, vì có trường hợp link avatar của Google)
+			if ($path_old) {
+				$pos = strpos($path_old, 'thumbnail');
+				$path_old_cut = substr($path_old, $pos);
+				// Tiến hành xóa
+				Storage::disk('digitalocean')->delete($path_old_cut);
+			}
+			// Xóa rating
+			$this->RatingController->RatingDelete($item->id);
+			// Xóa view
+			ViewNovel::where('id_novel', $item->id)->delete();
+			// Xóa lịch sử đọc
+			HistoryRead::where('id_novel', $item->id)->delete();
+			// Xóa chap theo id_vol
+			$vol = Vol::where('id_novel', $item->id)->get();
+			foreach ($vol as $item_vol) {
+				Chap::where('id_vol', $item_vol->id)->delete();
+			}
+			// Xóa vol
+			Vol::where('id_novel', $item->id)->delete();
+			// Xóa follow
+			Follow::where('id_novel', $item->id)->delete();
+			// Xóa comment
+			Comment::where('id_novel', $item->id)->delete();
+			// Xóa novel_cate
+			NovelCate::where('id_novel', $item->id)->delete();
+			// Xóa novel
+			Novel::where('id', $item->id)->delete();
+		}
+		return true;
+	}
 }

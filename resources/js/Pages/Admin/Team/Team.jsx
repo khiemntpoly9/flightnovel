@@ -1,12 +1,38 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { router, usePage, Link, Head } from '@inertiajs/react';
 import { toast } from 'react-toastify';
-import { useState } from 'react';
-export default function Team({ team }) {
+import { useState, useEffect } from 'react';
+export default function Team({ team, status }) {
 	const [values, setValues] = useState({
 		search: '',
 	});
-
+	// Toast
+	useEffect(() => {
+		// Success
+		if (status.success) {
+			toast.success(status.success, {
+				position: 'top-right',
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+		// Error
+		if (status.error) {
+			toast.error(status.error, {
+				position: 'top-right',
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	}, [status]);
 	// Handle change input
 	const handleChange = (e) => {
 		const key = e.target.id;
@@ -92,26 +118,27 @@ export default function Team({ team }) {
 									<th>
 										<button
 											className='btn-xs rounded-sm bg-orange-400 text-white hover:bg-orange-300'
-											onClick={() =>
-												document.getElementById(`modal_delete_${item.id_categories}`).showModal()
-											}
+											onClick={() => document.getElementById(`modal_delete_${item.id}`).showModal()}
 										>
 											Xóa
 										</button>
-										<dialog id={`modal_delete_${item.id_categories}`} className='modal'>
+										<dialog id={`modal_delete_${item.id}`} className='modal'>
 											<div className='modal-box'>
 												<form method='dialog'>
 													<button className='btn btn-circle btn-ghost btn-sm absolute right-2 top-2'>
 														✕
 													</button>
 												</form>
-												<h3 className='text-lg font-bold'>Xoá danh mục!</h3>
-												<p className='py-4 text-base font-normal'>Bạn có chắc muốn xoá nhóm {item.name}</p>
+												<h3 className='text-lg font-bold'>Giải tán nhóm!</h3>
+												<p className='py-4 text-base font-normal'>
+													Bạn có chắc muốn giải tán nhóm {item.team_name}? <br /> Điều này đồng nghĩa với việc
+													bạn sẽ xóa mọi dữ liệu liên quan đến nhóm.
+												</p>
 												<div className='modal-action'>
 													<form method='dialog'>
 														<button
 															onClick={() => {
-																router.delete(`/admin/categories/${item.id_categories}`);
+																router.delete(`/team/${item.slug}/delete`);
 															}}
 															className='btn mr-2 bg-orange-400 text-white hover:bg-orange-300'
 														>

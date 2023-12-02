@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
 		'admin' => \App\Http\Middleware\AdminRole::class,
 		'team' => \App\Http\Middleware\TeamRole::class,
 		'team.user' => \App\Http\Middleware\TeamUserRole::class,
+		'team.admin' => \App\Http\Middleware\TeamAdmin::class,
 		'user.comment' => \App\Http\Middleware\UserComment::class,
 		'view.rate.limit' => \App\Http\Middleware\ViewRateLimit::class,
 		'novel.publish' => \App\Http\Middleware\NovelPublish::class,

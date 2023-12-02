@@ -98,7 +98,8 @@ Route::middleware('auth')->prefix('team')->group(function () {
 	Route::patch('/{team:slug}/update', [TeamController::class, 'TeamUpdate'])->name('team.update');
 	Route::get('/{team:slug}/add-member', [TeamController::class, 'TeamMember'])->name('team.member');
 	Route::post('/{team:slug}/add-member', [TeamController::class, 'AddMember'])->name('team.addmember');
-	Route::delete('/{team:slug}/delete/{id}', [TeamController::class, 'DeleteMember'])->name('team.deletemember');
+	Route::delete('/{team:slug}/delete/{id}', [TeamController::class, 'DeleteMember'])->middleware(['team.admin'])->name('team.delete.member');
+	Route::delete('/{team:slug}/delete', [TeamController::class, 'TeamDelete'])->middleware(['team.admin'])->name('team.delete');
 	// Team Role
 	Route::middleware('team')->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');
