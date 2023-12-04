@@ -27,36 +27,28 @@ class TeamController extends Controller
 		$this->NovelController = $NovelController;
 		$this->ViewController = $ViewController;
 	}
+	// Lấy danh sách nhóm
+	public function TeamList()
+	{
+		$team = Team::orderBy('created_at', 'desc')->paginate($perPage = 10, $columns = ['*'], $pageName = 'page');
+		// Status
+		return $team;
+	}
 	// Team Page
 	public function TeamIndex()
 	{
 		// Lấy dữ liệu từ session
 		$status = ['success' => session('success'), 'error' => session('error')];
 		// Lấy dữ liệu từ bảng team_user
-		$team_user = TeamUser::where('id_user', auth()->user()->id)->first();
-		if (!$team_user) {
-			return Inertia::render('Client/Team/Team', [
-				'team_user' => $team_user,
-				'status' => $status
-			]);
-		} else {
-			// Lấy novel có id_team = id của team
-			$team = TeamUser::with('team')->where('id_user', auth()->user()->id)->first();
-			$novel = $this->NovelController->NovelGetIdTeam($team_user->id_team);
-			$team_member = TeamUser::with('user')->where('id_team', $team->id_team)->get();
-			return Inertia::render('Client/Team/Team', [
-				'team_user' => $team_user,
-				'team_member' => $team_member,
-				'team' => $team,
-				'novel' => $novel,
-				'status' => $status,
-				'views' => [
-					$this->ViewController->TeamDayView($team->id_team, $novel),
-					$this->ViewController->TeamWeekView($team->id_team, $novel),
-					$this->ViewController->TeamMonthView($team->id_team, $novel)
-				],
-			]);
+		$team_user = null;
+		if (auth()->check()) {
+			$team_user = TeamUser::where('id_user', auth()->user()->id)->first();
 		}
+		return Inertia::render('Client/Team/Team', [
+			'team_user' => $team_user,
+			'team_list' => $this->TeamList(),
+			'status' => $status
+		]);
 	}
 	// Hiện Novel chi tiết trong team
 	public function TeamNovel(Request $request, $id)
@@ -193,7 +185,7 @@ class TeamController extends Controller
 			'team_role' => 1,
 		]);
 
-		return redirect()->route('team.index');
+		return redirect()->route('team.dashboard')->with('success', 'Tạo nhóm thành công');
 	}
 	// Thêm thành viên
 	public function TeamMember(Team $team)
@@ -271,6 +263,34 @@ class TeamController extends Controller
 			return redirect()->back()->with('success', 'Giải tán nhóm thành công');
 		} else {
 			return redirect()->back()->with('error', 'Giải tán nhóm thất bại');
+		}
+	}
+
+	public function TeamDashboard()
+	{
+		// Lấy dữ liệu từ session
+		$status = ['success' => session('success'), 'error' => session('error')];
+		// Lấy dữ liệu từ bảng team_user
+		$team_user = TeamUser::where('id_user', auth()->user()->id)->first();
+		if (!$team_user) {
+			return redirect()->route('team.index')->with('error', 'Bạn chưa có nhóm');
+		} else {
+			// Lấy novel có id_team = id của team
+			$team = TeamUser::with('team')->where('id_user', auth()->user()->id)->first();
+			$novel = $this->NovelController->NovelGetIdTeam($team_user->id_team);
+			$team_member = TeamUser::with('user')->where('id_team', $team->id_team)->get();
+			return Inertia::render('Client/Team/TeamDashboard', [
+				'team_user' => $team_user,
+				'team_member' => $team_member,
+				'team' => $team,
+				'novel' => $novel,
+				'status' => $status,
+				'views' => [
+					$this->ViewController->TeamDayView($team->id_team, $novel),
+					$this->ViewController->TeamWeekView($team->id_team, $novel),
+					$this->ViewController->TeamMonthView($team->id_team, $novel)
+				],
+			]);
 		}
 	}
 }

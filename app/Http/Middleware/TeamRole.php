@@ -12,9 +12,14 @@ class TeamRole
 	// Xác thực user đã tạo nhóm hay chưa
 	public function handle(Request $request, Closure $next): Response
 	{
-		$team_user = TeamUser::where('id_user', auth()->user()->id)->first();
+		$team_user = null;
+		if (!auth()->check()) {
+			return redirect()->route('login');
+		} else {
+			$team_user = TeamUser::where('id_user', auth()->user()->id)->first();
+		}
 		if ($team_user) {
-			return redirect()->route('team.index');
+			return redirect()->route('team.dashboard');
 		}
 		return $next($request);
 	}

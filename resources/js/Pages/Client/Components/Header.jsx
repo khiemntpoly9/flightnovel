@@ -179,6 +179,9 @@ export default function Header({ auth, notify }) {
 									<li>
 										<Link href='/register'>Đăng ký</Link>
 									</li>
+									<li>
+										<Link href={route('team.index')}>Nhóm</Link>
+									</li>
 								</ul>
 							)}
 						</div>
