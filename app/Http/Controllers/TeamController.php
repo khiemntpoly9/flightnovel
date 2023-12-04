@@ -216,7 +216,7 @@ class TeamController extends Controller
 				'id_team' => $team->id,
 				'team_role' => 0,
 			]);
-			return redirect()->route('team.index')->with('success', 'Thêm thành viên thành công');
+			return redirect()->route('team.dashboard')->with('success', 'Thêm thành viên thành công');
 		}
 	}
 
@@ -234,7 +234,7 @@ class TeamController extends Controller
 			}
 		} else {
 			// Nếu không tìm thấy, bạn có thể xử lý lỗi hoặc trả về thông báo không tìm thấy
-			return redirect()->route('team.index')->with('error', 'Không tìm thấy thành viên để xóa');
+			return redirect()->route('team.dashboard')->with('error', 'Không tìm thấy thành viên để xóa');
 		}
 	}
 
