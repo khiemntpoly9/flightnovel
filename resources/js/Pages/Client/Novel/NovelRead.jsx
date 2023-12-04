@@ -182,7 +182,7 @@ export default function NovelRead({ auth, novel_main, vol, follow, rating, comme
 						<div className='bg-header-a'>
 							<div className='flex flex-row gap-2'>
 								<img src={user[0].avatar} className='h-20 w-20' alt='' />
-								<p className='p-6 text-white'>{user[0].name}</p>
+								<p className='p-7 text-white'>{user[0].name}</p>
 							</div>
 						</div>
 						<div className='border-4	border-b-indigo-500 p-4'>
