@@ -9,7 +9,9 @@ use App\Models\Follow;
 use App\Models\HistoryRead;
 use App\Models\Novel;
 use App\Models\NovelCate;
+use App\Models\Team;
 use App\Models\TeamUser;
+use App\Models\User;
 use App\Models\ViewNovel;
 use App\Models\Vol;
 use Illuminate\Http\Request;
@@ -348,6 +350,10 @@ class NovelController extends Controller
 		$comments = Comment::where('id_novel', $novel->id)->with('user:id,name,avatar')->orderBy('created_at', 'desc')->paginate($perPage = 6, $columns = ['*'], $pageName = 'comment');
 		// Lấy số lượng follow
 		$follow_count = Follow::where('id_novel', $novel->id)->count();
+		// lấy team 
+		$team = Team::where('id', $novel->id_team)->get();
+		// lấy user 
+		$getuser = User::where('id', $novel->id_user)->get();
 		return Inertia::render('Client/Novel/NovelRead', [
 			'novel_main' => [
 				'novel' => $novel,
@@ -366,6 +372,8 @@ class NovelController extends Controller
 				'average' => $averageRating,
 			],
 			'comments' => $comments,
+			'user' => $getuser,
+			'team' => $team,
 			'status' => $status
 		]);
 	}
