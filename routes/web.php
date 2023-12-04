@@ -92,16 +92,20 @@ Route::middleware('auth')->prefix('profile')->group(function () {
 });
 
 // Team Role - Auth Role
-Route::middleware('auth')->prefix('team')->group(function () {
+Route::prefix('team')->group(function () {
 	Route::get('/', [TeamController::class, 'TeamIndex'])->name('team.index');
-	Route::get('/{team:slug}/edit', [TeamController::class, 'TeamUpdateIndex'])->name('team.edit');
-	Route::patch('/{team:slug}/update', [TeamController::class, 'TeamUpdate'])->name('team.update');
-	Route::get('/{team:slug}/add-member', [TeamController::class, 'TeamMember'])->name('team.member');
-	Route::post('/{team:slug}/add-member', [TeamController::class, 'AddMember'])->name('team.addmember');
-	Route::delete('/{team:slug}/delete/{id}', [TeamController::class, 'DeleteMember'])->middleware(['team.admin'])->name('team.delete.member');
-	Route::delete('/{team:slug}/delete', [TeamController::class, 'TeamDelete'])->middleware(['team.admin'])->name('team.delete');
+	Route::get('/{team:slug}', [TeamController::class, 'TeamDetail'])->name('team.detail');
+	Route::middleware('auth')->group(function () {
+		Route::get('/dashboard', [TeamController::class, 'TeamDashboard'])->name('team.dashboard');
+		Route::get('/{team:slug}/edit', [TeamController::class, 'TeamUpdateIndex'])->name('team.edit');
+		Route::patch('/{team:slug}/update', [TeamController::class, 'TeamUpdate'])->name('team.update');
+		Route::get('/{team:slug}/add-member', [TeamController::class, 'TeamMember'])->name('team.member');
+		Route::post('/{team:slug}/add-member', [TeamController::class, 'AddMember'])->name('team.addmember');
+		Route::delete('/{team:slug}/delete/{id}', [TeamController::class, 'DeleteMember'])->middleware(['team.admin'])->name('team.delete.member');
+		Route::delete('/{team:slug}/delete', [TeamController::class, 'TeamDelete'])->middleware(['team.admin'])->name('team.delete');
+	});
 	// Team Role
-	Route::middleware('team')->group(function () {
+	Route::middleware(['team', 'auth'])->group(function () {
 		Route::get('/create', [TeamController::class, 'TeamCreate'])->name('team.create');
 		Route::post('/create', [TeamController::class, 'TeamStore'])->name('team.store');
 	});
