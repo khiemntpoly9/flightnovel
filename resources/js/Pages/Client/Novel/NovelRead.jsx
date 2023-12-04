@@ -8,7 +8,6 @@ import Rating from '@/Components/Rating';
 
 export default function NovelRead({ auth, novel_main, vol, follow, rating, comments, user, team, status }) {
 	const { errors } = usePage().props;
-	console.log(user);
 	// lấy status
 	let getStatus = null;
 	switch (novel_main.novel.status) {
@@ -186,7 +185,7 @@ export default function NovelRead({ auth, novel_main, vol, follow, rating, comme
 							</div>
 						</div>
 						<div className='border-4	border-b-indigo-500 p-4'>
-							<p className='text-slate-400'>Nhóm dịch</p>
+							<p className='text-slate-400'>Nhóm</p>
 							<Link className='bg-slate-100' href={`/team/${team[0].slug}`}>
 								<p className='pt-2 text-base font-bold uppercase'>{team[0].team_name}</p>
 							</Link>

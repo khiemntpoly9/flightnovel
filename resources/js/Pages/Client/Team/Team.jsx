@@ -1,5 +1,5 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import Pagination from '@/Components/Pagination';
@@ -31,7 +31,6 @@ export default function Team({ auth, team_user, team_list, status }) {
 			});
 		}
 	}, [status]);
-
 	return (
 		<DefaultLayout auth={auth}>
 			<Head title='Nhóm' />

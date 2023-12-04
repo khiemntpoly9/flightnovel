@@ -1,9 +1,7 @@
 import Pagination from '@/Components/Pagination';
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head, Link } from '@inertiajs/react';
-import React from 'react';
 export default function TeamDetail({ auth, team, novel, team_member }) {
-	console.log(novel.data);
 	return (
 		<DefaultLayout auth={auth}>
 			<Head title={`Nhóm ${team.team_name}`} />
