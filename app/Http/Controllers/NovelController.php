@@ -49,9 +49,14 @@ class NovelController extends Controller
 		return $novel;
 	}
 	// Novel Get Id Team
-	public function NovelGetIdTeam($id_team)
+	public function NovelGetIdTeam($id_team, $role)
 	{
-		$novel = Novel::where('id_team', $id_team)->get();
+		if ($role == 'admin') {
+			$novel = Novel::where('id_team', $id_team)->get();
+		} else {
+			$novel = Novel::where('id_team', $id_team)->where('is_publish', 1)->orderBy('created_at', 'desc')
+				->paginate($perPage = 10, $columns = ['*'], $pageName = 'page');
+		}
 		return $novel;
 	}
 	// Page Novel

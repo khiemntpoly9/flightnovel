@@ -1,8 +1,7 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { toast } from 'react-toastify';
-import { useState, useEffect } from 'react';
-import ViewTeam from '../Components/ViewTeam';
+import { useEffect } from 'react';
 import Pagination from '@/Components/Pagination';
 export default function Team({ auth, team_user, team_list, status }) {
 	// Toast
@@ -32,7 +31,7 @@ export default function Team({ auth, team_user, team_list, status }) {
 			});
 		}
 	}, [status]);
-	console.log(team_list);
+
 	return (
 		<DefaultLayout auth={auth}>
 			<Head title='Nhóm' />

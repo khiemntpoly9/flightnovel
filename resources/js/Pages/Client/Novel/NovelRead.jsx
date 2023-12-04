@@ -187,7 +187,9 @@ export default function NovelRead({ auth, novel_main, vol, follow, rating, comme
 						</div>
 						<div className='border-4	border-b-indigo-500 p-4'>
 							<p className='text-slate-400'>Nhóm dịch</p>
-							<p className='pt-2 text-base font-bold uppercase'>{team[0].team_name}</p>
+							<Link className='bg-slate-100' href={`/team/${team[0].slug}`}>
+								<p className='pt-2 text-base font-bold uppercase'>{team[0].team_name}</p>
+							</Link>
 						</div>
 					</div>
 				</div>

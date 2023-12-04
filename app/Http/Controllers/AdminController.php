@@ -40,7 +40,7 @@ class AdminController extends Controller
 	// Trang chi tiết team | admin (page)
 	public function TeamDetailAdmin(Team $team)
 	{
-		$novel = $this->NovelController->NovelGetIdTeam($team->id);
+		$novel = $this->NovelController->NovelGetIdTeam($team->id, 'admin');
 		// Lấy danh sách thành viên trong team
 		$team_member = TeamUser::with('user')->where('id_team', $team->id)->get();
 		return Inertia::render('Admin/Team/TeamDetail', [

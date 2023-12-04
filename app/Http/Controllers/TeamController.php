@@ -277,7 +277,7 @@ class TeamController extends Controller
 		} else {
 			// Lấy novel có id_team = id của team
 			$team = TeamUser::with('team')->where('id_user', auth()->user()->id)->first();
-			$novel = $this->NovelController->NovelGetIdTeam($team_user->id_team);
+			$novel = $this->NovelController->NovelGetIdTeam($team_user->id_team, 'admin');
 			$team_member = TeamUser::with('user')->where('id_team', $team->id_team)->get();
 			return Inertia::render('Client/Team/TeamDashboard', [
 				'team_user' => $team_user,
@@ -292,5 +292,11 @@ class TeamController extends Controller
 				],
 			]);
 		}
+	}
+	public function TeamDetail(Request $request, Team $team)
+	{
+		$novel = $this->NovelController->NovelGetIdTeam($team->id, 'user');
+		$team_member = TeamUser::with('user')->where('id_team', $team->id)->get();
+		return Inertia::render('Client/Team/TeamDetail', ['team' => $team, 'novel' => $novel, 'team_member' => $team_member]);
 	}
 }
