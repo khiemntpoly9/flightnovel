@@ -105,11 +105,11 @@ Route::prefix('team')->group(function () {
 	});
 	Route::prefix('{team:slug}')->group(function () {
 		Route::get('/', [TeamController::class, 'TeamDetail'])->name('team.detail');
-		Route::middleware('auth')->group(function () {
-			Route::get('/edit', [TeamController::class, 'TeamUpdateIndex'])->name('team.edit');
-			Route::patch('/update', [TeamController::class, 'TeamUpdate'])->name('team.update');
-			Route::get('/add-member', [TeamController::class, 'TeamMember'])->name('team.member');
-			Route::post('/add-member', [TeamController::class, 'AddMember'])->name('team.addmember');
+		Route::middleware(['auth'])->group(function () {
+			Route::get('/edit', [TeamController::class, 'TeamUpdateIndex'])->middleware(['team.admin'])->name('team.edit');
+			Route::patch('/update', [TeamController::class, 'TeamUpdate'])->middleware(['team.admin'])->name('team.update');
+			Route::get('/add-member', [TeamController::class, 'TeamMember'])->middleware(['team.admin'])->name('team.member');
+			Route::post('/add-member', [TeamController::class, 'AddMember'])->middleware(['team.admin'])->name('team.addmember');
 			Route::delete('/delete/{id}', [TeamController::class, 'DeleteMember'])->middleware(['team.admin'])->name('team.delete.member');
 			Route::delete('/delete', [TeamController::class, 'TeamDelete'])->middleware(['team.admin'])->name('team.delete');
 		});
