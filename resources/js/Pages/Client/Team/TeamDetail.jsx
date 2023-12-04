@@ -50,7 +50,7 @@ export default function TeamDetail({ auth, team, novel, team_member }) {
 								<div key={novel.id} className='card rounded-t-md bg-base-100 shadow-xl'>
 									<img src={novel.thumbnail} alt='' className='h-full w-full rounded-t-md object-cover' />
 									<div className='my-3 p-2'>
-										<Link href={`/team/novel/${novel.slug}`} className='mt-2 text-lg font-semibold'>
+										<Link href={`/novel/${novel.slug}`} className='mt-2 text-lg font-semibold'>
 											{novel.name_novel}
 										</Link>
 										<p className='mt-1 font-semibold'> Tác giả: {novel.author}</p>

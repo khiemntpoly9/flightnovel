@@ -148,7 +148,7 @@ class TeamController extends Controller
 			'team_detail' => $request->team_detail,
 			'slug' => $team->id . '-' . Str::of($request->team_name)->slug('-'),
 		]);
-		return redirect()->route('team.index')->with('success', 'Cập nhật thành công');
+		return redirect()->route('team.dashboard')->with('success', 'Cập nhật thành công');
 	}
 
 	public function TeamStore(Request $request)
