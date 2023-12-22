@@ -6,33 +6,68 @@ export default function Team({ team, status }) {
 	const [values, setValues] = useState({
 		search: '',
 	});
-	// Toast
-	useEffect(() => {
-		// Success
-		if (status.success) {
-			toast.success(status.success, {
-				position: 'top-right',
-				autoClose: 1500,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-			});
-		}
-		// Error
-		if (status.error) {
-			toast.error(status.error, {
-				position: 'top-right',
-				autoClose: 1500,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-			});
-		}
-	}, [status]);
+	const [statusi, setStatusi] = useState({ success: null, error: null });
+
+	if (!status) {
+		// Toast
+		useEffect(() => {
+			// Success
+			if (statusi.success) {
+				toast.success(statusi.success, {
+					position: 'top-right',
+					autoClose: 1500,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			}
+
+			// Error
+			if (statusi.error) {
+				toast.error(statusi.error, {
+					position: 'top-right',
+					autoClose: 1500,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			}
+		}, [statusi]);
+	} else {
+		// Toast
+		useEffect(() => {
+			// Success
+			if (status.success) {
+				toast.success(status.success, {
+					position: 'top-right',
+					autoClose: 1500,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			}
+
+			// Error
+			if (status.error) {
+				toast.error(status.error, {
+					position: 'top-right',
+					autoClose: 1500,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			}
+		}, [status]);
+	}
+
 	// Handle change input
 	const handleChange = (e) => {
 		const key = e.target.id;
